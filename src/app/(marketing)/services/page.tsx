@@ -51,8 +51,18 @@ export default function ServicesOverviewPage() {
                 ))}
               </div>
               <Button asChild>
-                <Link href="/services/healthcare">
-                  View {sector.title} services
+                <Link
+                  href={
+                    sector.slug === "enterprise-ai"
+                      ? "/services/healthcare"
+                      : sector.slug === "edtech"
+                      ? "/services/edtech"
+                      : `/services/${sector.slug}`
+                  }
+                >
+                  {sector.slug === "enterprise-ai"
+                    ? "View Healthcare services"
+                    : `View ${sector.title} services`}
                 </Link>
               </Button>
             </CardContent>
