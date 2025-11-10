@@ -4,19 +4,23 @@ import { notFound } from "next/navigation";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Card } from "@/components/ui/card";
 import { getSectorBySlug, sectors } from "@/config/services";
+import { FintechExperience } from "@/app/(marketing)/services/[slug]/pageIndex";
 
 type ServiceDetailPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
   return sectors.map((sector) => ({ slug: sector.slug }));
 }
 
-export function generateMetadata({ params }: ServiceDetailPageProps): Metadata {
-  const sector = getSectorBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: ServiceDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const sector = getSectorBySlug(slug);
 
   if (!sector) {
     return {};
@@ -28,11 +32,18 @@ export function generateMetadata({ params }: ServiceDetailPageProps): Metadata {
   };
 }
 
-export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
-  const sector = getSectorBySlug(params.slug);
+export default async function ServiceDetailPage({
+  params,
+}: ServiceDetailPageProps) {
+  const { slug } = await params;
+  const sector = getSectorBySlug(slug);
 
   if (!sector) {
     notFound();
+  }
+
+  if (sector.slug === "fintech") {
+    return <FintechExperience />;
   }
 
   return (
@@ -61,7 +72,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               {sector.capabilities.map((capability) => (
                 <div key={capability.title} className="rounded-xl border bg-background p-5">
                   <p className="font-medium text-foreground">{capability.title}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{capability.description}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {capability.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -90,7 +103,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             <div className="space-y-3">
               {sector.metrics.map((metric) => (
                 <div key={metric.label}>
-                  <p className="text-3xl font-semibold tracking-tight text-primary">{metric.value}</p>
+                  <p className="text-3xl font-semibold tracking-tight text-primary">
+                    {metric.value}
+                  </p>
                   <p className="text-sm text-muted-foreground">{metric.label}</p>
                 </div>
               ))}
