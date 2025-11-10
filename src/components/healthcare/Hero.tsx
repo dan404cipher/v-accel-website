@@ -4,6 +4,8 @@ import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { HealthcareBackground } from "./HealthcareBackground";
 import { motion } from "motion/react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import heroImage from "@/assets/f1c492f95124a52f897533a675f029f7199c04e3.png";
 
 export function Hero() {
   return (
@@ -78,11 +80,11 @@ export function Hero() {
           >
             {/* Healthcare Dashboard Interface */}
             <div className="relative w-full max-w-lg">
-              <div className="w-full h-96 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center">
-                <span className="text-muted-foreground">
-                  Healthcare Dashboard Preview
-                </span>
-              </div>
+              <ImageWithFallback
+                src={heroImage.src}
+                alt="Healthcare web application dashboard interface"
+                className="w-full h-auto scale-[1.15]"
+              />
             </div>
           </motion.div>
         </div>

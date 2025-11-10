@@ -1,22 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  Calendar,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, Clock, Calendar, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-
-const solutions = [
-  "Redesigned their system with scalable cloud architecture",
-  "Added custom analytics dashboards for real-time insights",
-  "Implemented personalized patient care pathways",
-  "Integrated automated appointment reminders and compliance tracking",
-];
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import deviceMockups from "@/assets/8d6ea894437f9bb0e985e12120c860b377e06ad8.png";
 
 export function ResultSnapshot() {
   return (
@@ -149,11 +138,12 @@ export function ResultSnapshot() {
               transition={{ duration: 0.6 }}
               className="relative flex items-center justify-center"
             >
-              <div className="w-full h-96 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center">
-                <span className="text-muted-foreground">
-                  Device Mockups Preview
-                </span>
-              </div>
+              <ImageWithFallback
+                src={deviceMockups.src}
+                alt="Healthcare Portal - Dashboard Mockups"
+                className="w-full h-auto scale-125"
+                style={{ filter: "drop-shadow(0 0 0 transparent)" }}
+              />
             </motion.div>
           </div>
         </div>
