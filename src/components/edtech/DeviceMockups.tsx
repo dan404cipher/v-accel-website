@@ -2,10 +2,11 @@
 
 import { motion } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import deviceMockupImage from "@/assets/0a8ac4366979be11081f7f7abae5f758c04f2992.png";
 
 export function DeviceMockups() {
   return (
-    <div className="relative w-full h-[250px] md:h-[280px]">
+    <div className="relative w-full h-[450px] sm:h-[500px] md:h-[600px] lg:h-[700px] xl:h-[800px]">
       {/* iPad Pro Mockup with Dashboard */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
@@ -14,15 +15,15 @@ export function DeviceMockups() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <motion.div
-          className="w-full max-w-[280px]"
+          className="w-full max-w-[90%] sm:max-w-[500px] md:max-w-[650px] lg:max-w-[750px] xl:max-w-[850px] border-2 border-black shadow-lg rounded-2xl overflow-hidden"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center border border-primary/10">
-            <span className="text-muted-foreground text-sm">
-              EdTech Device Mockup
-            </span>
-          </div>
+          <ImageWithFallback
+            src={deviceMockupImage.src}
+            alt="EdTech Device Mockup - iPad Pro with Dashboard"
+            className="w-full h-auto"
+          />
         </motion.div>
       </motion.div>
 
