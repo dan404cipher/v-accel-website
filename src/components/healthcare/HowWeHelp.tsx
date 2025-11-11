@@ -53,7 +53,7 @@ export function HowWeHelp() {
           {/* Faded Healthcare Icons - More spread out */}
           <motion.div
             className="absolute"
-            style={{ left: "8%", top: "15%" }}
+            style={{ left: "8%", top: "15%", willChange: 'transform, opacity' }}
             animate={{
               opacity: [0.03, 0.06, 0.03],
               y: [0, -20, 0],
@@ -69,7 +69,7 @@ export function HowWeHelp() {
 
           <motion.div
             className="absolute"
-            style={{ right: "15%", top: "10%" }}
+            style={{ right: "15%", top: "10%", willChange: 'transform, opacity' }}
             animate={{
               opacity: [0.03, 0.06, 0.03],
               y: [0, -15, 0],
@@ -86,7 +86,7 @@ export function HowWeHelp() {
 
           <motion.div
             className="absolute"
-            style={{ left: "5%", bottom: "25%" }}
+            style={{ left: "5%", bottom: "25%", willChange: 'transform, opacity' }}
             animate={{
               opacity: [0.03, 0.06, 0.03],
               y: [0, -25, 0],
@@ -99,57 +99,6 @@ export function HowWeHelp() {
             }}
           >
             <Stethoscope className="w-18 h-18 text-[#4CAF50]" />
-          </motion.div>
-
-          <motion.div
-            className="absolute"
-            style={{ right: "10%", bottom: "20%" }}
-            animate={{
-              opacity: [0.03, 0.06, 0.03],
-              y: [0, -18, 0],
-            }}
-            transition={{
-              duration: 23,
-              delay: 1,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Pill className="w-14 h-14 text-[#4CAF50]" />
-          </motion.div>
-
-          <motion.div
-            className="absolute"
-            style={{ left: "50%", top: "30%" }}
-            animate={{
-              opacity: [0.03, 0.06, 0.03],
-              y: [0, -22, 0],
-            }}
-            transition={{
-              duration: 24,
-              delay: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Shield className="w-16 h-16 text-[#4CAF50]" />
-          </motion.div>
-
-          <motion.div
-            className="absolute"
-            style={{ right: "25%", top: "50%" }}
-            animate={{
-              opacity: [0.03, 0.06, 0.03],
-              y: [0, -20, 0],
-            }}
-            transition={{
-              duration: 21,
-              delay: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Users className="w-15 h-15 text-[#4CAF50]" />
           </motion.div>
 
           {/* Subtle Gradient Orbs */}

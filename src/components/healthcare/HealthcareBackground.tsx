@@ -8,10 +8,6 @@ const floatingIcons = [
   { Icon: Activity, delay: 2, duration: 25, x: "80%", y: "10%" },
   { Icon: Stethoscope, delay: 4, duration: 22, x: "15%", y: "70%" },
   { Icon: Cross, delay: 1, duration: 24, x: "85%", y: "60%" },
-  { Icon: Users, delay: 3, duration: 23, x: "50%", y: "80%" },
-  { Icon: Heart, delay: 5, duration: 21, x: "70%", y: "30%" },
-  { Icon: Activity, delay: 2.5, duration: 26, x: "25%", y: "45%" },
-  { Icon: Zap, delay: 4.5, duration: 20, x: "90%", y: "85%" },
 ];
 
 export function HealthcareBackground() {
@@ -52,6 +48,7 @@ export function HealthcareBackground() {
             style={{
               left: item.x,
               top: item.y,
+              willChange: 'transform, opacity',
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{
@@ -103,13 +100,14 @@ export function HealthcareBackground() {
       </svg>
 
       {/* Floating Circles representing network/connectivity */}
-      {[...Array(8)].map((_, i) => (
+      {[...Array(4)].map((_, i) => (
         <motion.div
           key={`circle-${i}`}
           className="absolute w-2 h-2 bg-primary/20 rounded-full"
           style={{
-            left: `${10 + i * 12}%`,
+            left: `${10 + i * 25}%`,
             top: `${30 + (i % 3) * 20}%`,
+            willChange: 'transform, opacity',
           }}
           animate={{
             y: [0, -20, 0],
@@ -128,6 +126,7 @@ export function HealthcareBackground() {
       {/* Pulse effect - representing heartbeat */}
       <motion.div
         className="absolute top-20 right-20 w-32 h-32 border-2 border-primary/10 rounded-full"
+        style={{ willChange: 'transform, opacity' }}
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.1, 0.3],
@@ -141,6 +140,7 @@ export function HealthcareBackground() {
       
       <motion.div
         className="absolute bottom-40 left-32 w-24 h-24 border-2 border-primary/10 rounded-full"
+        style={{ willChange: 'transform, opacity' }}
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.2, 0.05, 0.2],

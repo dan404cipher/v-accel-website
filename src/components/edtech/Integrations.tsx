@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
@@ -22,7 +22,11 @@ const GoogleClassroomLogo = () => (
         <stop offset="100%" stopColor="#0B8043" />
       </linearGradient>
     </defs>
-    <path d="M40 25L28 35V45L40 55L52 45V35L40 25Z" fill="white" opacity="0.9" />
+    <path
+      d="M40 25L28 35V45L40 55L52 45V35L40 25Z"
+      fill="white"
+      opacity="0.9"
+    />
     <circle cx="40" cy="40" r="8" fill="white" />
   </svg>
 );
@@ -36,7 +40,15 @@ const MicrosoftTeamsLogo = () => (
         <stop offset="100%" stopColor="#464EB8" />
       </linearGradient>
     </defs>
-    <rect x="25" y="30" width="30" height="30" rx="4" fill="white" opacity="0.9" />
+    <rect
+      x="25"
+      y="30"
+      width="30"
+      height="30"
+      rx="4"
+      fill="white"
+      opacity="0.9"
+    />
     <circle cx="50" cy="35" r="8" fill="white" />
   </svg>
 );
@@ -50,7 +62,10 @@ const ZoomLogo = () => (
         <stop offset="100%" stopColor="#2563EB" />
       </linearGradient>
     </defs>
-    <path d="M28 32C28 30.3431 29.3431 29 31 29H45C46.6569 29 48 30.3431 48 32V37L55 32V48L48 43V48C48 49.6569 46.6569 51 45 51H31C29.3431 51 28 49.6569 28 48V32Z" fill="white" />
+    <path
+      d="M28 32C28 30.3431 29.3431 29 31 29H45C46.6569 29 48 30.3431 48 32V37L55 32V48L48 43V48C48 49.6569 46.6569 51 45 51H31C29.3431 51 28 49.6569 28 48V32Z"
+      fill="white"
+    />
   </svg>
 );
 
@@ -63,7 +78,16 @@ const SlackLogo = () => (
       {/* Left Red */}
       <rect x="0" y="16" width="12" height="12" rx="3" fill="#E01E5A" />
       {/* Center - intersection bars */}
-      <rect x="16" y="16" width="12" height="12" rx="3" fill="none" stroke="#36C5F0" strokeWidth="3" />
+      <rect
+        x="16"
+        y="16"
+        width="12"
+        height="12"
+        rx="3"
+        fill="none"
+        stroke="#36C5F0"
+        strokeWidth="3"
+      />
       {/* Right Green */}
       <rect x="32" y="16" width="12" height="12" rx="3" fill="#2EB67D" />
       {/* Bottom Cyan */}
@@ -95,7 +119,11 @@ const CanvasLogo = () => (
         <stop offset="100%" stopColor="#C72E1F" />
       </linearGradient>
     </defs>
-    <path d="M35 25H45V55H35V25Z M25 35H55V45H25V35Z" fill="white" opacity="0.9" />
+    <path
+      d="M35 25H45V55H35V25Z M25 35H55V45H25V35Z"
+      fill="white"
+      opacity="0.9"
+    />
   </svg>
 );
 
@@ -110,7 +138,13 @@ const MoodleLogo = () => (
     </defs>
     <circle cx="32" cy="35" r="6" fill="white" />
     <circle cx="48" cy="35" r="6" fill="white" />
-    <path d="M28 48Q40 55 52 48" stroke="white" strokeWidth="4" fill="none" strokeLinecap="round" />
+    <path
+      d="M28 48Q40 55 52 48"
+      stroke="white"
+      strokeWidth="4"
+      fill="none"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -118,13 +152,32 @@ const BlackboardLogo = () => (
   <svg viewBox="0 0 80 80" className="w-20 h-20">
     <rect width="80" height="80" rx="18" fill="url(#blackboard-gradient)" />
     <defs>
-      <linearGradient id="blackboard-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient
+        id="blackboard-gradient"
+        x1="0%"
+        y1="0%"
+        x2="100%"
+        y2="100%"
+      >
         <stop offset="0%" stopColor="#000000" />
         <stop offset="100%" stopColor="#1F1F1F" />
       </linearGradient>
     </defs>
-    <rect x="25" y="25" width="30" height="30" rx="4" fill="white" opacity="0.15" />
-    <path d="M30 35H50M30 40H50M30 45H45" stroke="white" strokeWidth="2" strokeLinecap="round" />
+    <rect
+      x="25"
+      y="25"
+      width="30"
+      height="30"
+      rx="4"
+      fill="white"
+      opacity="0.15"
+    />
+    <path
+      d="M30 35H50M30 40H50M30 45H45"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -139,10 +192,8 @@ const integrations = [
   { name: "Blackboard", logo: BlackboardLogo },
 ];
 
-
-
 export function Integrations() {
-  const [api, setApi] = useState<any>();
+  const [api, setApi] = useState<{ scrollNext: () => void } | undefined>();
 
   useEffect(() => {
     if (!api) {
@@ -175,9 +226,13 @@ export function Integrations() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-block mb-4">
-              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">Integrations</span>
+              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
+                Integrations
+              </span>
             </div>
-            <h2 className="text-3xl md:text-5xl mb-4 text-[32px]">Connect With Your Favorite Tools</h2>
+            <h2 className="text-3xl md:text-5xl mb-4 text-[32px]">
+              Connect With Your Favorite Tools
+            </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Our platform integrates seamlessly with the tools you already use
             </p>
@@ -202,7 +257,10 @@ export function Integrations() {
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {integrations.map((integration, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+                <CarouselItem
+                  key={index}
+                  className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5"
+                >
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -214,7 +272,7 @@ export function Integrations() {
                     <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
                       <integration.logo />
                     </div>
-                    
+
                     {/* Platform Name */}
                     <p className="text-sm text-center text-muted-foreground">
                       {integration.name}
@@ -237,7 +295,8 @@ export function Integrations() {
           className="text-center mt-16"
         >
           <p className="text-muted-foreground mb-6 text-lg">
-            Don't see your tool? We can integrate with custom platforms too.
+            Don&apos;t see your tool? We can integrate with custom platforms
+            too.
           </p>
           <Button
             variant="outline"

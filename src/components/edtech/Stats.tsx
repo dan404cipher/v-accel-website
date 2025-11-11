@@ -1,7 +1,13 @@
-'use client';
+"use client";
 
-import { motion, useMotionValue, useTransform, animate, useMotionValueEvent } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  useMotionValueEvent,
+} from "motion/react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 const stats = [
   {
@@ -77,17 +83,31 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export function Stats() {
+  // Memoize particle positions and animation values
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const particles = useMemo(() => {
+    // Generate random values once on mount - this is intentional for performance
+    const rng = () => Math.random();
+    return Array.from({ length: 8 }, () => ({
+      left: rng() * 100,
+      top: rng() * 100,
+      duration: 3 + rng() * 2,
+      delay: rng() * 2,
+    }));
+  }, []);
+
   return (
     <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
       {/* Animated background patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, index) => (
+        {particles.map((particle, index) => (
           <motion.div
             key={index}
             className="absolute w-2 h-2 rounded-full bg-white/10"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              willChange: "transform, opacity",
             }}
             animate={{
               y: [0, -30, 0],
@@ -95,9 +115,9 @@ export function Stats() {
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              delay: particle.delay,
               ease: "easeInOut",
             }}
           />

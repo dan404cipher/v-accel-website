@@ -82,13 +82,14 @@ export function CoreSolutions() {
         />
         
         {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-primary/20 rounded-full"
             style={{
-              left: `${10 + i * 8}%`,
+              left: `${10 + i * 15}%`,
               top: `${20 + (i % 4) * 20}%`,
+              willChange: 'transform, opacity',
             }}
             animate={{
               y: [0, -30, 0],

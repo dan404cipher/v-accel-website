@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useInView } from "motion/react";
 import { useState, useEffect, useRef } from "react";
 
 const stats = [
@@ -11,47 +11,34 @@ const stats = [
 ];
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    damping: 60,
+    stiffness: 100,
+  });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [displayValue, setDisplayValue] = useState<string>("0");
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          const duration = 2000;
-          const steps = 60;
-          const increment = value / steps;
-          let current = 0;
-
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= value) {
-              setCount(value);
-              clearInterval(timer);
-            } else {
-              setCount(current);
-            }
-          }, duration / steps);
-
-          return () => clearInterval(timer);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (isInView) {
+      motionValue.set(value);
     }
+  }, [motionValue, isInView, value]);
 
-    return () => observer.disconnect();
-  }, [value, hasAnimated]);
+  useEffect(() => {
+    const unsubscribe = springValue.on("change", (latest) => {
+      if (ref.current) {
+        const display = suffix === "%" ? latest.toFixed(1) : String(Math.floor(latest));
+        setDisplayValue(display);
+      }
+    });
+    return () => unsubscribe();
+  }, [springValue, suffix]);
 
   return (
     <div ref={ref}>
-      {suffix === "%" ? count.toFixed(1) : Math.floor(count)}
-      {suffix}
+      {displayValue}{suffix}
     </div>
   );
 }
