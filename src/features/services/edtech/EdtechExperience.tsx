@@ -4,6 +4,8 @@ import { Hero } from "@/components/edtech/Hero";
 import { ProblemNarrative } from "@/components/edtech/ProblemNarrative";
 import { HowItWorks } from "@/components/edtech/HowItWorks";
 import { CoreSolutions } from "@/components/edtech/CoreSolutions";
+import { Services } from "@/components/edtech/Services";
+import { Integrations } from "@/components/edtech/Integrations";
 import { CaseStudy } from "@/components/edtech/CaseStudy";
 import { ComplianceAccessibility } from "@/components/edtech/ComplianceAccessibility";
 import { Testimonials } from "@/components/edtech/Testimonials";
@@ -19,6 +21,8 @@ export function EdtechExperience() {
         <ProblemNarrative />
         <HowItWorks />
         <CoreSolutions />
+        <Services />
+        <Integrations />
         <CaseStudy />
         <ComplianceAccessibility />
         <Testimonials />
