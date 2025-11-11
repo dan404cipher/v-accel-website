@@ -1,5 +1,7 @@
 "use client";
 
+import "@/styles/edtech/theme.css";
+
 import { Hero } from "@/components/edtech/Hero";
 import { ProblemNarrative } from "@/components/edtech/ProblemNarrative";
 import { HowItWorks } from "@/components/edtech/HowItWorks";
@@ -15,8 +17,8 @@ import { CTA } from "@/components/edtech/CTA";
 
 export function EdtechExperience() {
   return (
-    <div className="min-h-screen">
-      <main>
+    <div className="edtech-theme relative flex min-h-screen flex-col">
+      <main className="flex-1">
         <Hero />
         <ProblemNarrative />
         <HowItWorks />

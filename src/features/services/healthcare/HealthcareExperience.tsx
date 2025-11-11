@@ -1,5 +1,7 @@
 "use client";
 
+import "@/styles/healthcare/theme.css";
+
 import { Hero } from "@/components/healthcare/Hero";
 import { ProblemSection } from "@/components/healthcare/ProblemSection";
 import { HowWeHelp } from "@/components/healthcare/HowWeHelp";
@@ -13,8 +15,8 @@ import { CTA } from "@/components/healthcare/CTA";
 
 export function HealthcareExperience() {
   return (
-    <div className="min-h-screen">
-      <main>
+    <div className="healthcare-theme relative flex min-h-screen flex-col">
+      <main className="flex-1">
         <Hero />
         <ProblemSection />
         <HowWeHelp />
