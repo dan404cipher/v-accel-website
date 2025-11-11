@@ -17,7 +17,7 @@ import { Container } from "@/components/shared/container";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Discover how V-Accel partners with fintech, edtech, and enterprise AI teams to deliver mission-critical software.",
+    "Discover how V-Accel partners with fintech, edtech, and healthcare teams to deliver mission-critical software.",
 };
 
 export default function ServicesOverviewPage() {
@@ -51,19 +51,7 @@ export default function ServicesOverviewPage() {
                 ))}
               </div>
               <Button asChild>
-                <Link
-                  href={
-                    sector.slug === "enterprise-ai"
-                      ? "/services/healthcare"
-                      : sector.slug === "edtech"
-                      ? "/services/edtech"
-                      : `/services/${sector.slug}`
-                  }
-                >
-                  {sector.slug === "enterprise-ai"
-                    ? "View Healthcare services"
-                    : `View ${sector.title} services`}
-                </Link>
+                <Link href={`/services/${sector.slug}`}>View {sector.title} services</Link>
               </Button>
             </CardContent>
           </Card>

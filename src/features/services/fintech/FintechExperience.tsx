@@ -18,11 +18,8 @@ import { Resources } from "@/components/fintech/Resources";
 import { CTA } from "@/components/fintech/CTA";
 import { ScrollToTop } from "@/components/fintech/ScrollToTop";
 import { Toaster } from "@/components/fintech/ui/sonner";
-import { usePageTheme } from "@/hooks/use-page-theme";
 
 export function FintechExperience() {
-  usePageTheme("fintech-theme");
-
   return (
     <div className="fintech-theme relative flex min-h-screen flex-col">
       <main className="flex-1">
@@ -45,3 +42,4 @@ export function FintechExperience() {
     </div>
   );
 }
+
