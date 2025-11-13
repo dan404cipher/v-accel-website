@@ -22,10 +22,9 @@ export const siteConfig = {
   },
   navigation: {
     main: [
-      { title: "Services", href: "/services", description: "What we build" },
       { title: "Case Studies", href: "/case-studies", description: "Proof and outcomes" },
       { title: "Process", href: "/process", description: "How we operate" },
-      { title: "Insights", href: "/insights", description: "Thought leadership" },
+      { title: "Blog", href: "/blog", description: "Thought leadership" },
       { title: "About", href: "/about", description: "Team and ethos" },
     ] satisfies NavigationItem[],
     secondary: [

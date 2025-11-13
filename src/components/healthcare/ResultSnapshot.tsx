@@ -5,7 +5,7 @@ import { ArrowRight, Clock, Calendar, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import deviceMockups from "@/assets/8d6ea894437f9bb0e985e12120c860b377e06ad8.png";
+import deviceMockups from "@assets/8d6ea894437f9bb0e985e12120c860b377e06ad8.png";
 
 export function ResultSnapshot() {
   return (

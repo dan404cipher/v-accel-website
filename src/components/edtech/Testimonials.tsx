@@ -1,8 +1,10 @@
 'use client';
 
-import { Star, Quote } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { motion } from "motion/react";
+
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const testimonials = [
   {
@@ -29,6 +31,80 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+  const extendedTestimonials = useMemo(
+    () => [...testimonials, ...testimonials.slice(0, 4)],
+    [],
+  );
+
+  const [slidesPerView, setSlidesPerView] = useState(() => {
+    if (typeof window === "undefined") return 3;
+    const width = window.innerWidth;
+    if (width < 768) return 1;
+    if (width < 1024) return 2;
+    return 3;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setSlidesPerView(1);
+      } else if (width < 1024) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const pageCount = Math.max(
+    Math.ceil(extendedTestimonials.length / slidesPerView),
+    1,
+  );
+
+  const [activePage, setActivePage] = useState(0);
+
+  useEffect(() => {
+    setActivePage((prev) => Math.min(prev, pageCount - 1));
+  }, [pageCount]);
+
+  const goToPage = useCallback(
+    (nextPage: number) => {
+      if (nextPage < 0) {
+        setActivePage(pageCount - 1);
+      } else if (nextPage >= pageCount) {
+        setActivePage(0);
+      } else {
+        setActivePage(nextPage);
+      }
+    },
+    [pageCount],
+  );
+
+  const handlePrev = useCallback(() => {
+    goToPage(activePage - 1);
+  }, [activePage, goToPage]);
+
+  const handleNext = useCallback(() => {
+    goToPage(activePage + 1);
+  }, [activePage, goToPage]);
+
+  useEffect(() => {
+    if (pageCount <= 1) return;
+
+    const timer = window.setInterval(() => {
+      goToPage(activePage + 1);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, [activePage, goToPage, pageCount]);
+
+  const translatePercentage = 100 * activePage;
+
   return (
     <section className="py-20 bg-background relative overflow-hidden">
       {/* Mild Interactive Background */}
@@ -57,50 +133,99 @@ export function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+        <div className="relative mt-12">
+          <div className="overflow-hidden py-6">
             <motion.div
-              key={index}
-              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-primary transition-all duration-300 group cursor-pointer"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-              whileHover={{ y: -10, scale: 1.02, transition: { duration: 0.2 } }}
+              className="flex"
+              animate={{ x: `-${translatePercentage}%` }}
+              transition={{ type: "spring", stiffness: 110, damping: 22 }}
             >
-              {/* Quote Icon */}
-              <div className="mb-4">
-                <Quote className="h-10 w-10 text-primary/20 group-hover:text-primary/40 transition-colors" />
-              </div>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                ))}
-              </div>
-
-              {/* Content */}
-              <p className="text-foreground mb-6 leading-relaxed">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-primary/10 flex-shrink-0">
-                  <ImageWithFallback
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="text-foreground">{testimonial.name}</div>
-                  <div className="text-muted-foreground text-sm">{testimonial.role}</div>
-                </div>
-              </div>
+              {extendedTestimonials.map((testimonial, index) => (
+                <motion.div
+                  key={`${testimonial.name}-${index}`}
+                  className="px-2 md:px-4 lg:px-6 flex-[0_0_calc(100%/1)] sm:flex-[0_0_calc(100%/1)] md:flex-[0_0_calc(100%/2)] lg:flex-[0_0_calc(100%/3)]"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.6, delay: (index % slidesPerView) * 0.2 }}
+                >
+                  <motion.div
+                    className="relative h-full"
+                    initial={{ opacity: 1 }}
+                    whileHover={{ y: -18 }}
+                    transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent opacity-0 blur-xl transition-opacity duration-300"
+                      whileHover={{ opacity: 1 }}
+                    />
+                    <motion.div
+                      className="relative bg-white border border-primary/12 rounded-3xl p-8 lg:p-10 shadow-sm transition-all duration-300 h-full flex flex-col"
+                      whileHover={{ boxShadow: "0 24px 55px rgba(115, 76, 186, 0.18)", borderColor: "rgba(98, 0, 234, 0.55)" }}
+                      transition={{ duration: 0.25 }}
+                      style={{ overflow: "visible", transformStyle: "preserve-3d" }}
+                    >
+                    <div className="mb-6">
+                      <Quote className="h-10 w-10 text-primary/25" />
+                    </div>
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <p className="text-foreground mb-8 leading-relaxed flex-1">
+                      "{testimonial.content}"
+                    </p>
+                    <div className="flex items-center gap-3 pt-6 border-t border-primary/10">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-primary/10 flex-shrink-0">
+                        <ImageWithFallback
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div className="text-foreground font-medium">{testimonial.name}</div>
+                        <div className="text-muted-foreground text-sm">{testimonial.role}</div>
+                      </div>
+                    </div>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
+          </div>
+
+          <button
+            onClick={handlePrev}
+            aria-label="Previous testimonials"
+            className="hidden md:flex absolute left-[-1.75rem] lg:left-[-3rem] top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-white text-primary shadow-md hover:bg-primary/10 transition-colors"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            onClick={handleNext}
+            aria-label="Next testimonials"
+            className="hidden md:flex absolute right-[-1.75rem] lg:right-[-3rem] top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-white text-primary shadow-md hover:bg-primary/10 transition-colors"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          <div className="mt-16 flex items-center justify-center gap-3">
+            {Array.from({ length: pageCount }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToPage(index)}
+                aria-label={`Go to testimonial group ${index + 1}`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  index === activePage
+                    ? "w-10 bg-primary"
+                    : "w-6 bg-primary/20 hover:bg-primary/40"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -9,18 +9,21 @@ import {
 } from "motion/react";
 import { useEffect, useRef, useState, useMemo } from "react";
 
+import { cn } from "@/lib/utils";
+import { createSeededRandom } from "@/lib/seeded-random";
+
 const stats = [
   {
-    number: "500+",
+    number: "20+",
     label: "Educational Institutions",
-    value: 500,
+    value: 20,
     suffix: "+",
   },
   {
-    number: "1M+",
+    number: "100+",
     label: "Active Students",
-    value: 1,
-    suffix: "M+",
+    value: 100,
+    suffix: "+",
   },
   {
     number: "99.9%",
@@ -86,8 +89,7 @@ export function Stats() {
   // Memoize particle positions and animation values
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const particles = useMemo(() => {
-    // Generate random values once on mount - this is intentional for performance
-    const rng = () => Math.random();
+    const rng = createSeededRandom(359);
     return Array.from({ length: 8 }, () => ({
       left: rng() * 100,
       top: rng() * 100,
@@ -97,7 +99,7 @@ export function Stats() {
   }, []);
 
   return (
-    <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
+    <section className="relative flex h-[200px] items-center justify-center overflow-hidden bg-primary text-primary-foreground">
       {/* Animated background patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map((particle, index) => (
@@ -124,7 +126,7 @@ export function Stats() {
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 w-full max-w-[1122px] px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div

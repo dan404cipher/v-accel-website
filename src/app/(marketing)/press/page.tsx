@@ -14,7 +14,7 @@ export default function PressPage() {
       title="Media resources coming soon"
       description="We’re preparing our media kit, founder bios, and analyst materials. Reach out for early access or to coordinate interviews."
       primaryCta={{ label: "Contact press team", href: "mailto:press@v-accel.com" }}
-      secondaryCta={{ label: "Explore our services", href: "/services" }}
+      secondaryCta={{ label: "Explore our services", href: "/services/edtech" }}
     />
   );
 }

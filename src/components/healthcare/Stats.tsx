@@ -4,8 +4,8 @@ import { motion, useInView, useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef } from "react";
 
 const stats = [
-  { value: 500, suffix: "+", label: "Healthcare Organizations" },
-  { value: 1, suffix: "M+", label: "Patient Records Processed" },
+  { value: 20, suffix: "+", label: "Healthcare Organizations" },
+  { value: 100, suffix: "+", label: "Patient Records Processed" },
   { value: 99.9, suffix: "%", label: "Uptime Guarantee" },
   { value: 24, suffix: "/7", label: "Technical Support" },
 ];
@@ -39,7 +39,7 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 
 export function Stats() {
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-br from-[#2C3E50] via-[#34495E] to-[#2C3E50] relative overflow-hidden">
+    <section className="relative flex h-[200px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#2C3E50] via-[#34495E] to-[#2C3E50]">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -69,7 +69,7 @@ export function Stats() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 w-full max-w-[1122px] px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
             <motion.div
@@ -79,7 +79,7 @@ export function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.04, transition: { type: "tween", duration: 0.2, ease: "easeOut" } }}
             >
               <div className="text-4xl sm:text-5xl lg:text-6xl text-white mb-2 transition-all">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />

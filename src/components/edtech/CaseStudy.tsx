@@ -3,7 +3,7 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import laptopImage from "@/assets/02421010d110dd5b7c02805ab78d71af827a8ddf.png";
+import laptopImage from "@assets/02421010d110dd5b7c02805ab78d71af827a8ddf.png";
 import { motion } from "motion/react";
 
 export function CaseStudy() {

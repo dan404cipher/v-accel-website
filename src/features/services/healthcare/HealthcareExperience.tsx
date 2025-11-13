@@ -15,19 +15,17 @@ import { CTA } from "@/components/healthcare/CTA";
 
 export function HealthcareExperience() {
   return (
-    <div className="healthcare-theme relative flex min-h-screen flex-col">
-      <main className="flex-1">
-        <Hero />
-        <ProblemSection />
-        <HowWeHelp />
-        <CoreSolutions />
-        <ResultSnapshot />
-        <ComplianceSecurity />
-        <Testimonials />
-        <Stats />
-        <ResourcesInsights />
-        <CTA />
-      </main>
+    <div className="healthcare-theme relative">
+      <Hero />
+      <ProblemSection />
+      <HowWeHelp />
+      <CoreSolutions />
+      <ResultSnapshot />
+      <ComplianceSecurity />
+      <Testimonials />
+      <Stats />
+      <ResourcesInsights />
+      <CTA />
     </div>
   );
 }

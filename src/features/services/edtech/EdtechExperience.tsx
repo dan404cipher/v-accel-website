@@ -17,21 +17,19 @@ import { CTA } from "@/components/edtech/CTA";
 
 export function EdtechExperience() {
   return (
-    <div className="edtech-theme relative flex min-h-screen flex-col">
-      <main className="flex-1">
-        <Hero />
-        <ProblemNarrative />
-        <HowItWorks />
-        <CoreSolutions />
-        <Services />
-        <Integrations />
-        <CaseStudy />
-        <ComplianceAccessibility />
-        <Testimonials />
-        <Stats />
-        <Resources />
-        <CTA />
-      </main>
+    <div className="edtech-theme relative">
+      <Hero />
+      <ProblemNarrative />
+      <HowItWorks />
+      <CoreSolutions />
+      <Services />
+      <Integrations />
+      <CaseStudy />
+      <ComplianceAccessibility />
+      <Testimonials />
+      <Stats />
+      <Resources />
+      <CTA />
     </div>
   );
 }

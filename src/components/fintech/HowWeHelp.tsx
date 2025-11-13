@@ -45,7 +45,7 @@ export function HowWeHelp() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-block px-4 py-2 bg-[#45647B]/10 rounded-full mb-6">
-              <span className="text-[#45647B]">Our Process</span>
+              <span className="text-[#1A2332] font-[470]">Our Process</span>
             </div>
             <h2 className="mb-6 text-[32px]">
               From planning to compliance — we build for the full FinTech lifecycle.

@@ -3,9 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 import { siteConfig } from "@/config/site";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
+import { ParentNavigation } from "@/components/layout/parent-navigation";
+import { ParentFooter } from "@/components/layout/parent-footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,14 +45,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#F4F6F8] antialiased`}>
+        <div className="flex min-h-screen flex-col">
+          <ParentNavigation />
+          <main className="flex-1">{children}</main>
+          <ParentFooter />
+        </div>
       </body>
     </html>
   );

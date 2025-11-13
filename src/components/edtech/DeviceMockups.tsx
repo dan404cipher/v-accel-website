@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import deviceMockupImage from "@/assets/0a8ac4366979be11081f7f7abae5f758c04f2992.png";
+import deviceMockupImage from "@assets/0a8ac4366979be11081f7f7abae5f758c04f2992.png";
 
 export function DeviceMockups() {
   return (

@@ -4,8 +4,8 @@ import { motion, useMotionValue, useSpring, useInView } from "motion/react";
 import { useState, useEffect, useRef } from "react";
 
 const stats = [
-  { value: 200, suffix: "+", label: "Projects Delivered" },
-  { value: 50, suffix: "+", label: "Enterprise Clients" },
+  { value: 20, suffix: "+", label: "Projects Delivered" },
+  { value: 10, suffix: "+", label: "Enterprise Clients" },
   { value: 99.9, suffix: "%", label: "System Uptime" },
   { value: 24, suffix: "/7", label: "Technical Support" },
 ];
@@ -45,8 +45,8 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 
 export function Stats() {
   return (
-    <section className="py-20 bg-primary overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative flex h-[200px] items-center justify-center overflow-hidden bg-primary">
+      <div className="w-full max-w-[1122px] px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div 

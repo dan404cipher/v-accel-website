@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { BookOpen, GraduationCap, Lightbulb, Award } from "lucide-react";
 import { useMemo } from "react";
 
+import { createSeededRandom } from "@/lib/seeded-random";
+
 const floatingIcons = [
   { Icon: BookOpen, delay: 0, duration: 20, x: "10%", y: "20%" },
   { Icon: GraduationCap, delay: 2, duration: 25, x: "80%", y: "15%" },
@@ -21,8 +23,7 @@ export function EdutechBackground() {
   // Memoize particle positions and animation values to prevent recalculation on every render
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const particles = useMemo(() => {
-    // Generate random values once on mount - this is intentional for performance
-    const rng = () => Math.random();
+    const rng = createSeededRandom(137); // deterministic seed for SSR/client parity
     return Array.from({ length: 6 }, () => ({
       left: rng() * 100,
       top: rng() * 100,

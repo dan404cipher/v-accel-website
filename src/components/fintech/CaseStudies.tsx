@@ -20,7 +20,7 @@ export function CaseStudies() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-block px-5 py-2 bg-[#E8E9EB] rounded-full mb-6">
-              <span className="text-[#6B7280] text-sm">Case Study</span>
+              <span className="text-[#1A2332] font-[470] text-md">Case Study</span>
             </div>
             <h2 className="mb-6 text-[32px] text-[#2C3E50] max-w-5xl mx-auto">
               Cutting time-to-market by 40% for a digital lending company.

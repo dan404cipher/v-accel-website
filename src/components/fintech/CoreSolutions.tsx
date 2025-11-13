@@ -122,7 +122,7 @@ export function CoreSolutions() {
               className="inline-block px-4 py-2 bg-[#45647B]/10 rounded-full mb-6"
               whileHover={{ scale: 1.05 }}
             >
-              <span className="text-[#45647B]">Core FinTech Solutions</span>
+              <span className="text-[#1A2332] font-[470]">Core FinTech Solutions</span>
             </motion.div>
             <h2 className="mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-[32px]">
               Solutions designed for next-generation financial ecosystems.

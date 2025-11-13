@@ -77,7 +77,7 @@ export function ComplianceSecurity() {
             transition={{ duration: 0.5 }}
             className="inline-block px-4 py-2 bg-[#45647B]/10 rounded-full"
           >
-            <span className="text-[#45647B]">Compliance & Security</span>
+            <span className="text-[#1A2332] font-[470]">Compliance & Security</span>
           </motion.div>
         </div>
 

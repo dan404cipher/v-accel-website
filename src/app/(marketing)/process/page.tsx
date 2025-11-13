@@ -14,7 +14,7 @@ export default function ProcessPage() {
       title="A playbook for high-trust delivery"
       description="From discovery to ongoing stewardship, our process is designed to compress risk while accelerating value. We’ll publish the detailed playbook shortly."
       primaryCta={{ label: "Request an executive overview", href: "/contact" }}
-      secondaryCta={{ label: "See service capabilities", href: "/services" }}
+      secondaryCta={{ label: "See service capabilities", href: "/services/edtech" }}
     />
   );
 }

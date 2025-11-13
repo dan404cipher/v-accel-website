@@ -21,7 +21,7 @@ const features = [
   {
     icon: Award,
     title: "Proven Track Record",
-    description: "Successfully delivered 200+ projects for leading financial institutions globally.",
+    description: "Successfully delivered 20+ projects for leading financial institutions globally.",
   },
 ];
 

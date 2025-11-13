@@ -25,7 +25,7 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-[#45647B]">Key Features</span>
+            <span className="text-[#1A2332] font-[470]">Key Features</span>
           </motion.div>
           <motion.h2 
             className="text-[32px] mb-2"

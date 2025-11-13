@@ -21,22 +21,20 @@ import { Toaster } from "@/components/fintech/ui/sonner";
 
 export function FintechExperience() {
   return (
-    <div className="fintech-theme relative flex min-h-screen flex-col">
-      <main className="flex-1">
-        <Hero />
-        <ProblemSection />
-        <HowWeHelp />
-        <CoreSolutions />
-        <CaseStudies />
-        <ComplianceSecurity />
-        <UseCases />
-        <KeyFeatures />
-        <TechStack />
-        <Testimonials />
-        <Stats />
-        <Resources />
-        <CTA />
-      </main>
+    <div className="fintech-theme relative">
+      <Hero />
+      <ProblemSection />
+      <HowWeHelp />
+      <CoreSolutions />
+      <CaseStudies />
+      <ComplianceSecurity />
+      <UseCases />
+      <KeyFeatures />
+      <TechStack />
+      <Testimonials />
+      <Stats />
+      <Resources />
+      <CTA />
       <ScrollToTop />
       <Toaster position="top-right" />
     </div>

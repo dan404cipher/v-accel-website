@@ -15,7 +15,7 @@ export default function InsightsPage() {
       title="Insights for operators and builders"
       description="We’re documenting how regulated teams are modernizing delivery, integrating AI safely, and scaling product operations. Expect monthly briefings, not marketing fluff."
       primaryCta={{ label: "Subscribe for updates", href: "/contact" }}
-      secondaryCta={{ label: "View service lines", href: "/services" }}
+      secondaryCta={{ label: "View service lines", href: "/services/edtech" }}
     />
   );
 }

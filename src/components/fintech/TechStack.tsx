@@ -88,7 +88,7 @@ export function TechStack() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-block px-4 py-2 bg-[#45647B]/10 rounded-full mb-4">
-              <span className="text-[#45647B]">Technology Stack</span>
+              <span className="text-[#1A2332] font-[470]">Technology Stack</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-4 text-[32px]">
               Built on Trusted, Modern Technology

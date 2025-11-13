@@ -32,7 +32,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span className="text-[#45647B]">Powering Financial Innovation</span>
+              <span className="text-[#1A2332] font-[470]">Powering Financial Innovation</span>
             </motion.div>
             
             <motion.h1 

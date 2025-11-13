@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { HealthcareBackground } from "./HealthcareBackground";
 import { motion } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import heroImage from "@/assets/f1c492f95124a52f897533a675f029f7199c04e3.png";
+import heroImage from "@assets/f1c492f95124a52f897533a675f029f7199c04e3.png";
 
 export function Hero() {
   return (
