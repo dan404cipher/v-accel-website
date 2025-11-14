@@ -54,6 +54,7 @@ export function ImageWithFallback({ src, alt, className, width, height, fill, ..
       onError={handleError}
       width={width}
       height={height}
+      loading={props.loading || "lazy"}
       {...props}
     />
   );

@@ -84,6 +84,7 @@ export function Hero() {
                 src={heroImage.src}
                 alt="Healthcare web application dashboard interface"
                 className="w-full h-auto scale-85 sm:scale-100 md:scale-100 lg:scale-[1.1] xl:scale-[1.2] origin-center"
+                loading="eager"
               />
             </div>
           </motion.div>
