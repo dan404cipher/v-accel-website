@@ -125,7 +125,7 @@ export function ResultSnapshot() {
                 >
                   <Link href="/services/healthcare" className="text-white">
                     
-                    care Projects
+                    See more Healthcare Projects
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-white" />
                   </Link>
                 </Button>
@@ -140,12 +140,16 @@ export function ResultSnapshot() {
               transition={{ duration: 0.6 }}
               className="relative flex items-center justify-center"
             >
-              <ImageWithFallback
-                src={deviceMockups.src}
-                alt="Healthcare Portal - Dashboard Mockups"
-                className="w-full h-auto scale-125"
-                style={{ filter: "drop-shadow(0 0 0 transparent)" }}
-              />
+              <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl">
+                <ImageWithFallback
+                  src={deviceMockups.src}
+                  alt="Healthcare Portal - Dashboard Mockups"
+                  className="w-full h-auto scale-100 sm:scale-90 md:scale-100 lg:scale-110 xl:scale-125 origin-center"
+                  style={{ 
+                    filter: "drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15))",
+                  }}
+                />
+              </div>
             </motion.div>
           </div>
         </div>

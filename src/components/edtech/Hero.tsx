@@ -30,7 +30,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm bg-primary/10 text-primary rounded-full whitespace-nowrap">
                 Transforming Education Through Technology
               </span>
             </motion.div>
@@ -53,20 +53,20 @@ export function Hero() {
               we help educational institutions and platforms deliver smarter, connected and impactful digital experiences.
             </motion.p>
             <motion.div 
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="gap-2 font-semibold">
+                <Button size="default" className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8">
                   Explore Solutions
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="outline" className="gap-2 font-semibold">
-                  <Play className="h-4 w-4" />
+                <Button size="default" variant="outline" className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8">
+                  <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   Talk to Our Team
                 </Button>
               </motion.div>

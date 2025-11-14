@@ -73,17 +73,17 @@ export function Hero() {
           </div>
 
           <motion.div
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-end overflow-hidden"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             {/* Healthcare Dashboard Interface */}
-            <div className="relative w-full max-w-lg">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
               <ImageWithFallback
                 src={heroImage.src}
                 alt="Healthcare web application dashboard interface"
-                className="w-full h-auto scale-[1.15]"
+                className="w-full h-auto scale-85 sm:scale-100 md:scale-100 lg:scale-[1.1] xl:scale-[1.2] origin-center"
               />
             </div>
           </motion.div>
