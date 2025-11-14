@@ -126,7 +126,7 @@ export function BlogPage() {
             transition={{ duration: 0.5 }}
             className="mb-6 flex justify-center"
           >
-            <Badge className="flex items-center gap-3 rounded-full bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 px-6 py-3 text-base font-semibold text-[#1A2332] shadow-[0_10px_30px_rgba(0,184,169,0.18)]">
+            <Badge className="flex items-center gap-3 rounded-full bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 px-6 py-3 text-base font-semibold text-[#1A2332]">
               <BookOpen className="h-5 w-5" />
               Insights &amp; Resources
             </Badge>
@@ -294,7 +294,7 @@ export function BlogPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="group flex h-full cursor-pointer flex-col overflow-hidden border-0 bg-white transition-all duration-300 hover:shadow-2xl">
+                <Card className="group flex h-full cursor-pointer flex-col overflow-hidden border-0 bg-white transition-all duration-300 hover:shadow-2xl p-0">
                   <div className="relative h-[240px] overflow-hidden">
                     <ImageWithFallback
                       src={post.image}

@@ -123,16 +123,16 @@ export function UseCases() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Modern Tab Triggers */}
-          <TabsList className="inline-flex w-auto h-auto p-1.5 bg-background/50 backdrop-blur-sm border rounded-full mb-12 mx-auto grid grid-cols-3 md:grid-cols-6 gap-1">
+          <TabsList className="inline-flex w-full sm:w-auto h-auto p-1.5 sm:p-1.5 bg-background/50 backdrop-blur-sm border rounded-full mb-12 mx-auto grid grid-cols-6 gap-1.5 sm:gap-1">
             {useCases.map((useCase) => {
               const Icon = useCase.icon;
               return (
                 <TabsTrigger
                   key={useCase.id}
                   value={useCase.id}
-                  className="relative flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg hover:bg-primary/5"
+                  className="relative flex items-center justify-center gap-2 px-3 sm:px-4 md:px-6 py-3 sm:py-3 rounded-full transition-all duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg hover:bg-primary/5"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-5 w-5 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">{useCase.label}</span>
                 </TabsTrigger>
               );

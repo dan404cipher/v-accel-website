@@ -1,10 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { motion } from "motion/react";
-
-import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const testimonials = [
   {
@@ -29,6 +27,14 @@ const testimonials = [
     rating: 5,
   },
 ];
+
+const getInitials = (name: string) =>
+  name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .slice(0, 2)
+    .join("");
 
 export function Testimonials() {
   const extendedTestimonials = useMemo(
@@ -93,6 +99,32 @@ export function Testimonials() {
     goToPage(activePage + 1);
   }, [activePage, goToPage]);
 
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      touchStartX.current = event.touches[0]?.clientX ?? null;
+    },
+    [],
+  );
+
+  const handleTouchEnd = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      if (touchStartX.current === null) return;
+      const touchEndX = event.changedTouches[0]?.clientX ?? 0;
+      const deltaX = touchStartX.current - touchEndX;
+      if (Math.abs(deltaX) > 40) {
+        if (deltaX > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+      touchStartX.current = null;
+    },
+    [handleNext, handlePrev],
+  );
+
   useEffect(() => {
     if (pageCount <= 1) return;
 
@@ -112,8 +144,10 @@ export function Testimonials() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5"></div>
         
         {/* Decorative elements */}
-        <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-primary/5"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-primary/5"></div>
+        {/* Top-left: half bubble at corner on mobile, full bubble on larger screens */}
+        <div className="absolute top-0 left-0 w-20 h-20 md:top-10 md:left-10 rounded-br-full md:rounded-full bg-primary/5"></div>
+        {/* Bottom-right: half bubble at corner on mobile, full bubble on larger screens */}
+        <div className="absolute bottom-0 right-0 w-32 h-32 md:bottom-10 md:right-10 rounded-tl-full md:rounded-full bg-primary/5"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -139,6 +173,8 @@ export function Testimonials() {
               className="flex"
               animate={{ x: `-${translatePercentage}%` }}
               transition={{ type: "spring", stiffness: 110, damping: 22 }}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
               {extendedTestimonials.map((testimonial, index) => (
                 <motion.div
@@ -152,17 +188,17 @@ export function Testimonials() {
                   <motion.div
                     className="relative h-full"
                     initial={{ opacity: 1 }}
-                    whileHover={{ y: -18 }}
+                    whileHover={{ y: -8 }}
                     transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     <motion.div
-                      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent opacity-0 blur-xl transition-opacity duration-300"
-                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 via-primary/2 to-transparent opacity-0 blur-lg transition-opacity duration-300"
+                      whileHover={{ opacity: 0.3 }}
                     />
                     <motion.div
                       className="relative bg-white border border-primary/12 rounded-3xl p-8 lg:p-10 shadow-sm transition-all duration-300 h-full flex flex-col"
-                      whileHover={{ boxShadow: "0 24px 55px rgba(115, 76, 186, 0.18)", borderColor: "rgba(98, 0, 234, 0.55)" }}
+                      whileHover={{ boxShadow: "0 12px 30px rgba(115, 76, 186, 0.08)", borderColor: "rgba(98, 0, 234, 0.25)" }}
                       transition={{ duration: 0.25 }}
                       style={{ overflow: "visible", transformStyle: "preserve-3d" }}
                     >
@@ -178,12 +214,8 @@ export function Testimonials() {
                       "{testimonial.content}"
                     </p>
                     <div className="flex items-center gap-3 pt-6 border-t border-primary/10">
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-primary/10 flex-shrink-0">
-                        <ImageWithFallback
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
+                        {getInitials(testimonial.name)}
                       </div>
                       <div>
                         <div className="text-foreground font-medium">{testimonial.name}</div>

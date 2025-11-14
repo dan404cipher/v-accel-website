@@ -2,8 +2,8 @@
 
 import { motion } from "motion/react";
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FigmaIndustryCards } from "./FigmaIndustryCards";
 import { ProblemCard } from "./ProblemCard";
@@ -23,26 +23,17 @@ import {
   ShieldAlert,
   TrendingUp,
   Award,
-  Building2,
   CheckCircle2,
   ArrowRight,
   Sparkles,
   Target,
-  Rocket,
   Shield,
   FileCheck,
-  Linkedin,
-  Facebook,
-  Instagram,
-  Mail,
-  ChevronUp,
   MessageCircle,
   Zap
 } from "lucide-react";
 import { ImageWithFallback } from "./ImageWithFallback";
-import Image from "next/image";
 import leadAccelImage from "@assets/d64e6d6646625791c48e3bc956b41ef6548cda47.png";
-import vaccelLogo from "@assets/2f6818b63f91758834982350ffe7523437d669ba.png";
 
 // Animated Product Text Component - Memoized for better performance
 const AnimatedProductText = memo(() => {
@@ -57,25 +48,25 @@ const AnimatedProductText = memo(() => {
     return () => clearInterval(interval);
   }, [industries.length]);
 
-  const minWidthStyle = useMemo(() => ({ minWidth: '280px' }), []);
+  const minWidthStyle = useMemo(() => ({ minWidth: 'clamp(200px, 20vw, 280px)' }), []);
 
   return (
-    <span className="inline-block whitespace-nowrap">
-      <span className="bg-gradient-to-r from-[#1A2332] via-[#00B8A9] to-[#1A2332] bg-clip-text text-[rgb(44,62,80)]">
+    <span className="inline-block">
+      <span className="text-[#2C3E50]">
         AI-powered{" "}
       </span>
-      <span className="inline-block relative" style={minWidthStyle}>
+      <span className="inline-block relative text-center sm:text-left" style={minWidthStyle}>
         <motion.span
           key={currentIndex}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="absolute left-0 bg-gradient-to-r from-[#00B8A9] to-[#1A2332] bg-clip-text text-transparent"
+          className="absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 bg-gradient-to-r from-[#00B8A9] to-[#1A2332] bg-clip-text text-transparent whitespace-nowrap font-semibold"
         >
           {industries[currentIndex]}
         </motion.span>
-        <span className="invisible">{industries[2]}</span>
+        <span className="invisible whitespace-nowrap">{industries[2]}</span>
       </span>
     </span>
   );
@@ -84,6 +75,17 @@ const AnimatedProductText = memo(() => {
 AnimatedProductText.displayName = 'AnimatedProductText';
 
 export function HomePage() {
+  const pathname = usePathname();
+  
+  // Clean up any theme classes from document element when home page mounts or pathname changes
+  useEffect(() => {
+    const root = document.documentElement;
+    // Remove any theme classes that might have been applied
+    root.classList.remove('fintech-theme', 'edtech-theme', 'healthcare-theme');
+    // Force a reflow to ensure styles are recalculated
+    void root.offsetHeight;
+  }, [pathname]);
+
   // Mouse position for interactive background - optimized with useCallback
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -130,7 +132,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-[#F4F6F8]">
       {/* Section 1: Hero Area - Optimized */}
-      <section className="relative overflow-hidden min-h-screen flex items-center pt-20">
+      <section className="relative px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-24 md:pb-32 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-screen">
         {/* Simple gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]" style={{ zIndex: -20 }} />
 
@@ -139,39 +141,60 @@ export function HomePage() {
           <OptimizedBackground variant="hero" />
         </div>
 
-        <div className="max-w-7xl mx-auto text-center relative py-[0px] px-[16px] px-[8px]" style={{ zIndex: 10 }}>
-          {/* Badge with animation */}
-          <div>
-            <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs md:text-sm py-[7px] px-[14px] font-semibold">
-              <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-              AI-Powered Innovation
-            </Badge>
-          </div>
+        <div className="max-w-7xl mx-auto relative z-10 pt-24 sm:pt-28 md:pt-32 lg:pt-36">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            {/* Badge with animation */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, type: "spring" }}
+            >
+              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs md:text-sm py-[8px] px-[16px] font-semibold">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                AI-Powered Innovation
+              </Badge>
+            </motion.div>
 
-          {/* Main heading with staggered animation */}
-          <div className="mb-4 md:mb-6">
-            <div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-normal">
-                <span className="inline bg-gradient-to-r from-[#1A2332] via-[#00B8A9] to-[#1A2332] bg-clip-text text-[rgb(44,62,80)] whitespace-nowrap">
-                  Accelerate your business with
-                </span>
-                <br />
-                <AnimatedProductText />
-              </h1>
-            </div>
-          </div>
+            {/* Main heading with staggered animation */}
+            <motion.h1 
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal mb-4 sm:mb-6 leading-[1.1]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <span className="inline text-[#2C3E50] block">
+                Accelerate your business with
+              </span>
+              <AnimatedProductText />
+            </motion.h1>
 
-          {/* Description */}
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 md:mb-10 max-w-3xl mx-auto leading-relaxed px-[16px] py-[0px] text-center font-normal">
-             From secure platforms to compliant integrations, we help companies turn complex requirements into scalable, reliable systems — delivered on time, every time.
-          </p>
+            {/* Description */}
+            <motion.p 
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#2C3E50] max-w-3xl mx-auto leading-relaxed font-normal px-4 sm:px-2 mb-6 sm:mb-8 md:mb-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              From secure platforms to compliant integrations, we help companies turn complex requirements into scalable, reliable systems — delivered on time, every time.
+            </motion.p>
 
-          {/* CTA Buttons */}
-          <div className="flex gap-3 md:gap-4 justify-center items-center flex-wrap px-4">
-            <div>
+            {/* CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-stretch sm:items-center px-4 sm:px-2 min-h-[3.5rem] sm:min-h-[3rem]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              style={{ willChange: 'auto' }}
+            >
+            <div className="w-full sm:w-auto flex-shrink-0">
               <Button 
                 size="default"
-                className="rounded-lg px-6 md:px-8 py-6 text-sm md:text-base bg-[#1A2332] hover:bg-[#1A2332]/90 shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)] transition-all group text-white h-12 md:h-14"
+                className="w-full sm:w-auto rounded-lg px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm md:text-base bg-[#1A2332] hover:bg-[#1A2332]/90 shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)] transition-all group text-white h-11 sm:h-12 md:h-14 flex-shrink-0"
                 onClick={() => onNavigate('solutions')}
               >
                 Explore Industry Solutions
@@ -181,23 +204,24 @@ export function HomePage() {
               </Button>
             </div>
             
-            <div>
+            <div className="w-full sm:w-auto flex-shrink-0">
               <Button 
                 size="default"
                 variant="outline" 
-                className="rounded-lg px-6 md:px-8 py-6 text-sm md:text-base border-2 border-black/80 bg-[rgba(255,255,255,0)] text-black/90 hover:border-black hover:bg-gray-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.1)] hover:shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] transition-all h-12 md:h-14 text-[rgb(44,62,80)]"
+                className="w-full sm:w-auto rounded-lg px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm md:text-base border-2 border-black/80 bg-[rgba(255,255,255,0)] text-black/90 hover:border-black hover:bg-gray-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.1)] hover:shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] transition-all h-11 sm:h-12 md:h-14 text-[rgb(44,62,80)] flex-shrink-0"
                 onClick={() => onNavigate('lead-accel')}
               >
                 See Our Product
               </Button>
             </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Section 2: Pain-Point Narrative - Optimized */}
       <section 
-        className="relative py-20 bg-white overflow-hidden"
+        className="relative py-16 md:py-20 bg-white overflow-hidden"
         onMouseMove={handleMouseMove}
       >
         {/* Modern professional background - Optimized with memoized styles */}
@@ -233,7 +257,7 @@ export function HomePage() {
 
           {/* Animated gradient orb - subtle movement */}
           <motion.div 
-            className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20"
+            className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] opacity-20"
             style={{
               background: 'radial-gradient(circle, rgba(255, 107, 107, 0.15) 0%, transparent 70%)',
               filter: 'blur(80px)',
@@ -250,7 +274,7 @@ export function HomePage() {
           />
 
           <motion.div 
-            className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20"
+            className="absolute bottom-0 left-0 w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] opacity-20"
             style={{
               background: 'radial-gradient(circle, rgba(0, 184, 169, 0.12) 0%, transparent 70%)',
               filter: 'blur(70px)',
@@ -344,7 +368,7 @@ export function HomePage() {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -356,12 +380,12 @@ export function HomePage() {
               <ShieldAlert className="w-4 h-4 text-[#00B8A9]" />
               <span className="text-sm text-[rgb(26,35,50)] font-normal">Challenges</span>
             </div>
-            <h2 className="mb-4 text-[#1A2332] text-[32px] text-center whitespace-nowrap font-medium">
-              Your growth shouldn't be slowed by technology bottlenecks.
+            <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] text-center font-medium">
+              {"Your growth shouldn\u2019t be slowed by technology bottlenecks."}
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-10">
             <ProblemCard
               icon={Clock}
               text="Delayed releases because your in-house team is stretched thin?"
@@ -394,8 +418,8 @@ export function HomePage() {
       </section>
 
       {/* Section 3: Industry Focus */}
-      <section id="industries" className="py-20 bg-[#F4F6F8]">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="industries" className="py-16 md:py-20 bg-[#F4F6F8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -407,7 +431,7 @@ export function HomePage() {
               <Target className="w-4 h-4 text-[#00B8A9]" />
               <span className="text-sm text-[rgb(26,35,50)]">Industry Expertise</span>
             </div>
-            <h2 className="mb-4 text-[#1A2332] text-[32px] font-medium">
+            <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
               Purpose-built solutions across three critical industries.
             </h2>
             <p className="text-[#2C3E50] font-normal">
@@ -434,8 +458,8 @@ export function HomePage() {
       </section>
 
       {/* Section 4: LeadAccel Product */}
-      <section id="leadaccel" className="py-20 bg-gradient-to-br from-[#E8F5F4] via-[#F4F6F8] to-[#E8F5F4]">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="leadaccel" className="py-16 md:py-20 bg-gradient-to-br from-[#E8F5F4] via-[#F4F6F8] to-[#E8F5F4]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -444,13 +468,13 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20">
-              <FileCheck className="w-4 h-4 text-[#00B8A9]" />
-              <span className="text-sm text-[rgb(26,35,50)]">Built by V-Accel</span>
+            <div className="inline-flex items-center gap-3 px-5 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20">
+              <FileCheck className="w-5 h-5 text-[#00B8A9]" />
+              <span className="text-base text-[rgb(26,35,50)]">Built by V-Accel</span>
             </div>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-20 items-center">{/* Left: Product Screenshot */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">{/* Left: Product Screenshot */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -458,11 +482,13 @@ export function HomePage() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <ImageWithFallback
-                src={leadAccelImage}
-                alt="Project Accel CRM Interface"
-                className="w-full h-auto scale-125"
-              />
+              <div className="max-w-md mx-auto sm:max-w-lg">
+                <ImageWithFallback
+                  src={leadAccelImage}
+                  alt="Project Accel CRM Interface"
+                  className="w-full h-auto rounded-xl md:scale-110 lg:scale-145"
+                />
+              </div>
             </motion.div>
 
             {/* Right: Product Copy */}
@@ -471,18 +497,20 @@ export function HomePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="space-y-6 lg:pl-20"
+              className="space-y-4 sm:space-y-6 lg:pl-0 xl:pl-20"
             >
               {/* Section Title */}
-              <h2 className="text-[#1A2332] text-[32px] font-medium">
+              <h2 className="text-[#1A2332] text-2xl sm:text-[32px] font-medium">
                 Our Product
               </h2>
 
               <div className="space-y-4">
-                <h2 className="text-[#1A2332] text-justify leading-relaxed font-medium">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-[#1A2332]/10 border border-[#1A2332]/20 text-[#1A2332] rounded-md mr-3 font-semibold">Project Accel</span> A project management platform built for how<br />tech and service teams actually work.
+                <h2 className="text-[#1A2332] leading-relaxed font-normal text-base sm:text-lg text-left">
+                  <span className="inline-flex items-center gap-2 px-2 sm:px-3 py-1 bg-[#1A2332]/10 border border-[#1A2332]/20 text-[#1A2332] rounded-md mr-2 sm:mr-3 text-sm sm:text-base font-semibold">Project Accel</span> 
+                  <span className="inline ">A project management platform built for how </span>
+                  <span className="inline">tech and service teams actually work.</span>
                 </h2>
-                <p className="text-[#2C3E50] text-lg text-justify text-[14px] font-normal">
+                <p className="text-[#2C3E50] text-sm sm:text-base md:text-lg leading-relaxed font-normal text-left">
                   Developed from our experience managing complex client projects, Project Accel helps teams plan, track, and deliver work efficiently — keeping communication clear, progress visible, and deadlines under control without the chaos of spreadsheets and scattered tools.
                 </p>
               </div>
@@ -523,8 +551,8 @@ export function HomePage() {
       </section>
 
       {/* Section 5: Proof & Trust */}
-      <section id="about" className="py-20 bg-[#F4F6F8]">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="about" className="py-16 md:py-20 bg-[#F4F6F8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -536,7 +564,7 @@ export function HomePage() {
               <Shield className="w-4 h-4 text-[#00B8A9]" />
               <span className="text-sm text-[rgb(26,35,50)]">Proof & Trust</span>
             </div>
-            <h2 className="text-[#1A2332] text-[32px] mb-6 font-medium">
+            <h2 className="text-[#1A2332] text-2xl sm:text-[32px] mb-6 font-medium">
               Trusted by companies that build for scale and compliance.
             </h2>
             <p className="text-[#2C3E50] max-w-3xl mx-auto font-normal">
@@ -551,64 +579,64 @@ export function HomePage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="max-w-5xl mx-auto mb-12"
           >
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               <motion.div 
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
-                    <Zap className="w-8 h-8 text-[#00B8A9]" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
+                    <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#00B8A9]" />
                   </div>
-                  <div className="mb-2 text-[#1A2332] text-3xl font-semibold">25+</div>
-                  <p className="text-[#2C3E50] font-normal">Successful projects delivered</p>
+                  <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">25+</div>
+                  <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Successful projects delivered</p>
                 </div>
               </motion.div>
               
               <motion.div 
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
-                    <Target className="w-8 h-8 text-[#FF6B6B]" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
+                    <Target className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#FF6B6B]" />
                   </div>
-                  <div className="mb-2 text-[#1A2332] text-3xl font-semibold">3</div>
-                  <p className="text-[#2C3E50] font-normal">Regulated industries served</p>
+                  <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">3</div>
+                  <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Regulated industries served</p>
                 </div>
               </motion.div>
               
               <motion.div 
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
-                    <TrendingUp className="w-8 h-8 text-[#00B8A9]" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
+                    <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#00B8A9]" />
                   </div>
-                  <div className="mb-2 text-[#1A2332] text-3xl font-semibold">5+</div>
-                  <p className="text-[#2C3E50] font-normal">Years of excellence</p>
+                  <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">5+</div>
+                  <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Years of excellence</p>
                 </div>
               </motion.div>
               
               <motion.div 
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
-                    <Award className="w-8 h-8 text-[#FF6B6B]" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
+                    <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#FF6B6B]" />
                   </div>
-                  <div className="mb-2 text-[#1A2332] text-3xl font-semibold">100%</div>
-                  <p className="text-[#2C3E50] font-normal">Client satisfaction rate</p>
+                  <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">100%</div>
+                  <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Client satisfaction rate</p>
                 </div>
               </motion.div>
             </div>
@@ -623,8 +651,8 @@ export function HomePage() {
       <ServicesSection />
 
       {/* Section 7: Testimonials */}
-      <section className="py-20 bg-[#F4F6F8]">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-16 md:py-20 bg-[#F4F6F8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -636,11 +664,11 @@ export function HomePage() {
               <MessageCircle className="w-4 h-4 text-[#00B8A9]" />
               <span className="text-sm text-[rgb(26,35,50)]">Client Success Stories</span>
             </div>
-            <h2 className="mb-4 text-[#1A2332] text-[32px] font-medium">
-              Hear from companies we've helped scale.
+            <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
+              {"Hear from companies we\u2019ve helped scale."}
             </h2>
             <p className="text-[#2C3E50] font-normal">
-              Real feedback from partners who've trusted us with their most critical software projects.
+              {"Real feedback from partners who\u2019ve trusted us with their most critical software projects."}
             </p>
           </motion.div>
 
@@ -653,7 +681,7 @@ export function HomePage() {
                 company: "HealthStream Solutions",
               },
               {
-                quote: "The team's deep understanding of financial systems made our lending platform migration seamless. Their SOC2 experience gave our stakeholders confidence from day one.",
+                quote: "The team\u2019s deep understanding of financial systems made our lending platform migration seamless. Their SOC2 experience gave our stakeholders confidence from day one.",
                 author: "James Chen",
                 role: "VP of Engineering",
                 company: "CapitalFlow Financial",
@@ -677,7 +705,7 @@ export function HomePage() {
                 company: "PayFlow Systems",
               },
               {
-                quote: "The team at V-Accel didn't just build our student management system—they understood our educational mission. Their LeadAccel CRM integration saved us countless hours of manual work.",
+                quote: "The team at V-Accel didn\u2019t just build our student management system\u2014they understood our educational mission. Their LeadAccel CRM integration saved us countless hours of manual work.",
                 author: "Michael Torres",
                 role: "Head of IT",
                 company: "Scholar Academy",
@@ -688,19 +716,19 @@ export function HomePage() {
       </section>
 
       {/* Section 8: FAQ */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-16 md:py-20 relative overflow-hidden">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/20 via-[#1A2332]/10 to-[#00B8A9]/30" />
         <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 via-purple-100/20 to-pink-100/30" />
         
-        <div className="max-w-5xl mx-auto px-6 relative">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
           {/* Glass Morphism Container */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-[32px] p-8 md:p-12 lg:p-16"
+            className="relative overflow-hidden rounded-[32px] p-6 md:p-12 lg:p-16"
           >
             {/* Glass Background Layers */}
             <div className="absolute inset-0 bg-white/40 backdrop-blur-3xl" />
@@ -726,7 +754,7 @@ export function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-[32px] text-[#1A2332] mb-2 font-medium"
+                  className="text-2xl sm:text-[32px] text-[#1A2332] mb-2 font-medium"
                 >
                   FAQs - Our Answers
                 </motion.h2>
@@ -782,7 +810,7 @@ export function HomePage() {
                       <span className="pr-8">What technologies do you specialize in?</span>
                     </AccordionTrigger>
                     <AccordionContent className="text-[#2C3E50] px-6 pb-5 pt-1">
-                      We're full-stack experts with deep experience in React, Node.js, Python, AWS, Azure, and modern DevOps practices. We choose technologies based on your specific needs and long-term goals, not trends. Check out our Technology Stack section above for more details.
+                      {"We\u2019re full-stack experts with deep experience in React, Node.js, Python, AWS, Azure, and modern DevOps practices. We choose technologies based on your specific needs and long-term goals, not trends. Check out our Technology Stack section above for more details."}
                     </AccordionContent>
                   </AccordionItem>
 

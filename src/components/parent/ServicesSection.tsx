@@ -33,8 +33,11 @@ export function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <>
+      {/* Service section temporarily disabled */}
+      {false && (
+    <section id="services" className="py-16 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,7 +49,7 @@ export function ServicesSection() {
             <Building2 className="w-4 h-4 text-[#00B8A9]" />
             <span className="text-sm text-[rgb(26,35,50)]">Our Services</span>
           </div>
-          <h2 className="mb-4 text-[#1A2332] text-[32px] font-medium">
+          <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
             Comprehensive software solutions for your business needs.
           </h2>
           <p className="text-[#2C3E50] font-normal">
@@ -54,7 +57,7 @@ export function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {serviceCards.map(({ service, icon: Icon, href, delay }) => {
             if (!service) return null;
             
@@ -84,6 +87,8 @@ export function ServicesSection() {
         </div>
       </div>
     </section>
+      )}
+    </>
   );
 }
 

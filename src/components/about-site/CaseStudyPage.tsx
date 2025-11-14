@@ -183,7 +183,7 @@ export function CaseStudyPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8" style={{ zIndex: 10 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Badge className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 px-6 py-3 text-base font-semibold text-[#1A2332] shadow-[0_10px_30px_rgba(0,184,169,0.2)]">
+            <Badge className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 px-6 py-3 text-base font-semibold text-[#1A2332]">
               Client Success Stories
             </Badge>
           </motion.div>
@@ -238,7 +238,7 @@ export function CaseStudyPage() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <div className="inline-flex items-center gap-3 rounded-full border border-[#00B8A9]/30 bg-gradient-to-r from-[#00B8A9]/10 to-[#00B8A9]/5 px-7 py-3.5 shadow-[0_12px_34px_rgba(0,184,169,0.24)]">
+              <div className="inline-flex items-center gap-3 rounded-full border border-[#00B8A9]/30 bg-gradient-to-r from-[#00B8A9]/10 to-[#00B8A9]/5 px-7 py-3.5">
                 <Award className="h-[22px] w-[22px] text-[#00B8A9]" />
                 <span className="text-base font-semibold text-[rgb(26,35,50)]">Featured Case Study</span>
               </div>
@@ -349,7 +349,7 @@ export function CaseStudyPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="group flex h-full cursor-pointer flex-col overflow-hidden border-0 bg-white transition-all duration-300 hover:shadow-2xl">
+                <Card className="group flex h-full cursor-pointer flex-col overflow-hidden border-0 bg-white transition-all duration-300 hover:shadow-2xl p-0">
                   <div className="relative h-[240px] overflow-hidden">
                     <ImageWithFallback
                       src={study.image}

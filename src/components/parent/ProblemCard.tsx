@@ -39,7 +39,7 @@ export const ProblemCard = memo(function ProblemCard({ text, icon: Icon, index }
           </div>
           
           {/* Text content with improved typography */}
-          <p className="text-[#2C3E50] leading-relaxed max-w-xs">
+          <p className="text-[#2C3E50] text-sm sm:text-base leading-relaxed">
             {text}
           </p>
         </div>

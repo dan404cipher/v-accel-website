@@ -47,7 +47,9 @@ export const TestimonialCard = memo(function TestimonialCard({ quote, author, ro
         
         {/* Quote */}
         <p className="text-[#2C3E50] mb-6 flex-grow leading-relaxed text-sm">
-          "{formattedQuote}"
+          {"\u201C"}
+          {formattedQuote}
+          {"\u201D"}
         </p>
         
         {/* Author Info */}
@@ -57,7 +59,10 @@ export const TestimonialCard = memo(function TestimonialCard({ quote, author, ro
           </div>
           <div>
             <div className="text-[#1A2332] text-sm">{author}</div>
-            <div className="text-xs text-[#2C3E50]/70">{role}</div>
+            <div className="text-xs text-[#2C3E50]/70">
+              {role}
+              {company ? `, ${company}` : ""}
+            </div>
           </div>
         </div>
       </Card>

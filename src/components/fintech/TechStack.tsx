@@ -151,13 +151,13 @@ export function TechStack() {
                             onMouseLeave={() => setHoveredTech(null)}
                             className="relative group h-full pb-1"
                           >
-                            <div className="relative bg-white border-2 border-primary/10 rounded-2xl p-8 shadow-sm hover:border-primary/40 transition-all duration-300 h-full overflow-hidden">
+                            <div className="relative bg-white border-2 border-primary/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 h-full overflow-hidden">
                               {/* Glow effect on hover */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="absolute inset-[2px] bg-gradient-to-br from-primary/10 via-transparent to-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                               
                               {/* Shine effect */}
                               <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-2xl"
+                                className="absolute inset-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-xl"
                                 initial={{ x: "-100%" }}
                                 whileHover={{ x: "100%" }}
                                 transition={{ duration: 0.6 }}

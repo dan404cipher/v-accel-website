@@ -12,6 +12,8 @@ export function TrustedPartners() {
   return (
     <section className="relative px-6 py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
+        {false && (
+          <>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -108,6 +110,8 @@ export function TrustedPartners() {
             </motion.div>
           </div>
         </motion.div>
+          </>
+        )}
 
         {/* CTA Buttons */}
         <motion.div

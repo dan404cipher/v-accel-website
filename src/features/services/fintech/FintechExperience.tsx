@@ -1,7 +1,6 @@
 "use client";
 
 import "@/styles/fintech/theme.css";
-import "@/styles/fintech/fintech.css";
 
 import { Hero } from "@/components/fintech/Hero";
 import { ProblemSection } from "@/components/fintech/ProblemSection";

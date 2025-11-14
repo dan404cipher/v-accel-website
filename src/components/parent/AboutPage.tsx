@@ -65,7 +65,7 @@ export function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Interactive Elements */}
-      <section ref={heroRef} className="relative px-6 pt-32 pb-32 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-screen">
+      <section ref={heroRef} className="relative px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-24 md:pb-32 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-screen">
         {/* Simple gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]" style={{ zIndex: -20 }} />
 
@@ -86,14 +86,14 @@ export function AboutPage() {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs md:text-sm py-[8px] px-[16px] font-semibold">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs sm:text-sm md:text-base py-[10px] px-[20px] font-semibold">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" />
                 About V-Accel AI Dynamics
               </Badge>
             </motion.div>
             
             <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-semibold mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-medium leading-[1.1] sm:leading-[1.1] md:leading-[1.05] mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -106,7 +106,7 @@ export function AboutPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-base md:text-lg text-[#2C3E50] max-w-3xl mx-auto leading-relaxed font-normal"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#2C3E50] max-w-4xl mx-auto leading-normal font-normal px-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -115,7 +115,7 @@ export function AboutPage() {
             </motion.p>
             
             <motion.p 
-              className="text-lg md:text-xl text-[#1A2332] mt-8 italic max-w-3xl mx-auto font-medium"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#1A2332] mt-6 sm:mt-8 italic max-w-3xl mx-auto font-normal px-2 leading-snug"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -135,7 +135,7 @@ export function AboutPage() {
                 transition={{ duration: 1.5, repeat: Infinity }}
                 className="inline-flex flex-col items-center gap-2"
               >
-                <span className="text-sm text-[#2C3E50]">Discover Our Story</span>
+                <span className="text-base sm:text-lg text-[#2C3E50]">Discover Our Story</span>
                 <div className="w-6 h-10 border-2 border-[#00B8A9] rounded-full flex items-start justify-center p-2">
                   <motion.div
                     animate={{ y: [0, 12, 0] }}
@@ -178,7 +178,7 @@ export function AboutPage() {
               transition={{ duration: 0.6 }}
               className="space-y-6"
             >
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
                 <span className="text-[#1A2332]">From problem solvers to </span>
                 <span className="bg-gradient-to-r from-[#00B8A9] to-[#1A2332] bg-clip-text text-transparent">
                   trusted engineering partners.
@@ -267,12 +267,12 @@ export function AboutPage() {
                     
                     {/* Icon circle */}
                     <motion.div
-                      className="absolute left-0 top-8 -translate-x-[21px] w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
+                      className="absolute left-0 top-8 -translate-x-[21px] w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg flex-shrink-0"
                       style={{ backgroundColor: item.color }}
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 400 }}
                     >
-                      <item.icon className="w-5 h-5 text-white" />
+                      <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                     </motion.div>
 
                     <div className="pt-1">
@@ -314,7 +314,7 @@ export function AboutPage() {
             >
               {/* Stats Badge */}
               <div className="mb-6">
-                <h3 className="text-4xl text-[#1A2332] mb-2 font-bold">100+</h3>
+                <h3 className="text-4xl text-[#1A2332] mb-2 font-bold">20+</h3>
                 <p className="text-[#2C3E50] font-normal">Projects Delivered</p>
               </div>
 
@@ -355,21 +355,23 @@ export function AboutPage() {
               </div>
 
               {/* Achievement Badge */}
-              <div className="flex items-center gap-3 text-sm text-[#2C3E50] font-normal">
-                <Star className="w-4 h-4 text-[#00B8A9]" />
-                <span>Delivering excellence across EdTech, FinTech & Healthcare</span>
-                <Badge className="bg-[#00B8A9]/10 text-[rgb(26,35,50)] border-[#00B8A9]/20 text-[14px] py-[8px] px-[16px] m-[0px] font-semibold">#innovation</Badge>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm text-[#2C3E50] font-medium">
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#00B8A9] flex-shrink-0" />
+                  <span>Delivering excellence across EdTech, FinTech & Healthcare</span>
+                </div>
+                <Badge className="bg-[#00B8A9]/10 text-[rgb(26,35,50)] border-[#00B8A9]/20 text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 font-semibold">#innovation</Badge>
               </div>
 
               {/* Excellence Badge */}
-              <div className="flex items-center gap-4 mt-6">
-                <div className="w-16 h-16 rounded-full bg-[#1A2332] flex items-center justify-center text-white">
+              <div className="flex items-center gap-3 sm:gap-4 mt-6">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#1A2332] flex items-center justify-center text-white flex-shrink-0">
                   <div className="text-center">
-                    <div className="text-xl font-bold">3+</div>
+                    <div className="text-lg sm:text-xl font-bold">3+</div>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-[#2C3E50] font-normal">Years of Trusted by organizations worldwide</p>
+                  <p className="text-xs sm:text-sm text-[#2C3E50] font-medium">Years of Trusted by organizations worldwide</p>
                 </div>
               </div>
             </motion.div>
@@ -388,7 +390,7 @@ export function AboutPage() {
                 {/* Mission */}
                 <div className="mb-8">
                   <h3 className="text-lg text-[#1A2332] mb-3 font-semibold">Mission</h3>
-                  <p className="text-[#2C3E50] leading-relaxed font-normal">
+                  <p className="text-[#2C3E50] leading-relaxed font-medium">
                     To empower businesses in <strong className="text-[#1A2332]">EdTech, FinTech, and Healthcare</strong> with reliable, secure, and scalable software — built through <strong className="text-[#1A2332]">collaboration, technical depth</strong>, and a deep understanding of real-world challenges.
                   </p>
                 </div>
@@ -396,43 +398,47 @@ export function AboutPage() {
                 {/* Vision */}
                 <div className="mb-8">
                   <h3 className="text-lg text-[#1A2332] mb-3 font-semibold">Vision</h3>
-                  <p className="text-[#2C3E50] leading-relaxed font-normal">
+                  <p className="text-[#2C3E50] leading-relaxed font-medium">
                     To become a <strong className="text-[#1A2332]">global technology partner</strong> recognized for engineering clarity, compliance, and innovation — where every solution we build creates <strong className="text-[#1A2332]">measurable impact and long-term trust</strong>.
                   </p>
                 </div>
 
                 {/* Goal Badge */}
-                <Badge className="bg-[#00B8A9]/10 text-[#1A2332] border-[#00B8A9]/20 px-4 py-2 mb-6 font-semibold">
+                <Badge className="bg-[#00B8A9]/10 text-[#1A2332] text-sm border-[#00B8A9]/20 px-6 py-3 mb-6 font-semibold">
                   Our goal: Trusted partner across 3 regulated industries
                 </Badge>
 
                 {/* Focus Areas */}
                 <div className="flex flex-wrap gap-2 mb-8">
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
-                    EdTech Solutions
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
+                    EdTech Services
                   </Badge>
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
                     FinTech Development
                   </Badge>
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
                     Healthcare Systems
                   </Badge>
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
                     Compliance First
                   </Badge>
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
                     Innovation
                   </Badge>
-                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-normal">
+                  <Badge variant="outline" className="bg-white border-[#1A2332]/20 text-[#2C3E50] font-medium">
                     Technical Excellence
                   </Badge>
                 </div>
+
+                <p className="text-[#1A2332] font-semibold leading-relaxed mb-10">
+                  Our commitment is simple: deliver technology that solves real problems, not just showcases capability.
+                </p>
 
                 {/* CTAs */}
                 <div className="flex flex-wrap gap-4">
                   <Button asChild className="bg-[#1A2332] hover:bg-[#1A2332]/90 text-white">
                     <Link href="/services/edtech">
-                      Explore Our Solutions
+                      Explore Our Services
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
@@ -460,8 +466,8 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <Badge className="mb-[24px] bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-[#1A2332] shadow-lg text-[14px] py-[8px] px-[16px] mt-[0px] mr-[0px] ml-[0px] font-semibold">
-              <Users className="w-4 h-4 mr-2 text-[#00B8A9]" />
+            <Badge className="mb-[24px] bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-[#1A2332] shadow-lg text-base sm:text-lg py-[8px] px-[16px] mt-[0px] mr-[0px] ml-[0px] font-semibold">
+              <Users className="w-6 h-6 mr-2 text-[#00B8A9]" />
               Leadership
             </Badge>
             <h2 className="text-4xl md:text-6xl font-semibold mb-4">
@@ -553,7 +559,7 @@ export function AboutPage() {
                 </motion.p>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 pt-6">
+              <div className="flex flex-row gap-3 sm:gap-4 pt-6">
                 {[
                   { icon: Briefcase, label: "Experience", value: "10+ Years", gradient: "from-[#1A2332] to-[#1A2332]/80" },
                   { icon: Building2, label: "Companies", value: "2 Founded", gradient: "from-[#00B8A9] to-[#FF6B6B]" }
@@ -565,16 +571,16 @@ export function AboutPage() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 + (index * 0.1) }}
                     whileHover={{ scale: 1.05, y: -5 }}
-                    className="group"
+                    className="group flex-1"
                   >
-                    <Card className="p-6 bg-[#F4F6F8] border-2 border-[#1A2332]/20 hover:border-[#1A2332]/40 transition-all shadow-lg hover:shadow-xl">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className={`w-10 h-10 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
-                          <item.icon className="w-5 h-5 text-white" />
+                    <Card className="p-3 sm:p-4 bg-[#F4F6F8] border-2 border-[#1A2332]/20 hover:border-[#1A2332]/40 transition-all shadow-lg hover:shadow-xl">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-gradient-to-br ${item.gradient} rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
+                          <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                         </div>
-                        <span className="text-sm text-[#1A2332] font-semibold">{item.label}</span>
+                        <span className="text-xs sm:text-sm text-[#1A2332] font-semibold">{item.label}</span>
                       </div>
-                      <p className="text-3xl font-bold text-[#1A2332]">{item.value}</p>
+                      <p className="text-xl sm:text-2xl font-bold text-[#1A2332]">{item.value}</p>
                     </Card>
                   </motion.div>
                 ))}

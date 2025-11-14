@@ -88,7 +88,7 @@ export function HowItWorks() {
 
         <div className="relative">
           {/* Animated connecting line - positioned to go through the center of the numbered badges */}
-          <div className="hidden lg:block absolute top-[30px] left-0 right-0 h-0.5 pointer-events-none z-0">
+          <div className="hidden lg:block absolute top-8 left-0 right-0 h-0.5 pointer-events-none z-0">
             {/* Background line */}
             <div className="absolute inset-0 left-[12.5%] right-[12.5%] bg-primary/10"></div>
             
@@ -137,10 +137,10 @@ export function HowItWorks() {
                   className="relative cursor-pointer"
                 >
                   <div className="text-center">
-                    {/* Numbered badge positioned to sit on the line */}
-                    <div className="relative h-16 mb-4 flex items-center justify-center">
+                    {/* Numbered badge positioned to sit on the line - desktop only */}
+                    <div className="hidden md:block relative h-16 mb-4 flex items-center justify-center mx-auto">
                       <motion.div 
-                        className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center relative z-20"
+                        className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center relative z-20 mx-auto"
                         style={{ fontSize: '14px' }}
                         animate={{
                           scale: isStepActive ? [1, 1.15, 1] : 1,
@@ -158,18 +158,35 @@ export function HowItWorks() {
                       </motion.div>
                     </div>
 
-                    {/* Icon card */}
+                    {/* Icon card - with number badge overlay on mobile only */}
                     <div className="relative inline-block mb-6">
                       <motion.div 
-                        className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto transition-all duration-500"
+                        className="w-16 h-16 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mx-auto transition-all duration-500 relative bg-primary/10 md:bg-primary/15"
                         animate={{
-                          backgroundColor: isStepActive ? 'rgba(88, 39, 96, 0.15)' : 'rgba(88, 39, 96, 0.1)',
                           scale: isStepActive ? 1.05 : 1,
                         }}
                         whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
                         <step.icon className="h-8 w-8 text-primary" strokeWidth={1.5} />
+                      </motion.div>
+                      
+                      {/* Number badge as overlay - top-right corner on mobile only, hidden on desktop */}
+                      <motion.div 
+                        className="absolute -top-1 -right-1 md:hidden w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-semibold shadow-lg z-20"
+                        animate={{
+                          scale: isStepActive ? [1, 1.15, 1] : 1,
+                          boxShadow: isStepActive 
+                            ? '0 0 15px rgba(88, 39, 96, 0.6)' 
+                            : '0 2px 4px rgba(0, 0, 0, 0.15)',
+                        }}
+                        transition={{ 
+                          scale: { duration: 2, repeat: isStepActive ? Infinity : 0, ease: "easeInOut" },
+                          boxShadow: { duration: 0.3 }
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        {step.number}
                       </motion.div>
                     </div>
                     

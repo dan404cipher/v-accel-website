@@ -136,12 +136,7 @@ export function CTA() {
               </DialogContent>
             </Dialog>
             
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" variant="outline" className="gap-2">
-                <Phone className="h-4 w-4" />
-                Schedule a Call
-              </Button>
-            </motion.div>
+         
           </motion.div>
           
           {/* Contact Info */}
@@ -152,13 +147,13 @@ export function CTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-lg md:text-xl">
               <Mail className="h-4 w-4" />
-              <span>contact@v-accel.ai</span>
+            <span className="font-extrabold">info@v-accel.ai</span>
             </div>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-lg md:text-xl">
               <Phone className="h-4 w-4" />
-              <span>+1 (555) 123-4567</span>
+            <span className="font-extrabold">+91-86102 62853</span>
             </div>
           </motion.div>
         </motion.div>

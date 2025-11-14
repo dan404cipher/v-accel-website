@@ -120,11 +120,13 @@ export function ResultSnapshot() {
               >
                 <Button
                   asChild
-                  className="bg-[#4CAF50] hover:bg-[#4CAF50]/90 text-white group hover:scale-105 transition-transform"
+                  size="lg"
+                  className="gap-2 group hover:scale-105 transition-transform !text-white [&_svg]:text-white"
                 >
-                  <Link href="/services/healthcare">
-                    See More Healthcare Projects
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <Link href="/services/healthcare" className="text-white">
+                    
+                    care Projects
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-white" />
                   </Link>
                 </Button>
               </motion.div>

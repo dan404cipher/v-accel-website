@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { useState, useEffect, memo, useCallback } from "react";
 import { TestimonialCard } from "./TestimonialCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";

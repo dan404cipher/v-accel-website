@@ -262,6 +262,31 @@ html {
   }
 }
 
+/* Ensure navigation is isolated from theme changes - override all CSS variables */
+nav {
+  --background: #ffffff !important;
+  --foreground: #2C3E50 !important;
+  --primary: #1A2332 !important;
+  --radius: 0.625rem !important;
+  --border: rgba(0, 0, 0, 0.1) !important;
+  --card: #ffffff !important;
+  --card-foreground: #2C3E50 !important;
+  --popover: #ffffff !important;
+  --popover-foreground: #2C3E50 !important;
+  --secondary: #ececf0 !important;
+  --secondary-foreground: #1A2332 !important;
+  --muted: #ececf0 !important;
+  --muted-foreground: #6B7280 !important;
+  --accent: #e9ebef !important;
+  --accent-foreground: #1A2332 !important;
+  --destructive: #d4183d !important;
+  --destructive-foreground: #ffffff !important;
+  --input: transparent !important;
+  --input-background: #f3f3f5 !important;
+  --switch-background: #cbced4 !important;
+  --ring: #1A2332 !important;
+}
+
 @media (min-width: 768px) {
   .parent-footer-grid {
     grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr));

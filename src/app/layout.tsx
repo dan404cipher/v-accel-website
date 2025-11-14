@@ -48,7 +48,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#F4F6F8] antialiased`}>
         <div className="flex min-h-screen flex-col">
           <ParentNavigation />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pt-6 md:pt-0">{children}</main>
           <ParentFooter />
         </div>
       </body>

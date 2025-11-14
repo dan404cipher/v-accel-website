@@ -57,196 +57,24 @@ const technologies = [
 ];
 
 export function TechStack() {
-  const [activeTab, setActiveTab] = useState("frontend");
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("cloud");
 
-  // Auto-rotate tabs
+  // Auto-switch tabs after delay
   useEffect(() => {
     const tabKeys = technologies.map(tech => tech.key);
-    let currentIndex = tabKeys.indexOf(activeTab);
+    const currentIndex = tabKeys.indexOf(activeTab);
     
-    const interval = setInterval(() => {
-      currentIndex = (currentIndex + 1) % tabKeys.length;
-      setActiveTab(tabKeys[currentIndex]);
+    const timer = setTimeout(() => {
+      const nextIndex = (currentIndex + 1) % tabKeys.length;
+      setActiveTab(tabKeys[nextIndex]);
     }, 5000); // Switch every 5 seconds
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(timer);
   }, [activeTab]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
   return (
-    <section 
-      id="tech-stack" 
-      className="relative w-full min-w-full py-20 lg:py-32 bg-[#F4F6F8] overflow-hidden"
-      onMouseMove={handleMouseMove}
-    >
-      {/* Modern professional background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Interactive grid with fade effect */}
-        <motion.div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #1A2332 1px, transparent 1px),
-              linear-gradient(to bottom, #1A2332 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            maskImage: `radial-gradient(circle 400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.04) 50%, rgba(0,0,0,0.02) 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.04) 50%, rgba(0,0,0,0.02) 100%)`,
-          }}
-          animate={{
-            opacity: [0.8, 1, 0.8],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Secondary grid layer with offset animation */}
-        <motion.div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #00B8A9 1px, transparent 1px),
-              linear-gradient(to bottom, #00B8A9 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            backgroundPosition: '30px 30px',
-            maskImage: `radial-gradient(circle 300px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 60%, rgba(0,0,0,0) 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 300px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 60%, rgba(0,0,0,0) 100%)`,
-          }}
-          animate={{
-            opacity: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5,
-          }}
-        />
-
-        {/* Animated gradient orb - subtle movement */}
-        <motion.div 
-          className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(0, 184, 169, 0.15) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-          }}
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.15, 0.25, 0.15],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div 
-          className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(26, 35, 50, 0.12) 0%, transparent 70%)',
-            filter: 'blur(70px)',
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.12, 0.2, 0.12],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        {/* Floating minimal dots */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-[#00B8A9]"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: i * 0.8,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-
-        {/* Modern line accents with subtle animation */}
-        <motion.div
-          className="absolute top-1/3 left-0 right-0 h-px opacity-10"
-          style={{
-            background: 'linear-gradient(90deg, transparent, #00B8A9 50%, transparent)',
-          }}
-          animate={{
-            opacity: [0.05, 0.15, 0.05],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Geometric modern shapes - very subtle */}
-        <motion.div
-          className="absolute top-1/4 right-1/4 w-40 h-40 opacity-[0.04]"
-          style={{
-            background: 'linear-gradient(135deg, #00B8A9, transparent)',
-            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-          }}
-          animate={{
-            rotate: [0, 90, 0],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/3 left-1/4 w-32 h-32 opacity-[0.03]"
-          style={{
-            background: 'linear-gradient(135deg, #1A2332, transparent)',
-            borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-          }}
-          animate={{
-            rotate: [0, -360, 0],
-            borderRadius: [
-              '30% 70% 70% 30% / 30% 30% 70% 70%',
-              '70% 30% 30% 70% / 70% 70% 30% 30%',
-              '30% 70% 70% 30% / 30% 30% 70% 70%'
-            ],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </div>
+    <section id="tech-stack" className="relative py-20 lg:py-32 bg-[#F4F6F8] overflow-hidden sm:overflow-visible">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
@@ -272,7 +100,7 @@ export function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-6xl mx-auto"
+          className="max-w-6xl mx-auto overflow-visible"
         >
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto gap-2 bg-transparent mb-12">
@@ -280,7 +108,7 @@ export function TechStack() {
                 <TabsTrigger
                   key={tech.key}
                   value={tech.key}
-                  className="data-[state=active]:bg-[#1A2332] data-[state=active]:text-white bg-white border-2 border-[#1A2332]/10 hover:border-[#00B8A9]/50 transition-all duration-300 px-6 py-4 rounded-xl"
+                  className="data-[state=active]:bg-[#1A2332] data-[state=active]:text-white bg-white border-2 border-[#1A2332]/10 hover:border-[#00B8A9]/30 transition-all duration-300 px-6 py-4 rounded-xl"
                 >
                   <motion.span
                     initial={{ opacity: 0, y: 10 }}
@@ -299,6 +127,7 @@ export function TechStack() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
+                  className="relative overflow-visible"
                 >
                   <Carousel
                     opts={{
@@ -307,55 +136,72 @@ export function TechStack() {
                     }}
                     className="w-full"
                   >
-                    <CarouselContent className="-ml-4">
+                    <CarouselContent className="-ml-2 md:-ml-4">
                       {tech.items.map((item, idx) => (
-                        <CarouselItem key={idx} className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4">
+                        <CarouselItem key={idx} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4">
                           <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: idx * 0.1 }}
-                            whileHover={{ y: -18 }}
-                            className="relative group h-full pt-3 pb-4"
+                            whileHover={{ scale: 1.05 }}
+                            onMouseEnter={() => setHoveredTech(item.name)}
+                            onMouseLeave={() => setHoveredTech(null)}
+                            className="relative group h-full pb-1"
                           >
-                            <motion.div
-                              className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00B8A9]/12 via-transparent to-[#1A2332]/10 opacity-0 blur-xl transition-opacity duration-300"
-                              whileHover={{ opacity: 1 }}
-                            />
-                            <motion.div
-                              className="relative bg-white border-2 border-[#00B8A9]/20 rounded-2xl p-8 shadow-sm transition-all duration-300 h-full overflow-visible"
-                              whileHover={{ borderColor: "#00B8A9", boxShadow: "0 36px 78px rgba(26,35,50,0.22)", zIndex: 30 }}
-                              transition={{ duration: 0.25 }}
-                            >
+                            <div className="relative bg-white border-2 border-[#00B8A9]/20 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 h-full overflow-hidden">
+                              {/* Glow effect on hover */}
+                              <div className="absolute inset-[2px] bg-gradient-to-br from-[#00B8A9]/10 via-transparent to-[#1A2332]/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              
+                              {/* Shine effect */}
                               <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/35 to-transparent rounded-2xl"
-                                initial={{ x: "-120%" }}
-                                whileHover={{ x: "120%" }}
-                                transition={{ duration: 0.7, ease: "easeInOut" }}
+                                className="absolute inset-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-xl"
+                                initial={{ x: "-100%" }}
+                                whileHover={{ x: "100%" }}
+                                transition={{ duration: 0.6 }}
                               />
+
                               <div className="relative flex flex-col items-center gap-4">
-                                <motion.div
+                                <motion.div 
                                   className="h-20 w-20 flex items-center justify-center"
-                                  animate={{ y: [0, -6, 0] }}
-                                  transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.3, ease: "easeInOut" }}
+                                  animate={{
+                                    y: [0, -8, 0],
+                                  }}
+                                  transition={{
+                                    duration: 2.5,
+                                    repeat: Infinity,
+                                    delay: idx * 0.3,
+                                    ease: "easeInOut"
+                                  }}
                                 >
-                                  <img
+                                  <motion.img
                                     src={item.logo}
                                     alt={item.name}
-                                    className="max-h-full max-w-full object-contain transition-all duration-300 group-hover:scale-110"
+                                    className="max-h-full max-w-full object-contain transition-all duration-300"
+                                    whileHover={{ rotate: [0, -10, 10, 0] }}
+                                    transition={{ duration: 0.5 }}
                                   />
                                 </motion.div>
                                 <div className="text-center min-h-[3rem] flex flex-col justify-center">
                                   <span className="text-sm text-[#2C3E50] group-hover:text-[#1A2332] transition-colors mb-1">
                                     {item.name}
                                   </span>
-                                  <span className="text-xs text-[#00B8A9] opacity-0 max-h-0 group-hover:max-h-16 group-hover:opacity-100 transition-all duration-300 overflow-hidden">
+                                  <motion.span
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ 
+                                      opacity: hoveredTech === item.name ? 1 : 0,
+                                      height: hoveredTech === item.name ? "auto" : 0
+                                    }}
+                                    className="text-xs text-[#00B8A9] overflow-hidden"
+                                  >
                                     {item.description}
-                                  </span>
+                                  </motion.span>
                                 </div>
                               </div>
-                              <div className="absolute top-3 right-3 w-2 h-2 bg-[#00B8A9] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                              <div className="absolute bottom-3 left-3 w-2 h-2 bg-[#00B8A9] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </motion.div>
+
+                              {/* Corner accent */}
+                              <div className="absolute top-3 right-3 w-2 h-2 bg-[#00B8A9] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="absolute bottom-3 left-3 w-2 h-2 bg-[#00B8A9] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
                           </motion.div>
                         </CarouselItem>
                       ))}
