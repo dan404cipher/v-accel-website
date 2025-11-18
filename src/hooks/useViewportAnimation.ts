@@ -22,6 +22,15 @@ export function useViewportAnimation(options?: {
       (entries) => {
         entries.forEach((entry) => {
           setIsVisible(entry.isIntersecting);
+          
+          // Pause/resume animations based on visibility
+          if (entry.isIntersecting) {
+            element.classList.remove("pause-animations");
+            element.classList.add("play-animations");
+          } else {
+            element.classList.remove("play-animations");
+            element.classList.add("pause-animations");
+          }
         });
       },
       {

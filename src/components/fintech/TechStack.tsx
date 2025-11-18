@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { FinancialBackground } from "./FinancialBackground";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ImageWithFallback } from "../parent/ImageWithFallback";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
@@ -64,18 +64,7 @@ export function TechStack() {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("cloud");
 
-  // Auto-switch tabs after delay
-  useEffect(() => {
-    const tabKeys = technologies.map(tech => tech.key);
-    const currentIndex = tabKeys.indexOf(activeTab);
-    
-    const timer = setTimeout(() => {
-      const nextIndex = (currentIndex + 1) % tabKeys.length;
-      setActiveTab(tabKeys[nextIndex]);
-    }, 5000); // Switch every 5 seconds
-
-    return () => clearTimeout(timer);
-  }, [activeTab]);
+  // Removed auto-tab switching to reduce timers and improve performance
 
   return (
     <section id="tech-stack" className="relative py-20 lg:py-32 bg-[#FAFBFC] overflow-hidden">
@@ -165,16 +154,10 @@ export function TechStack() {
                               />
 
                               <div className="relative flex flex-col items-center gap-4">
-                                <motion.div 
-                                  className="h-20 w-20 flex items-center justify-center"
-                                  animate={{
-                                    y: [0, -8, 0],
-                                  }}
-                                  transition={{
-                                    duration: 2.5,
-                                    repeat: Infinity,
-                                    delay: idx * 0.3,
-                                    ease: "easeInOut"
+                                <div 
+                                  className="h-20 w-20 flex items-center justify-center animate-tech-logo-float gpu-accelerated"
+                                  style={{
+                                    animationDelay: `${idx * 0.3}s`,
                                   }}
                                 >
                                   <motion.div
@@ -189,7 +172,7 @@ export function TechStack() {
                                       className="max-h-full max-w-full object-contain"
                                     />
                                   </motion.div>
-                                </motion.div>
+                                </div>
                                 <div className="text-center min-h-[3rem] flex flex-col justify-center">
                                   <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors mb-1">
                                     {item.name}

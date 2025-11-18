@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { useViewportAnimation } from "@/hooks/useViewportAnimation";
 import {
   AlertTriangle,
   Ban,
@@ -51,9 +52,9 @@ const sections = [
 ];
 
 const heroShapes = [
-  { className: "top-10 left-[8%] w-3 h-3 border border-[#00B8A9]/40 rotate-45", animation: "animate-float-up-down" },
-  { className: "top-20 right-[12%] w-4 h-4 rounded-full bg-[#00B8A9]/30", animation: "animate-float-dot" },
-  { className: "bottom-16 right-[25%] w-6 h-6 border border-[#FF6B6B]/30 rotate-45", animation: "animate-rotate-slow" },
+  { className: "top-20 left-[10%] w-4 h-4 border-2 border-[#00B8A9]/30 rotate-45", animation: "animate-float-up-down" },
+  { className: "top-40 right-[15%] w-3 h-3 rounded-full bg-[#00B8A9]/20", animation: "animate-float-dot" },
+  { className: "bottom-32 right-[25%] w-6 h-6 border border-[#FF6B6B]/20 rotate-45", animation: "animate-rotate-slow" },
 ];
 
 export function TermsPage() {
@@ -95,6 +96,9 @@ export function TermsPage() {
     [],
   );
 
+  const heroViewport = useViewportAnimation();
+  const contentViewport = useViewportAnimation({ rootMargin: "-30% 0px -30% 0px" });
+
   const scrollToSection = (sectionId: SectionId) => {
     const element = sectionRefs.current[sectionId];
     if (!element) return;
@@ -107,50 +111,110 @@ export function TermsPage() {
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
 
+  // Intersection Observer to detect active section on scroll
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const sectionVisibility = new Map<SectionId, number>();
+
+    const updateActiveSection = () => {
+      let maxVisibility = 0;
+      let mostVisibleSection: SectionId = 1;
+
+      sectionVisibility.forEach((visibility, sectionId) => {
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility;
+          mostVisibleSection = sectionId;
+        }
+      });
+
+      if (maxVisibility > 0) {
+        setActiveSection(mostVisibleSection);
+      }
+    };
+
+    sections.forEach((section) => {
+      const element = sectionRefs.current[section.id];
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const rect = entry.boundingClientRect;
+            const viewportHeight = window.innerHeight;
+            const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+            const visibility = Math.max(0, visibleHeight / viewportHeight);
+
+            if (entry.isIntersecting && visibility > 0.1) {
+              sectionVisibility.set(section.id, visibility);
+            } else {
+              sectionVisibility.delete(section.id);
+            }
+
+            updateActiveSection();
+          });
+        },
+        {
+          rootMargin: "-10% 0px -50% 0px",
+          threshold: [0, 0.1, 0.3, 0.5, 0.7, 1],
+        }
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F4F6F8] to-white text-[1rem] sm:text-[1.05rem]">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#3E5266] via-[#3E5266] to-[#4A5568] pt-32 pb-24">
-        <div className="absolute inset-0 opacity-30">
+      <section
+        ref={heroViewport.ref}
+        className="relative overflow-hidden bg-gradient-to-br from-[#3E5266] via-[#3E5266] to-[#4A5568] pt-32 pb-24 play-animations"
+      >
+        <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
+              backgroundImage: `linear-gradient(rgba(0, 184, 169, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 184, 169, 0.3) 1px, transparent 1px)`,
+              backgroundSize: "50px 50px",
             }}
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,184,169,0.18),transparent_60%)]" />
         </div>
 
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-10%] right-[-5%] w-[520px] h-[520px] bg-[radial-gradient(circle,rgba(0,184,169,0.45),transparent_70%)] blur-[120px]" />
-          <div className="absolute bottom-[-5%] left-[-5%] w-[480px] h-[480px] bg-[radial-gradient(circle,rgba(255,107,107,0.25),transparent_70%)] blur-[120px]" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20 bg-[radial-gradient(circle,rgba(0,184,169,0.3),transparent_70%)] blur-[100px]" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-15 bg-[radial-gradient(circle,rgba(255,107,107,0.2),transparent_70%)] blur-[90px]" />
+          <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] opacity-10 bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_70%)] blur-[80px]" />
           {heroShapes.map((shape, idx) => (
             <div key={idx} className={`absolute ${shape.className} ${shape.animation}`} />
           ))}
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10 text-center text-white">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center text-white">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00B8A9] to-[#00D2B5] shadow-[0_16px_40px_rgba(0,184,169,0.35)]">
-              <ScrollText className="h-8 w-8" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-[#00B8A9] to-[#00D4B8] shadow-2xl">
+              <ScrollText className="h-10 w-10" />
             </div>
-            <Badge className="mb-2 border-0 bg-white/15 text-white text-[0.75rem]">Legal Agreement</Badge>
-            <h1 className="mb-3 text-[1.55rem] sm:text-[1.8rem] font-semibold text-white leading-tight">Terms & Conditions</h1>
-            <p className="mx-auto mb-5 max-w-2xl text-xs sm:text-[0.95rem] text-white/80">
+            <Badge className="mb-4 border border-[#00B8A9]/30 bg-[#00B8A9]/20 text-[#00B8A9] text-xs">Legal Agreement</Badge>
+            <h1 className="mb-4 text-white max-w-3xl mx-auto">Terms & Conditions</h1>
+            <p className="mx-auto mb-6 max-w-2xl text-lg text-white/80">
               Please read these terms carefully before using our services. By accessing our platform, you agree to be bound by these terms.
             </p>
-            <div className="inline-flex items-center gap-2 text-[0.7rem] sm:text-xs text-white/70">
-              <Info className="h-3.5 w-3.5" />
-              <span>Effective Date: 13/11/2025</span>
+            <div className="flex items-center justify-center gap-3 text-white/70">
+              <Info className="h-4 w-4" />
+              <span className="text-sm">Effective Date: 13/11/2025</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Content */}
-      <section className="relative z-10 pt-4 pb-16">
+      <section ref={contentViewport.ref} className="relative z-10 pt-4 pb-16 play-animations">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
             {/* Sidebar */}
@@ -188,7 +252,7 @@ export function TermsPage() {
             </motion.aside>
 
             {/* Sections */}
-            <div className="space-y-6 text-[1.25rem] sm:text-[1.3rem] font-semibold">
+            <div className="space-y-6">
               {/* 1 */}
               <motion.div
                 ref={(el) => {
@@ -205,11 +269,11 @@ export function TermsPage() {
                       <UserCheck className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className="text-[#1A2332] text-lg font-semibold mb-1">1. Acceptance of Terms</h2>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 1 ? "font-bold" : ""}`}>1. Acceptance of Terms</h2>
                       <Badge className="border-0 bg-[#00B8A9]/10 text-xs text-[#00B8A9]">Required Reading</Badge>
                     </div>
                   </header>
-                  <div className="space-y-4 text-[1.15rem] font-medium text-[#2C3E50] leading-relaxed">
+                  <div className="space-y-4 text-[#2C3E50] leading-relaxed">
                     <p>
                       By accessing or using any of V-Accel&apos;s custom software development services, SaaS products, consulting, or related offerings
                       (&quot;Services&quot;), you agree to be bound by these Terms &amp; Conditions (&quot;Terms&quot;).
@@ -238,11 +302,11 @@ export function TermsPage() {
                       <Briefcase className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className="text-[#1A2332] text-lg font-semibold mb-1">2. Services Overview</h2>
-                      <p className="text-xs text-[#2C3E50]">V-Accel provides the following:</p>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 2 ? "font-bold" : ""}`}>2. Services Overview</h2>
+                      <p className="text-[#2C3E50]">V-Accel provides the following:</p>
                     </div>
                   </header>
-                  <div className="space-y-3 text-[1.15rem] font-medium">
+                  <div className="space-y-3">
                     {serviceHighlights.map((item, idx) => (
                       <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-2.5">
                         <CheckCircle2 className="h-4 w-4 text-[#00B8A9]" />
@@ -272,12 +336,12 @@ export function TermsPage() {
                       <FileText className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className="text-[#1A2332] text-lg font-semibold mb-1">3. User Responsibilities</h2>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 3 ? "font-bold" : ""}`}>3. User Responsibilities</h2>
                       <Badge className="border-0 bg-[#FF6B6B]/10 text-xs text-[#FF6B6B]">Important</Badge>
                     </div>
                   </header>
-                  <p className="text-sm text-[#2C3E50] mb-3 font-medium">You are responsible for:</p>
-                  <div className="grid gap-3 md:grid-cols-2 text-[1.15rem] font-medium">
+                  <p className="text-[#2C3E50] mb-6 leading-relaxed">You are responsible for:</p>
+                  <div className="grid gap-3 md:grid-cols-2">
                     {responsibilities.map((item) => (
                       <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3">
                         <CheckCircle2 className="h-4 w-4 text-[#00B8A9]" />
@@ -298,6 +362,8 @@ export function TermsPage() {
                 title="4. Payment & Billing"
                 icon={<CreditCard className="h-5 w-5 text-white" />}
                 gradient="from-[#3E5266] to-[#4A5568]"
+                sectionId={4}
+                activeSection={activeSection}
                 content={
                   <>
                     <SectionList
@@ -330,6 +396,8 @@ export function TermsPage() {
                 icon={<FileWarning className="h-5 w-5 text-white" />}
                 gradient="from-[#FF6B6B] to-[#FF8787]"
                 badges={<Badge className="border-0 bg-[#FF6B6B]/10 text-[#FF6B6B]">Critical</Badge>}
+                sectionId={5}
+                activeSection={activeSection}
                 content={
                   <div className="space-y-5 text-[#2C3E50]">
                     <SubSection title="Our IP">
@@ -353,6 +421,8 @@ export function TermsPage() {
                 gradient="from-[#FF6B6B] to-[#FF8787]"
                 badges={<Badge className="border-0 bg-[#FF6B6B] text-white">Read Carefully</Badge>}
                 cardClass="bg-gradient-to-br from-[#FFF5F5] to-white border-[#FF6B6B]/30"
+                sectionId={6}
+                activeSection={activeSection}
                 content={
                   <div className="space-y-4 text-[#2C3E50]">
                     <div className="rounded-lg border border-[#FF6B6B]/30 bg-white p-4">
@@ -379,6 +449,8 @@ export function TermsPage() {
                 title="7. Limitation of Liability"
                 icon={<AlertTriangle className="h-5 w-5 text-white" />}
                 gradient="from-[#FF6B6B] to-[#FF8787]"
+                sectionId={7}
+                activeSection={activeSection}
                 content={
                   <>
                     <p className="text-[#2C3E50]">
@@ -408,6 +480,8 @@ export function TermsPage() {
                 title="8. Termination"
                 icon={<FileX className="h-5 w-5 text-white" />}
                 gradient="from-[#3E5266] to-[#4A5568]"
+                sectionId={8}
+                activeSection={activeSection}
                 content={
                   <div className="space-y-5">
                     <SubSection title="By You">
@@ -437,6 +511,8 @@ export function TermsPage() {
                 gradient="from-[#FF6B6B] to-[#FF8787]"
                 badges={<Badge className="border-0 bg-[#FF6B6B] text-white">Strictly Forbidden</Badge>}
                 cardClass="bg-gradient-to-br from-[#FFF5F5] to-white border-[#FF6B6B]/30"
+                sectionId={9}
+                activeSection={activeSection}
                 content={
                   <>
                     <p className="text-[#2C3E50]">You may not:</p>
@@ -468,6 +544,8 @@ export function TermsPage() {
                 title="10. Governing Law"
                 icon={<Scale className="h-5 w-5 text-white" />}
                 gradient="from-[#3E5266] to-[#4A5568]"
+                sectionId={10}
+                activeSection={activeSection}
                 content={
                   <div className="space-y-4 text-[#2C3E50]">
                     <p>
@@ -488,6 +566,8 @@ export function TermsPage() {
                 icon={<Mail className="h-5 w-5 text-white" />}
                 gradient="from-[#00B8A9] to-[#00D2B5]"
                 cardClass="bg-gradient-to-br from-[#E8F5F4] to-white border-[#00B8A9]/30"
+                sectionId={11}
+                activeSection={activeSection}
                 content={
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="rounded-xl border border-[#00B8A9]/20 bg-white p-6">
@@ -535,9 +615,11 @@ type TermsSectionProps = {
   cardClass?: string;
   badges?: React.ReactNode;
   content: React.ReactNode;
+  sectionId: SectionId;
+  activeSection: SectionId;
 };
 
-function TermsSection({ refCallback, delay, title, icon, gradient, cardClass, badges, content }: TermsSectionProps) {
+function TermsSection({ refCallback, delay, title, icon, gradient, cardClass, badges, content, sectionId, activeSection }: TermsSectionProps) {
   return (
     <motion.div
       ref={refCallback}
@@ -552,11 +634,11 @@ function TermsSection({ refCallback, delay, title, icon, gradient, cardClass, ba
             {icon}
           </div>
           <div>
-            <h2 className="text-[#1A2332] text-lg font-semibold mb-1">{title}</h2>
+            <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === sectionId ? "font-bold" : ""}`}>{title}</h2>
             {badges}
           </div>
         </header>
-        <div className="space-y-4 text-[1.15rem] font-medium text-[#2C3E50] leading-relaxed">{content}</div>
+        <div className="space-y-4 text-[#2C3E50] leading-relaxed">{content}</div>
       </Card>
     </motion.div>
   );
@@ -568,7 +650,7 @@ function SectionList({ title, items }: { title: string; items: string[] }) {
       <h3 className="text-[#1A2332] text-lg font-semibold mb-3">{title}</h3>
       <div className="space-y-2">
         {items.map((item) => (
-          <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3 text-[1.15rem] font-medium">
+          <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3">
             <CheckCircle2 className="h-4 w-4 text-[#3E5266]" />
             <span>{item}</span>
           </div>
@@ -586,7 +668,7 @@ function SubSection({ title, children, tone }: { title: string; children: React.
   return (
     <div className={baseClass}>
       <h3 className="mb-2 text-lg font-semibold text-[#1A2332]">{title}</h3>
-      <div className="text-[1.15rem] font-medium text-[#2C3E50] leading-relaxed">{children}</div>
+      <div className="text-[#2C3E50] leading-relaxed">{children}</div>
     </div>
   );
 }
@@ -598,7 +680,7 @@ function Callout({ children, color }: { children: React.ReactNode; color: "teal"
       : { border: "border-[#FF6B6B]", bg: "bg-white" };
 
   return (
-    <div className={`rounded-r-lg border-l-4 ${palette.border} ${palette.bg} p-4 text-sm text-[#2C3E50] font-medium leading-relaxed`}>
+    <div className={`rounded-r-lg border-l-4 ${palette.border} ${palette.bg} p-4 text-sm text-[#2C3E50] leading-relaxed`}>
       {children}
     </div>
   );

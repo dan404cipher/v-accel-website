@@ -438,6 +438,177 @@ html {
   transform: translateY(-8px);
 }
 
+/* TechStack specific animations - CSS only for performance */
+@keyframes spotlight-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.95) translateZ(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05) translateZ(0);
+  }
+}
+
+.animate-spotlight-pulse {
+  animation: spotlight-pulse 6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes grid-opacity {
+  0%, 100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-grid-opacity {
+  animation: grid-opacity 5s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes grid-opacity-secondary {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-grid-opacity-secondary {
+  animation: grid-opacity-secondary 6s ease-in-out infinite;
+  animation-delay: 0.4s;
+  will-change: opacity;
+}
+
+@keyframes orb-scale {
+  0%, 100% {
+    transform: scale(1) translateZ(0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.1) translateZ(0);
+    opacity: 0.3;
+  }
+}
+
+.animate-orb-scale {
+  animation: orb-scale 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes orb-scale-large {
+  0%, 100% {
+    transform: scale(1) translateZ(0);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.12) translateZ(0);
+    opacity: 0.2;
+  }
+}
+
+.animate-orb-scale-large {
+  animation: orb-scale-large 10s ease-in-out infinite;
+  animation-delay: 0.8s;
+  will-change: transform, opacity;
+}
+
+@keyframes tech-dot-float {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateY(-18px) translateZ(0);
+    opacity: 0.4;
+  }
+}
+
+.animate-tech-dot-float {
+  animation: tech-dot-float 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes line-accent {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-line-accent {
+  animation: line-accent 7s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes wave-path {
+  0%, 100% {
+    d: path("M0,100 Q500,60 1000,100 T2000,100");
+  }
+  50% {
+    d: path("M0,100 Q500,140 1000,100 T2000,100");
+  }
+}
+
+@keyframes wave-path-2 {
+  0%, 100% {
+    d: path("M0,75 Q600,110 1200,75 T2400,75");
+  }
+  50% {
+    d: path("M0,75 Q600,40 1200,75 T2400,75");
+  }
+}
+
+@keyframes tech-logo-float {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-8px) translateZ(0);
+  }
+}
+
+.animate-tech-logo-float {
+  animation: tech-logo-float 2.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes tech-shape-rotate {
+  from {
+    transform: rotate(0deg) translateZ(0);
+  }
+  to {
+    transform: rotate(90deg) translateZ(0);
+  }
+}
+
+.animate-tech-shape-rotate {
+  animation: tech-shape-rotate 28s linear infinite;
+  will-change: transform;
+}
+
+@keyframes tech-blob-morph {
+  0%, 100% {
+    transform: rotate(0deg) translateZ(0);
+    border-radius: 35% 65% 60% 40% / 45% 35% 65% 55%;
+  }
+  50% {
+    transform: rotate(-180deg) translateZ(0);
+    border-radius: 60% 40% 35% 65% / 35% 55% 45% 65%;
+  }
+}
+
+.animate-tech-blob-morph {
+  animation: tech-blob-morph 26s ease-in-out infinite;
+  will-change: transform, border-radius;
+}
+
 /* Viewport animation helpers */
 .play-animations * {
   animation-play-state: running !important;
