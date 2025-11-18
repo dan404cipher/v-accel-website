@@ -742,10 +742,10 @@ export function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className="overflow-hidden border-0 shadow-xl relative">
+            <Card className="overflow-hidden border-0 shadow-xl relative p-0">
               {/* Map Background */}
               <div
-                className="relative h-[500px] bg-cover bg-center"
+                className="relative h-[500px] bg-cover bg-center rounded-[inherit] overflow-hidden"
                 style={{
                   backgroundImage: `url('${chennaiMapBg.src}')`,
                 }}
@@ -790,8 +790,17 @@ export function ContactPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Button className="bg-gradient-to-r from-[#1A2332] to-[#1A2332]/90 hover:from-[#2C3E50] hover:to-[#2C3E50]/90 text-white px-6 h-11 shadow-[0_4px_20px_rgba(26,35,50,0.3)] hover:shadow-[0_8px_30px_rgba(44,62,80,0.5)] transition-all duration-300 tracking-[-0.15px] rounded-xl">
-                        Get Directions
+                      <Button
+                        asChild
+                        className="bg-gradient-to-r from-[#1A2332] to-[#1A2332]/90 hover:from-[#2C3E50] hover:to-[#2C3E50]/90 text-white px-6 h-11 shadow-[0_4px_20px_rgba(26,35,50,0.3)] hover:shadow-[0_8px_30px_rgba(44,62,80,0.5)] transition-all duration-300 tracking-[-0.15px] rounded-xl"
+                      >
+                        <a
+                          href="https://www.google.com/maps/search/?api=1&query=V-Accel+AI+Dynamics+Pvt+Ltd,+No:04,+Ground+Floor,+Tidel+Park,+Rajiv+Gandhi+Salai,+Taramani,+Chennai+113"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Get Directions
+                        </a>
                       </Button>
                     </motion.div>
                   </motion.div>
