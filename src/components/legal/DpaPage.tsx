@@ -691,12 +691,12 @@ function Hero({ viewportRef }: { viewportRef: ReturnType<typeof useViewportAnima
           >
             <FileCheck className="w-10 h-10 text-white" />
           </motion.div>
-          <Badge className="bg-[#00B8A9]/20 text-[#00B8A9] border-[#00B8A9]/30 mb-4">GDPR & Compliance</Badge>
+          <Badge className="bg-[#00B8A9]/20 text-[#00B8A9] border-[#00B8A9]/20 mb-4">GDPR & Compliance</Badge>
           <h1 className="text-white mb-4 max-w-3xl">Data Processing Agreement</h1>
           <p className="text-white/90 text-lg max-w-2xl mb-6">Our commitment to processing your data securely and in compliance with global data protection regulations.</p>
           <div className="flex items-center gap-3 text-white/80">
             <Clock className="w-4 h-4" />
-            <span className="text-sm">Effective Date: 13/11/2025</span>
+            <span className="text-sm">Effective Date: 13/11/2025</span> 
           </div>
         </motion.div>
       </div>
@@ -778,7 +778,7 @@ function SectionCard({
         <div className="flex items-start gap-4 mb-6">
           <div className={`w-12 h-12 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center flex-shrink-0`}>{icon}</div>
           <div>
-            <h2 className={`text-[#1A2332] mb-2 ${activeSection === sectionId ? "font-bold" : "font-semibold"}`}>{title}</h2>
+            <h2 className={`text-[#1A2332] mb-2 ${activeSection === sectionId ? "font-bold" : "font-medium"}`}>{title}</h2>
             {badge ? <Badge className={`border-0 ${badgeStyles}`}>{badge.label}</Badge> : null}
           </div>
         </div>

@@ -24,18 +24,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-type SectionId =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11;
+type SectionId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
 const sections = [
   { id: 1 as SectionId, title: "Acceptance of Terms", icon: UserCheck },
@@ -52,9 +41,18 @@ const sections = [
 ];
 
 const heroShapes = [
-  { className: "top-20 left-[10%] w-4 h-4 border-2 border-[#00B8A9]/30 rotate-45", animation: "animate-float-up-down" },
-  { className: "top-40 right-[15%] w-3 h-3 rounded-full bg-[#00B8A9]/20", animation: "animate-float-dot" },
-  { className: "bottom-32 right-[25%] w-6 h-6 border border-[#FF6B6B]/20 rotate-45", animation: "animate-rotate-slow" },
+  {
+    className: "top-10 left-[8%] w-3 h-3 border border-[#00B8A9]/40 rotate-45",
+    animation: "animate-float-up-down",
+  },
+  {
+    className: "top-20 right-[12%] w-4 h-4 rounded-full bg-[#00B8A9]/30",
+    animation: "animate-float-dot",
+  },
+  {
+    className: "bottom-16 right-[25%] w-6 h-6 border border-[#FF6B6B]/30 rotate-45",
+    animation: "animate-rotate-slow",
+  },
 ];
 
 export function TermsPage() {
@@ -81,7 +79,7 @@ export function TermsPage() {
       "Cloud infrastructure, DevOps, and maintenance support",
       "API integrations and third-party platform connections",
     ],
-    [],
+    []
   );
 
   const responsibilities = useMemo(
@@ -93,7 +91,7 @@ export function TermsPage() {
       "Timely payment for subscriptions or project-based work",
       "Providing necessary project materials and feedback",
     ],
-    [],
+    []
   );
 
   const heroViewport = useViewportAnimation();
@@ -170,18 +168,23 @@ export function TermsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F4F6F8] to-white text-[1rem] sm:text-[1.05rem]">
-      {/* Hero */}
       <section
         ref={heroViewport.ref}
-        className="relative overflow-hidden bg-gradient-to-br from-[#3E5266] via-[#3E5266] to-[#4A5568] pt-32 pb-24 play-animations"
+        className="relative overflow-hidden bg-gradient-to-br from-[#3E5266] via-[#3E5266] to-[#4A5568] pt-36 pb-28 play-animations"
       >
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-15">
           <div
             className="absolute inset-0"
             style={{
               backgroundImage: `linear-gradient(rgba(0, 184, 169, 0.3) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 184, 169, 0.3) 1px, transparent 1px)`,
               backgroundSize: "50px 50px",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "radial-gradient(circle at top, rgba(0, 184, 169, 0.18), transparent 60%)",
             }}
           />
         </div>
@@ -195,14 +198,18 @@ export function TermsPage() {
           ))}
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center text-white">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10 text-center text-white">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-[#00B8A9] to-[#00D4B8] shadow-2xl">
-              <ScrollText className="h-10 w-10" />
-            </div>
-            <Badge className="mb-4 border border-[#00B8A9]/30 bg-[#00B8A9]/20 text-[#00B8A9] text-xs">Legal Agreement</Badge>
-            <h1 className="mb-4 text-white max-w-3xl mx-auto">Terms & Conditions</h1>
-            <p className="mx-auto mb-6 max-w-2xl text-lg text-white/80">
+            <motion.div
+              className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00B8A9] to-[#00D2B5]"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ScrollText className="h-8 w-8" />
+            </motion.div>
+            <Badge className="bg-[#00B8A9]/20 text-[#00B8A9] border-[#00B8A9]/10 mb-4">Legal Agreement</Badge>
+            <h1 className="mb-3 text-[1.55rem] sm:text-[1.8rem] font-semibold text-white leading-tight">Terms & Conditions</h1>
+            <p className="mx-auto mb-5 max-w-2xl text-xs sm:text-[0.95rem] text-white/80">
               Please read these terms carefully before using our services. By accessing our platform, you agree to be bound by these terms.
             </p>
             <div className="flex items-center justify-center gap-3 text-white/70">
@@ -213,7 +220,6 @@ export function TermsPage() {
         </div>
       </section>
 
-      {/* Content */}
       <section ref={contentViewport.ref} className="relative z-10 pt-4 pb-16 play-animations">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
@@ -226,7 +232,9 @@ export function TermsPage() {
               className="lg:sticky lg:top-24 h-fit"
             >
               <Card className="flex flex-col gap-6 rounded-xl border border-gray-200 bg-white/80 p-6 text-[0.9rem] shadow-lg backdrop-blur-sm">
-                <h3 className="text-[#1A2332] mb-4 text-base font-semibold">Quick Navigation</h3>
+                <h3 className="text-[#1A2332] mb-4 text-base font-semibold">
+                  Quick Navigation
+                </h3>
                 <div className="space-y-1">
                   {sections.map((section, index) => {
                     const Icon = section.icon;
@@ -269,18 +277,28 @@ export function TermsPage() {
                       <UserCheck className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 1 ? "font-bold" : ""}`}>1. Acceptance of Terms</h2>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 1 ? "font-bold" : "font-medium"}`}>
+                        1. Acceptance of Terms
+                      </h2>
                       <Badge className="border-0 bg-[#00B8A9]/10 text-xs text-[#00B8A9]">Required Reading</Badge>
                     </div>
                   </header>
                   <div className="space-y-4 text-[#2C3E50] leading-relaxed">
                     <p>
-                      By accessing or using any of V-Accel&apos;s custom software development services, SaaS products, consulting, or related offerings
-                      (&quot;Services&quot;), you agree to be bound by these Terms &amp; Conditions (&quot;Terms&quot;).
+                      By accessing or using any of V-Accel&apos;s custom
+                      software development services, SaaS products, consulting,
+                      or related offerings (&quot;Services&quot;), you agree to
+                      be bound by these Terms &amp; Conditions
+                      (&quot;Terms&quot;).
                     </p>
                     <div className="rounded-r-lg border-l-4 border-[#00B8A9] bg-[#E8F5F4] p-4 text-sm">
-                      <strong>If you do not agree to these Terms, you must not use our Services.</strong> These Terms constitute a binding legal
-                      agreement between you and V-Accel AI Dynamics Pvt Ltd (&quot;V-Accel&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;).
+                      <strong>
+                        If you do not agree to these Terms, you must not use our
+                        Services.
+                      </strong>{" "}
+                      These Terms constitute a binding legal agreement between
+                      you and V-Accel AI Dynamics Pvt Ltd (&quot;V-Accel&quot;,
+                      &quot;we&quot;, &quot;us&quot;, &quot;our&quot;).
                     </div>
                   </div>
                 </Card>
@@ -302,20 +320,26 @@ export function TermsPage() {
                       <Briefcase className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 2 ? "font-bold" : ""}`}>2. Services Overview</h2>
-                      <p className="text-[#2C3E50]">V-Accel provides the following:</p>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 2 ? "font-bold" : "font-medium"}`}>
+                        2. Services Overview
+                      </h2>
+                      <p className="text-xs text-[#2C3E50]">V-Accel provides the following:</p>
                     </div>
                   </header>
                   <div className="space-y-3">
                     {serviceHighlights.map((item, idx) => (
-                      <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-2.5">
+                      <div
+                        key={item}
+                        className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-2.5"
+                      >
                         <CheckCircle2 className="h-4 w-4 text-[#00B8A9]" />
                         <span className="text-[#2C3E50]">{item}</span>
                       </div>
                     ))}
                   </div>
                   <div className="mt-5 rounded-r-lg border-l-4 border-[#00B8A9] bg-[#E8F5F4] p-4 text-sm text-[#2C3E50]">
-                    <strong>Scope of services</strong> depends on the specific agreement, subscription plan, or statement of work provided.
+                    <strong>Scope of services</strong> depends on the specific
+                    agreement, subscription plan, or statement of work provided.
                   </div>
                 </Card>
               </motion.div>
@@ -336,21 +360,28 @@ export function TermsPage() {
                       <FileText className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 3 ? "font-bold" : ""}`}>3. User Responsibilities</h2>
+                      <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === 3 ? "font-bold" : "font-medium"}`}>
+                        3. User Responsibilities
+                      </h2>
                       <Badge className="border-0 bg-[#FF6B6B]/10 text-xs text-[#FF6B6B]">Important</Badge>
                     </div>
                   </header>
-                  <p className="text-[#2C3E50] mb-6 leading-relaxed">You are responsible for:</p>
-                  <div className="grid gap-3 md:grid-cols-2">
+                  <p className="text-sm text-[#2C3E50] mb-3 font-medium">You are responsible for:</p>
+                  <div className="grid gap-3 md:grid-cols-2 text-[1.15rem] font-medium">
                     {responsibilities.map((item) => (
-                      <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3">
+                      <div
+                        key={item}
+                        className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3"
+                      >
                         <CheckCircle2 className="h-4 w-4 text-[#00B8A9]" />
                         <span className="text-[#2C3E50]">{item}</span>
                       </div>
                     ))}
                   </div>
                   <div className="mt-5 rounded-r-lg border-l-4 border-[#FF6B6B] bg-[#FFF5F5] p-4 text-sm text-[#2C3E50]">
-                    <strong>You are liable for all activities</strong> conducted under your account. Notify us immediately if you suspect unauthorized access.
+                    <strong>You are liable for all activities</strong> conducted
+                    under your account. Notify us immediately if you suspect
+                    unauthorized access.
                   </div>
                 </Card>
               </motion.div>
@@ -383,7 +414,9 @@ export function TermsPage() {
                       ]}
                     />
                     <Callout color="teal">
-                      <strong>Taxes:</strong> Prices do not include applicable taxes. You are responsible for all taxes, duties, and government-imposed fees.
+                      <strong>Taxes:</strong> Prices do not include applicable
+                      taxes. You are responsible for all taxes, duties, and
+                      government-imposed fees.
                     </Callout>
                   </>
                 }
@@ -401,13 +434,20 @@ export function TermsPage() {
                 content={
                   <div className="space-y-5 text-[#2C3E50]">
                     <SubSection title="Our IP">
-                      All SaaS platforms, proprietary tools, frameworks, branding, and documentation remain the exclusive property of V-Accel. You receive only a limited, non-transferable license to use them.
+                      All SaaS platforms, proprietary tools, frameworks,
+                      branding, and documentation remain the exclusive property
+                      of V-Accel. You receive only a limited, non-transferable
+                      license to use them.
                     </SubSection>
                     <SubSection title="Custom Development Work">
-                      For custom projects, ownership and licensing terms are defined in the project agreement or statement of work. Typically, you receive full ownership upon final payment.
+                      For custom projects, ownership and licensing terms are
+                      defined in the project agreement or statement of work.
+                      Typically, you receive full ownership upon final payment.
                     </SubSection>
                     <SubSection title="Your Content">
-                      You retain ownership of all data, files, and content you upload. You grant us a limited license to process this content solely to provide Services.
+                      You retain ownership of all data, files, and content you
+                      upload. You grant us a limited license to process this
+                      content solely to provide Services.
                     </SubSection>
                   </div>
                 }
@@ -419,7 +459,11 @@ export function TermsPage() {
                 title="6. Warranties & Disclaimers"
                 icon={<ShieldAlert className="h-5 w-5 text-white" />}
                 gradient="from-[#FF6B6B] to-[#FF8787]"
-                badges={<Badge className="border-0 bg-[#FF6B6B] text-white">Read Carefully</Badge>}
+                badges={
+                  <Badge className="border-0 bg-[#FF6B6B] text-white">
+                    Read Carefully
+                  </Badge>
+                }
                 cardClass="bg-gradient-to-br from-[#FFF5F5] to-white border-[#FF6B6B]/30"
                 sectionId={6}
                 activeSection={activeSection}
@@ -427,10 +471,18 @@ export function TermsPage() {
                   <div className="space-y-4 text-[#2C3E50]">
                     <div className="rounded-lg border border-[#FF6B6B]/30 bg-white p-4">
                       <p className="mb-3">
-                        <strong>Services are provided &quot;AS IS&quot; and &quot;AS AVAILABLE&quot;</strong> without warranties of any kind, including:
+                        <strong>
+                          Services are provided &quot;AS IS&quot; and &quot;AS
+                          AVAILABLE&quot;
+                        </strong>{" "}
+                        without warranties of any kind, including:
                       </p>
                       <ul className="space-y-2">
-                        {["Merchantability or fitness for a particular purpose", "Uninterrupted or error-free operation", "Complete security or data integrity"].map((item) => (
+                        {[
+                          "Merchantability or fitness for a particular purpose",
+                          "Uninterrupted or error-free operation",
+                          "Complete security or data integrity",
+                        ].map((item) => (
                           <li key={item} className="flex items-start gap-2">
                             <XCircle className="h-4 w-4 text-[#FF6B6B]" />
                             <span>{item}</span>
@@ -438,7 +490,10 @@ export function TermsPage() {
                         ))}
                       </ul>
                     </div>
-                    <Callout color="teal">For custom projects, specific service levels and warranties may be outlined in your project agreement.</Callout>
+                    <Callout color="teal">
+                      For custom projects, specific service levels and
+                      warranties may be outlined in your project agreement.
+                    </Callout>
                   </div>
                 }
               />
@@ -454,7 +509,9 @@ export function TermsPage() {
                 content={
                   <>
                     <p className="text-[#2C3E50]">
-                      To the maximum extent permitted by law, V-Accel and its affiliates, directors, employees, and partners shall not be liable for:
+                      To the maximum extent permitted by law, V-Accel and its
+                      affiliates, directors, employees, and partners shall not
+                      be liable for:
                     </p>
                     <div className="space-y-2">
                       {[
@@ -463,13 +520,19 @@ export function TermsPage() {
                         "Service interruptions, security breaches, or third-party failures",
                         "Any damages exceeding the fees paid to V-Accel in the preceding 12 months",
                       ].map((item) => (
-                        <div key={item} className="flex items-start gap-2.5 rounded-lg border border-[#FF6B6B]/20 bg-[#FFF5F5] p-3">
+                        <div
+                          key={item}
+                          className="flex items-start gap-2.5 rounded-lg border border-[#FF6B6B]/20 bg-[#FFF5F5] p-3"
+                        >
                           <AlertTriangle className="h-5 w-5 text-[#FF6B6B]" />
                           <span>{item}</span>
                         </div>
                       ))}
                     </div>
-                    <Callout color="teal">Some jurisdictions do not allow limitation of liability, so these exclusions may not apply to you.</Callout>
+                    <Callout color="teal">
+                      Some jurisdictions do not allow limitation of liability,
+                      so these exclusions may not apply to you.
+                    </Callout>
                   </>
                 }
               />
@@ -485,12 +548,21 @@ export function TermsPage() {
                 content={
                   <div className="space-y-5">
                     <SubSection title="By You">
-                      You may cancel SaaS subscriptions or custom projects in accordance with your agreement. Refund eligibility depends on the service type and contract terms.
+                      You may cancel SaaS subscriptions or custom projects in
+                      accordance with your agreement. Refund eligibility depends
+                      on the service type and contract terms.
                     </SubSection>
                     <SubSection title="By V-Accel" tone="critical">
-                      <p className="mb-3">We may suspend or terminate your account if you:</p>
+                      <p className="mb-3">
+                        We may suspend or terminate your account if you:
+                      </p>
                       <ul className="space-y-2 text-sm">
-                        {["Violate these Terms", "Engage in fraudulent or illegal activity", "Fail to pay for Services", "Misuse our platform or harm other users"].map((item) => (
+                        {[
+                          "Violate these Terms",
+                          "Engage in fraudulent or illegal activity",
+                          "Fail to pay for Services",
+                          "Misuse our platform or harm other users",
+                        ].map((item) => (
                           <li key={item} className="flex items-start gap-2">
                             <XCircle className="h-4 w-4 text-[#FF6B6B]" />
                             <span>{item}</span>
@@ -498,7 +570,11 @@ export function TermsPage() {
                         ))}
                       </ul>
                     </SubSection>
-                    <Callout color="teal">Upon termination, you must cease all use of our Services. We may delete your data in accordance with our retention policies.</Callout>
+                    <Callout color="teal">
+                      Upon termination, you must cease all use of our Services.
+                      We may delete your data in accordance with our retention
+                      policies.
+                    </Callout>
                   </div>
                 }
               />
@@ -509,7 +585,11 @@ export function TermsPage() {
                 title="9. Prohibited Activities"
                 icon={<Ban className="h-5 w-5 text-white" />}
                 gradient="from-[#FF6B6B] to-[#FF8787]"
-                badges={<Badge className="border-0 bg-[#FF6B6B] text-white">Strictly Forbidden</Badge>}
+                badges={
+                  <Badge className="border-0 bg-[#FF6B6B] text-white">
+                    Strictly Forbidden
+                  </Badge>
+                }
                 cardClass="bg-gradient-to-br from-[#FFF5F5] to-white border-[#FF6B6B]/30"
                 sectionId={9}
                 activeSection={activeSection}
@@ -525,14 +605,20 @@ export function TermsPage() {
                         "Scrape, crawl, or automate access beyond allowed limits",
                         "Resell or sublicense our SaaS products without permission",
                       ].map((item) => (
-                        <div key={item} className="flex items-start gap-2 rounded-lg border border-[#FF6B6B]/30 bg-white p-3 text-sm">
+                        <div
+                          key={item}
+                          className="flex items-start gap-2 rounded-lg border border-[#FF6B6B]/30 bg-white p-3 text-sm"
+                        >
                           <Ban className="h-4 w-4 text-[#FF6B6B]" />
                           <span>{item}</span>
                         </div>
                       ))}
                     </div>
                     <Callout color="critical">
-                      <strong>Violations may result in immediate termination</strong> and potential legal action.
+                      <strong>
+                        Violations may result in immediate termination
+                      </strong>{" "}
+                      and potential legal action.
                     </Callout>
                   </>
                 }
@@ -549,11 +635,16 @@ export function TermsPage() {
                 content={
                   <div className="space-y-4 text-[#2C3E50]">
                     <p>
-                      These Terms are governed by the laws of India. Any disputes arising from these Terms or your use of our Services shall be subject to
-                      the exclusive jurisdiction of courts in Chennai, Tamil Nadu, India.
+                      These Terms are governed by the laws of India. Any
+                      disputes arising from these Terms or your use of our
+                      Services shall be subject to the exclusive jurisdiction of
+                      courts in Chennai, Tamil Nadu, India.
                     </p>
                     <div className="rounded-lg bg-[#F4F6F8] p-4">
-                      <strong>Dispute Resolution:</strong> We encourage good-faith negotiation before pursuing formal legal action. For custom projects, arbitration clauses may be specified in separate agreements.
+                      <strong>Dispute Resolution:</strong> We encourage
+                      good-faith negotiation before pursuing formal legal
+                      action. For custom projects, arbitration clauses may be
+                      specified in separate agreements.
                     </div>
                   </div>
                 }
@@ -577,7 +668,10 @@ export function TermsPage() {
                         </div>
                         <h3 className="text-[#1A2332]">Email</h3>
                       </div>
-                      <a href="mailto:info@v-accel.ai" className="text-[#00B8A9] hover:underline">
+                      <a
+                        href="mailto:info@v-accel.ai"
+                        className="text-[#00B8A9] hover:underline"
+                      >
                         info@v-accel.ai
                       </a>
                     </div>
@@ -628,17 +722,19 @@ function TermsSection({ refCallback, delay, title, icon, gradient, cardClass, ba
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
     >
-      <Card className={`p-6 shadow-lg hover:shadow-xl transition-shadow ${cardClass ?? ""}`}>
+      <Card
+        className={`p-6 shadow-lg hover:shadow-xl transition-shadow ${
+          cardClass ?? ""
+        }`}
+      >
         <header className="mb-5 flex items-start gap-4">
-          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient}`}>
-            {icon}
-          </div>
+          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient}`}>{icon}</div>
           <div>
-            <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === sectionId ? "font-bold" : ""}`}>{title}</h2>
+            <h2 className={`text-[#1A2332] text-lg mb-1 ${activeSection === sectionId ? "font-bold" : "font-medium"}`}>{title}</h2>
             {badges}
           </div>
         </header>
-        <div className="space-y-4 text-[#2C3E50] leading-relaxed">{content}</div>
+        <div className="space-y-4 text-[1.15rem] font-medium text-[#2C3E50] leading-relaxed">{content}</div>
       </Card>
     </motion.div>
   );
@@ -650,7 +746,7 @@ function SectionList({ title, items }: { title: string; items: string[] }) {
       <h3 className="text-[#1A2332] text-lg font-semibold mb-3">{title}</h3>
       <div className="space-y-2">
         {items.map((item) => (
-          <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3">
+          <div key={item} className="flex items-start gap-2.5 rounded-lg bg-[#F4F6F8] p-3 text-[1.15rem] font-medium">
             <CheckCircle2 className="h-4 w-4 text-[#3E5266]" />
             <span>{item}</span>
           </div>
@@ -660,29 +756,42 @@ function SectionList({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-function SubSection({ title, children, tone }: { title: string; children: React.ReactNode; tone?: "critical" }) {
+function SubSection({
+  title,
+  children,
+  tone,
+}: {
+  title: string;
+  children: React.ReactNode;
+  tone?: "critical";
+}) {
   const baseClass =
     tone === "critical"
       ? "rounded-lg border border-[#FF6B6B]/20 bg-[#FFF5F5] p-4"
       : "rounded-lg bg-[#F4F6F8] p-4";
   return (
     <div className={baseClass}>
-      <h3 className="mb-2 text-lg font-semibold text-[#1A2332]">{title}</h3>
-      <div className="text-[#2C3E50] leading-relaxed">{children}</div>
+      <h3 className="mb-2 text-lg	font-semibold text-[#1A2332]">{title}</h3>
+      <div className="text-[1.15rem] font-medium text-[#2C3E50] leading-relaxed">{children}</div>
     </div>
   );
 }
 
-function Callout({ children, color }: { children: React.ReactNode; color: "teal" | "critical" }) {
+function Callout({
+  children,
+  color,
+}: {
+  children: React.ReactNode;
+  color: "teal" | "critical";
+}) {
   const palette =
     color === "teal"
       ? { border: "border-[#00B8A9]", bg: "bg-[#E8F5F4]" }
       : { border: "border-[#FF6B6B]", bg: "bg-white" };
 
   return (
-    <div className={`rounded-r-lg border-l-4 ${palette.border} ${palette.bg} p-4 text-sm text-[#2C3E50] leading-relaxed`}>
+    <div className={`rounded-r-lg border-l-4 ${palette.border} ${palette.bg} p-4 text-sm text-[#2C3E50] font-medium leading-relaxed`}>
       {children}
     </div>
   );
 }
-
