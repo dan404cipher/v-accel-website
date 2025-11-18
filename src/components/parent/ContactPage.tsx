@@ -33,11 +33,57 @@ export function ContactPage() {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({
+          type: "success",
+          message: "Message sent successfully! We'll get back to you soon.",
+        });
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.message || "Failed to send message. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "An error occurred. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -535,14 +581,31 @@ export function ContactPage() {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full h-14 bg-gradient-to-r from-[#1A2332] to-[#1A2332]/90 hover:from-[#2C3E50] hover:to-[#2C3E50]/90 text-white shadow-[0_4px_20px_rgba(26,35,50,0.3)] hover:shadow-[0_8px_30px_rgba(44,62,80,0.5)] transition-all duration-300 group rounded-lg"
+                      disabled={isSubmitting}
+                      className="w-full h-14 bg-gradient-to-r from-[#1A2332] to-[#1A2332]/90 hover:from-[#2C3E50] hover:to-[#2C3E50]/90 text-white shadow-[0_4px_20px_rgba(26,35,50,0.3)] hover:shadow-[0_8px_30px_rgba(44,62,80,0.5)] transition-all duration-300 group rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <span className="flex items-center justify-center">
-                        Send Message
-                        <Send className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5 duration-300" />
+                        {isSubmitting ? "Sending..." : "Send Message"}
+                        {!isSubmitting && (
+                          <Send className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5 duration-300" />
+                        )}
                       </span>
                     </Button>
                   </motion.div>
+
+                  {submitStatus.type && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-4 rounded-lg ${
+                        submitStatus.type === "success"
+                          ? "bg-green-50 text-green-800 border border-green-200"
+                          : "bg-red-50 text-red-800 border border-red-200"
+                      }`}
+                    >
+                      {submitStatus.message}
+                    </motion.div>
+                  )}
 
                   <p className="text-xs text-[#2C3E50]/60 text-center">
                     By submitting this form, you agree to our privacy policy and
