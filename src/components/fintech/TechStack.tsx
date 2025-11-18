@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { FinancialBackground } from "./FinancialBackground";
 import { useState, useEffect } from "react";
+import { ImageWithFallback } from "../parent/ImageWithFallback";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
   Carousel,
@@ -176,13 +177,18 @@ export function TechStack() {
                                     ease: "easeInOut"
                                   }}
                                 >
-                                  <motion.img
+                                  <motion.div
+                                    className="hover-scale gpu-accelerated"
+                                    style={{ transition: "transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)" }}
+                                  >
+                                    <ImageWithFallback
                                     src={item.logo}
                                     alt={item.name}
-                                    className="max-h-full max-w-full object-contain transition-all duration-300"
-                                    whileHover={{ rotate: [0, -10, 10, 0] }}
-                                    transition={{ duration: 0.5 }}
-                                  />
+                                      width={80}
+                                      height={80}
+                                      className="max-h-full max-w-full object-contain"
+                                    />
+                                  </motion.div>
                                 </motion.div>
                                 <div className="text-center min-h-[3rem] flex flex-col justify-center">
                                   <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors mb-1">

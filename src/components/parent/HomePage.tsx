@@ -1,17 +1,37 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState, useEffect, useCallback, useMemo, memo } from "react";
+import { useState, useEffect, useCallback, useMemo, memo, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { FigmaIndustryCards } from "./FigmaIndustryCards";
+import dynamic from "next/dynamic";
 import { ProblemCard } from "./ProblemCard";
-import { TechStack } from "./TechStack";
-import { TestimonialCarousel } from "./TestimonialCarousel";
 import { OptimizedBackground } from "./OptimizedBackground";
-import { ServicesSection } from "./ServicesSection";
-import { FinalCtaSection } from "./FinalCtaSection";
+
+// Dynamic imports for code splitting - load heavy components only when needed
+const FigmaIndustryCards = dynamic(() => import("./FigmaIndustryCards").then(mod => ({ default: mod.FigmaIndustryCards })), {
+  ssr: true,
+  loading: () => <div className="grid md:grid-cols-3 gap-8 h-[400px] animate-pulse bg-gray-100 rounded-lg" />
+});
+
+const TechStack = dynamic(() => import("./TechStack").then(mod => ({ default: mod.TechStack })), {
+  ssr: false,
+  loading: () => <div className="h-[600px] animate-pulse bg-[#F4F6F8] rounded-lg" />,
+});
+
+const TestimonialCarousel = dynamic(() => import("./TestimonialCarousel").then(mod => ({ default: mod.TestimonialCarousel })), {
+  ssr: true,
+  loading: () => <div className="h-[300px] animate-pulse bg-gray-100 rounded-lg" />
+});
+
+const ServicesSection = dynamic(() => import("./ServicesSection").then(mod => ({ default: mod.ServicesSection })), {
+  ssr: true,
+});
+
+const FinalCtaSection = dynamic(() => import("./FinalCtaSection").then(mod => ({ default: mod.FinalCtaSection })), {
+  ssr: true,
+});
 import {
   Accordion,
   AccordionContent,
@@ -98,13 +118,19 @@ export function HomePage() {
     }
   }, []);
 
-  // Throttled mouse move handler
+  // Throttled mouse move handler - heavily throttled for performance
+  const lastMouseMoveTime = useRef(0);
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    // Throttle to 60fps max (16ms = ~60fps)
+    const now = Date.now();
+    if (now - lastMouseMoveTime.current >= 16) {
+      lastMouseMoveTime.current = now;
+      const rect = e.currentTarget.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
   }, []);
 
   // Memoize grid mask style for performance
@@ -132,7 +158,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-[#F4F6F8]">
       {/* Section 1: Hero Area - Optimized */}
-      <section className="relative px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-24 md:pb-32 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-screen">
+      <section className="relative flex items-center justify-center px-4 sm:px-6 py-0 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-[100svh]">
         {/* Simple gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]" style={{ zIndex: -20 }} />
 
@@ -141,7 +167,7 @@ export function HomePage() {
           <OptimizedBackground variant="hero" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 pt-24 sm:pt-28 md:pt-32 lg:pt-36">
+        <div className="max-w-7xl mx-auto relative z-10 w-full py-16 sm:py-20 lg:py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -154,15 +180,15 @@ export function HomePage() {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs md:text-sm py-[8px] px-[16px] font-semibold">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-sm md:text-base py-[10px] px-[20px] font-semibold tracking-wide">
+                <Sparkles className="w-4 h-4 mr-2" />
                 AI-Powered Innovation
               </Badge>
             </motion.div>
 
             {/* Main heading with staggered animation */}
             <motion.h1 
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal mb-4 sm:mb-6 leading-[1.1]"
+              className="text-[clamp(2.75rem,6vw,5rem)] md:text-[clamp(3.5rem,5vw,5.5rem)] font-normal mb-4 sm:mb-6 leading-[1.05] text-balance px-1"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -175,7 +201,7 @@ export function HomePage() {
 
             {/* Description */}
             <motion.p 
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#2C3E50] max-w-3xl mx-auto leading-relaxed font-normal px-4 sm:px-2 mb-6 sm:mb-8 md:mb-10"
+              className="text-[clamp(1rem,2.5vw,1.375rem)] md:text-[clamp(1.1rem,2vw,1.5rem)] text-[#2C3E50] max-w-3xl mx-auto leading-relaxed font-normal px-4 sm:px-2 mb-6 sm:mb-8 md:mb-10 text-balance"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -223,147 +249,92 @@ export function HomePage() {
       <section 
         className="relative py-16 md:py-20 bg-white overflow-hidden"
         onMouseMove={handleMouseMove}
+        style={{ willChange: 'auto' }}
       >
         {/* Modern professional background - Optimized with memoized styles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Interactive grid with fade effect */}
-          <motion.div 
-            className="absolute inset-0 will-change-opacity" 
-            style={gridMaskStyle}
-            animate={{
-              opacity: [0.8, 1, 0.8],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
+          {/* Interactive grid with fade effect - CSS animation for performance */}
+          <div 
+            className="absolute inset-0 animate-breathe gpu-accelerated" 
+            style={{
+              ...gridMaskStyle,
+              animationDuration: '4s',
             }}
           />
 
-          {/* Secondary grid layer with offset animation */}
-          <motion.div 
-            className="absolute inset-0 will-change-opacity" 
-            style={secondaryGridMaskStyle}
-            animate={{
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5,
+          {/* Secondary grid layer with offset animation - CSS */}
+          <div 
+            className="absolute inset-0 animate-breathe gpu-accelerated" 
+            style={{
+              ...secondaryGridMaskStyle,
+              animationDuration: '5s',
+              animationDelay: '0.5s',
             }}
           />
 
-          {/* Animated gradient orb - subtle movement */}
-          <motion.div 
-            className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] opacity-20"
+          {/* Animated gradient orb - CSS animation - Starts subtle, increases */}
+          <div 
+            className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] gpu-accelerated"
             style={{
               background: 'radial-gradient(circle, rgba(255, 107, 107, 0.15) 0%, transparent 70%)',
               filter: 'blur(80px)',
-            }}
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.15, 0.25, 0.15],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animation: 'pulseOpacityStart 8s ease-out forwards, breathe 8s ease-in-out infinite 8s',
+              opacity: 0.01,
             }}
           />
 
-          <motion.div 
-            className="absolute bottom-0 left-0 w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] opacity-20"
+          <div 
+            className="absolute bottom-0 left-0 w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] opacity-20 animate-breathe-large gpu-accelerated"
             style={{
               background: 'radial-gradient(circle, rgba(0, 184, 169, 0.12) 0%, transparent 70%)',
               filter: 'blur(70px)',
-            }}
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.12, 0.2, 0.12],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
+              animationDuration: '10s',
+              animationDelay: '1s',
             }}
           />
 
-          {/* Floating minimal dots - Reduced for performance */}
+          {/* Floating minimal dots - CSS animations */}
           {[...Array(4)].map((_, i) => (
-            <motion.div
+            <div
               key={i}
-              className="absolute w-2 h-2 rounded-full bg-[#00B8A9] will-change-transform"
+              className="absolute w-2 h-2 rounded-full bg-[#00B8A9] animate-float-dot gpu-accelerated"
               style={{
                 left: `${20 + i * 20}%`,
                 top: `${25 + (i % 2) * 30}%`,
-              }}
-              animate={{
-                y: [0, -20, 0],
-                opacity: [0.1, 0.3, 0.1],
-              }}
-              transition={{
-                duration: 4 + i,
-                repeat: Infinity,
-                delay: i * 0.8,
-                ease: "easeInOut",
+                opacity: 0.18,
+                animationDuration: `${4 + i}s`,
+                animationDelay: `${i * 0.8}s`,
               }}
             />
           ))}
 
-          {/* Modern line accents with subtle animation */}
-          <motion.div
-            className="absolute top-1/3 left-0 right-0 h-px opacity-10"
+          {/* Modern line accents - CSS animation - Starts subtle, increases */}
+          <div
+            className="absolute top-1/3 left-0 right-0 h-px gpu-accelerated"
             style={{
               background: 'linear-gradient(90deg, transparent, #FF6B6B 50%, transparent)',
-            }}
-            animate={{
-              opacity: [0.05, 0.15, 0.05],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animation: 'pulseOpacityStart 6s ease-out forwards',
+              opacity: 0.01,
             }}
           />
 
-          {/* Geometric modern shapes - very subtle */}
-          <motion.div
-            className="absolute top-1/4 right-1/4 w-40 h-40 opacity-[0.04]"
+          {/* Geometric modern shapes - CSS animations - Starts subtle, increases */}
+          <div
+            className="absolute top-1/4 right-1/4 w-40 h-40 animate-rotate-slow gpu-accelerated"
             style={{
               background: 'linear-gradient(135deg, #FF6B6B, transparent)',
               clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-            }}
-            animate={{
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
+              animation: 'pulseOpacityStart 4s ease-out forwards, rotate-slow 30s linear infinite 4s',
+              opacity: 0.01,
             }}
           />
 
-          <motion.div
-            className="absolute bottom-1/3 left-1/4 w-32 h-32 opacity-[0.03]"
+          <div
+            className="absolute bottom-1/3 left-1/4 w-32 h-32 opacity-[0.03] animate-rotate-reverse gpu-accelerated"
             style={{
               background: 'linear-gradient(135deg, #00B8A9, transparent)',
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-            }}
-            animate={{
-              rotate: [0, -360, 0],
-              borderRadius: [
-                '30% 70% 70% 30% / 30% 30% 70% 70%',
-                '70% 30% 30% 70% / 70% 70% 30% 30%',
-                '30% 70% 70% 30% / 30% 30% 70% 70%'
-              ],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animationDuration: '25s',
             }}
           />
         </div>
@@ -376,9 +347,9 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <ShieldAlert className="w-4 h-4 text-[#00B8A9]" />
-              <span className="text-sm text-[rgb(26,35,50)] font-normal">Challenges</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
+              <ShieldAlert className="w-4.5 h-4.5 text-[#00B8A9]" />
+              <span className="text-base text-[rgb(26,35,50)] font-semibold">Challenges</span>
             </div>
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] text-center font-medium">
               {"Your growth shouldn\u2019t be slowed by technology bottlenecks."}
@@ -411,7 +382,7 @@ export function HomePage() {
             className="text-center max-w-3xl mx-auto"
           >
             <p className="text-[#2C3E50] text-lg font-normal">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-sm text-[rgb(26,35,50)] mr-2">V-Accel</span> helps organizations close these gaps — blending domain expertise and engineering depth to deliver software that accelerates your roadmap without compromising quality or compliance.
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-base text-[rgb(26,35,50)] font-semibold mr-2">V-Accel</span> helps organizations close these gaps — blending domain expertise and engineering depth to deliver software that accelerates your roadmap without compromising quality or compliance.
             </p>
           </motion.div>
         </div>
@@ -427,9 +398,9 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <Target className="w-4 h-4 text-[#00B8A9]" />
-              <span className="text-sm text-[rgb(26,35,50)]">Industry Expertise</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
+              <Target className="w-4.5 h-4.5 text-[#00B8A9]" />
+              <span className="text-base text-[rgb(26,35,50)] font-semibold">Industry Expertise</span>
             </div>
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
               Purpose-built solutions across three critical industries.
@@ -468,9 +439,9 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-3 px-5 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20">
-              <FileCheck className="w-5 h-5 text-[#00B8A9]" />
-              <span className="text-base text-[rgb(26,35,50)]">Built by V-Accel</span>
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-[#00B8A9]/12 rounded-full border border-[#00B8A9]/25 shadow-sm">
+              <FileCheck className="w-5.5 h-5.5 text-[#00B8A9]" />
+              <span className="text-lg text-[rgb(26,35,50)] font-semibold">Built by V-Accel</span>
             </div>
           </motion.div>
 
@@ -506,7 +477,7 @@ export function HomePage() {
 
               <div className="space-y-4">
                 <h2 className="text-[#1A2332] leading-relaxed font-normal text-base sm:text-lg text-left">
-                  <span className="inline-flex items-center gap-2 px-2 sm:px-3 py-1 bg-[#1A2332]/10 border border-[#1A2332]/20 text-[#1A2332] rounded-md mr-2 sm:mr-3 text-sm sm:text-base font-semibold">Project Accel</span> 
+                  <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-[#1A2332]/10 border border-[#1A2332]/20 text-[#1A2332] rounded-md mr-2 sm:mr-3 text-base sm:text-lg font-semibold">Project Accel</span> 
                   <span className="inline ">A project management platform built for how </span>
                   <span className="inline">tech and service teams actually work.</span>
                 </h2>
@@ -560,9 +531,9 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-lg mb-6">
-              <Shield className="w-4 h-4 text-[#00B8A9]" />
-              <span className="text-sm text-[rgb(26,35,50)]">Proof & Trust</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-lg mb-6 border border-[#00B8A9]/20">
+              <Shield className="w-4.5 h-4.5 text-[#00B8A9]" />
+              <span className="text-base text-[rgb(26,35,50)] font-semibold">Proof & Trust</span>
             </div>
             <h2 className="text-[#1A2332] text-2xl sm:text-[32px] mb-6 font-medium">
               Trusted by companies that build for scale and compliance.
@@ -580,65 +551,57 @@ export function HomePage() {
             className="max-w-5xl mx-auto mb-12"
           >
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-              <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+              <div 
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-all duration-200 relative overflow-hidden group hover-scale gpu-accelerated"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-200">
                     <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#00B8A9]" />
                   </div>
                   <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">25+</div>
                   <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Successful projects delivered</p>
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+              <div 
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-all duration-200 relative overflow-hidden group hover-scale gpu-accelerated"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-200">
                     <Target className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#FF6B6B]" />
                   </div>
                   <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">3</div>
                   <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Regulated industries served</p>
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+              <div 
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#00B8A9] hover:shadow-2xl transition-all duration-200 relative overflow-hidden group hover-scale gpu-accelerated"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#00B8A9]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-300">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#00B8A9]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#00B8A9]/20 transition-colors duration-200">
                     <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#00B8A9]" />
                   </div>
                   <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">5+</div>
                   <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Years of excellence</p>
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group"
+              <div 
+                className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col items-center text-center shadow-lg border-t-4 border-[#FF6B6B] hover:shadow-2xl transition-all duration-200 relative overflow-hidden group hover-scale gpu-accelerated"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B6B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-300">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#FF6B6B]/10 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors duration-200">
                     <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#FF6B6B]" />
                   </div>
                   <div className="mb-2 text-[#1A2332] text-2xl sm:text-3xl font-semibold">100%</div>
                   <p className="text-[#2C3E50] text-sm sm:text-base font-normal">Client satisfaction rate</p>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
 
@@ -660,9 +623,9 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <MessageCircle className="w-4 h-4 text-[#00B8A9]" />
-              <span className="text-sm text-[rgb(26,35,50)]">Client Success Stories</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
+              <MessageCircle className="w-4.5 h-4.5 text-[#00B8A9]" />
+              <span className="text-base text-[rgb(26,35,50)] font-semibold">Client Success Stories</span>
             </div>
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
               {"Hear from companies we\u2019ve helped scale."}
@@ -746,7 +709,7 @@ export function HomePage() {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="mb-6"
                 >
-                  <span className="inline-flex items-center px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-sm tracking-wider text-[rgb(26,35,50)] uppercase">FAQs</span>
+                  <span className="inline-flex items-center px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-base font-semibold tracking-wider text-[rgb(26,35,50)] uppercase">FAQs</span>
                 </motion.div>
                 
                 <motion.h2

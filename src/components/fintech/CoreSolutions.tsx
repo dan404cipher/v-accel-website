@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { CreditCard, TrendingUp, PieChart, Shield } from "lucide-react";
+import { useViewportAnimation } from "@/hooks/useViewportAnimation";
 
 const solutions = [
   {
@@ -39,68 +40,43 @@ const solutions = [
 ];
 
 export function CoreSolutions() {
+  const { ref } = useViewportAnimation({ rootMargin: "-100px" });
+  
   return (
     <section className="py-20 lg:py-28 bg-gradient-to-br from-background via-white to-background relative overflow-hidden">
       {/* Enhanced background decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Animated gradient orbs */}
-        <motion.div 
-          className="absolute top-0 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ 
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
+      <div ref={ref} className="absolute inset-0 pointer-events-none play-animations">
+        {/* Animated gradient orbs - Now using CSS animations */}
+        <div 
+          className="absolute top-0 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl animate-breathe gpu-accelerated"
+          style={{
+            animationDuration: '8s',
           }}
         />
-        <motion.div 
-          className="absolute bottom-0 -right-20 w-[600px] h-[600px] bg-primary/8 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ 
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
+        <div 
+          className="absolute bottom-0 -right-20 w-[600px] h-[600px] bg-primary/8 rounded-full blur-3xl animate-breathe gpu-accelerated"
+          style={{
+            animationDuration: '10s',
+            animationDirection: 'reverse',
           }}
         />
-        <motion.div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl"
-          animate={{ 
-            rotate: [0, 180, 360],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ 
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl animate-rotate-slow gpu-accelerated"
+          style={{
+            animationDuration: '20s',
           }}
         />
         
-        {/* Floating particles */}
+        {/* Floating particles - CSS animations */}
         {[...Array(6)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-1 h-1 bg-primary/20 rounded-full"
+            className="absolute w-1 h-1 bg-primary/20 rounded-full animate-pulse-opacity gpu-accelerated"
             style={{
               left: `${10 + i * 15}%`,
               top: `${20 + (i % 4) * 20}%`,
-              willChange: 'transform, opacity',
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 4 + i * 0.5,
-              delay: i * 0.2,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animationDuration: `${4 + i * 0.5}s`,
+              animationDelay: `${i * 0.2}s`,
             }}
           />
         ))}
@@ -192,13 +168,11 @@ export function CoreSolutions() {
                     }}
                   >
                     <div className="relative">
-                      <motion.div 
-                        className={`w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center relative z-10`}
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 300 }}
+                      <div 
+                        className={`w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center relative z-10 hover-scale gpu-accelerated`}
                       >
                         <Icon className={`w-8 h-8 ${solution.iconColor}`} />
-                      </motion.div>
+                      </div>
                       {/* Icon glow */}
                       <motion.div 
                         className={`absolute inset-0 rounded-2xl ${solution.iconColor.replace('text-', 'bg-')}/20 blur-xl`}

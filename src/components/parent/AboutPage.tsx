@@ -65,7 +65,10 @@ export function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Interactive Elements */}
-      <section ref={heroRef} className="relative px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-24 md:pb-32 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-screen">
+      <section
+        ref={heroRef}
+        className="relative flex items-center justify-center px-4 sm:px-6 py-0 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-[100svh]"
+      >
         {/* Simple gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]" style={{ zIndex: -20 }} />
 
@@ -74,7 +77,7 @@ export function AboutPage() {
           <OptimizedBackground variant="hero" />
         </div>
         
-        <div className="max-w-7xl mx-auto relative z-10 pt-20">
+        <div className="max-w-7xl mx-auto relative z-10 w-full py-16 sm:py-20 lg:py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,7 +96,7 @@ export function AboutPage() {
             </motion.div>
             
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-medium leading-[1.1] sm:leading-[1.1] md:leading-[1.05] mb-6 sm:mb-8"
+              className="text-[clamp(2.5rem,6vw,4.5rem)] md:text-[clamp(3rem,5vw,5.5rem)] font-medium leading-[1.05] mb-6 sm:mb-8 text-balance"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -106,7 +109,7 @@ export function AboutPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#2C3E50] max-w-4xl mx-auto leading-normal font-normal px-2"
+              className="text-[clamp(1rem,2.5vw,1.375rem)] md:text-[clamp(1.1rem,2vw,1.5rem)] text-[#2C3E50] max-w-4xl mx-auto leading-normal font-normal px-2 text-balance"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -152,8 +155,8 @@ export function AboutPage() {
       {/* Our Story Section */}
       <section className="relative px-6 py-20 overflow-hidden bg-gradient-to-b from-white to-[#F4F6F8]">
         {/* Decorative elements */}
-        <div className="absolute top-20 right-10 w-72 h-72 bg-[#00B8A9]/10 rounded-full blur-3xl opacity-40" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#1A2332]/5 rounded-full blur-3xl opacity-30" />
+        <div className="absolute top-20 right-10 w-72 h-72 bg-[#00B8A9]/10 rounded-full blur-xl opacity-40" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#1A2332]/5 rounded-full blur-xl opacity-30" />
         
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
@@ -455,8 +458,8 @@ export function AboutPage() {
       {/* Founder Section with Parallax Effect */}
       <section className="relative px-6 py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#1A2332]/10 rounded-full blur-3xl opacity-20" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#00B8A9]/10 rounded-full blur-3xl opacity-20" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#1A2332]/10 rounded-full blur-xl opacity-20" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#00B8A9]/10 rounded-full blur-xl opacity-20" />
         
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div

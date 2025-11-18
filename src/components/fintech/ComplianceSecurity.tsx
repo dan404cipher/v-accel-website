@@ -41,29 +41,16 @@ export function ComplianceSecurity() {
       {/* Animated background with grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,179,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,179,0,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
       
-      {/* Gradient orbs */}
-      <motion.div 
-        className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
+      {/* Gradient orbs - CSS animations */}
+      <div 
+        className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl animate-breathe gpu-accelerated"
+        style={{ animationDuration: '8s' }}
       />
-      <motion.div 
-        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-primary/8 rounded-full blur-3xl"
-        animate={{ 
-          scale: [1.2, 1, 1.2],
-          opacity: [0.2, 0.4, 0.2]
-        }}
-        transition={{ 
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut"
+      <div 
+        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-primary/8 rounded-full blur-3xl animate-breathe gpu-accelerated"
+        style={{ 
+          animationDuration: '10s',
+          animationDirection: 'reverse'
         }}
       />
       

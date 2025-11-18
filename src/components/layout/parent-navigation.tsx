@@ -1,12 +1,13 @@
 "use client";
 
-import { memo, useCallback, useState, useEffect, useRef } from "react";
+import { memo, useCallback, useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,17 @@ export const ParentNavigation = memo(function ParentNavigation() {
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isResourcesMenuOpen, setIsResourcesMenuOpen] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
   const navRef = useRef<HTMLElement>(null);
+
+  const desktopNavLinks = useMemo(
+    () => [
+      { label: "Home", href: "/" },
+      { label: "Product", href: "/#leadaccel" },
+      { label: "About", href: "/about" },
+    ],
+    [],
+  );
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
@@ -55,6 +66,40 @@ export const ParentNavigation = memo(function ParentNavigation() {
       return !prev;
     });
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const updateHash = () => {
+      setCurrentHash(window.location.hash || "");
+    };
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setCurrentHash(window.location.hash || "");
+  }, [pathname]);
+
+  const isActiveLink = useCallback(
+    (href: string) => {
+      if (href === "/") {
+        return pathname === "/" && (currentHash === "" || currentHash === "#top");
+      }
+      if (href.startsWith("/#")) {
+        const hashValue = href.split("#")[1];
+        if (!hashValue) return pathname === href;
+        return pathname === "/" && currentHash === `#${hashValue}`;
+      }
+      return pathname === href;
+    },
+    [pathname, currentHash],
+  );
+
+  const isServicesActive = pathname.startsWith("/services/");
+  const isResourcesActive =
+    pathname === "/blog" || pathname === "/case-studies";
 
   // Close menu on scroll
   useEffect(() => {
@@ -117,7 +162,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
           '--radius': '0.625rem',
         } as React.CSSProperties & { [key: string]: string }}
       >
-        <div className="absolute inset-0 bg-white/95 sm:bg-white/40 backdrop-blur-md sm:backdrop-blur-3xl pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
+        <div className="absolute inset-0 bg-white/95 sm:bg-white/40 backdrop-blur-md sm:backdrop-blur-xl pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
         <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/60 to-white/70 sm:from-white/40 sm:via-white/20 sm:to-white/30 pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#00B8A9]/10 via-transparent to-[#00B8A9]/10 sm:from-[#00B8A9]/5 sm:to-[#00B8A9]/5 pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
         <div className="absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-full border border-white/60 shadow-inner pointer-events-none" />
@@ -134,26 +179,56 @@ export const ParentNavigation = memo(function ParentNavigation() {
           </Link>
 
           <div className="desktop-nav-links hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+            {desktopNavLinks.map((link) => {
+              const active = isActiveLink(link.href);
+              return (
             <Link
-              href="/"
-              className="px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] transition-colors duration-200 font-medium"
+                  key={link.href}
+                  href={link.href}
+                  prefetch={false}
+                  onClick={closeMenu}
+                  className="relative px-4 py-2 font-medium text-sm"
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                    />
+                  )}
+                  <span
+                    className={cn(
+                      "relative z-10 transition-colors duration-200",
+                      active ? "text-white" : "text-[#2C3E50] hover:text-[#1A2332]",
+                    )}
             >
-              Home
+                    {link.label}
+                  </span>
             </Link>
+              );
+            })}
 
-            <a
-              href="#leadaccel"
-              className="px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] transition-colors duration-200 font-medium"
-            >
-              Product
-            </a>
-
+            <div className="relative px-1">
+              {isServicesActive && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                />
+              )}
             <DropdownMenu open={isServicesMenuOpen} onOpenChange={setIsServicesMenuOpen}>
-              <DropdownMenuTrigger className="flex items-center gap-1 px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] transition-colors duration-200 outline-none font-medium">
+                <DropdownMenuTrigger
+                  className={cn(
+                    "relative z-10 flex items-center gap-1 px-4 py-2 transition-colors duration-200 outline-none font-medium",
+                    isServicesActive
+                      ? "text-white"
+                      : "text-[#2C3E50] hover:text-[#1A2332]",
+                  )}
+                >
                 Service
                 <ChevronDown className="w-3.5 h-3.5" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="bg-white/40 backdrop-blur-3xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)] rounded-xl mt-2 min-w-[200px] p-2">
+              <DropdownMenuContent align="start" className="bg-white/40 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)] rounded-xl mt-2 min-w-[200px] p-2">
                 <DropdownMenuItem
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
@@ -207,20 +282,29 @@ export const ParentNavigation = memo(function ParentNavigation() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
 
-            <Link
-              href="/about"
-              className="px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] transition-colors duration-200 font-medium"
-            >
-              About
-            </Link>
-
+            <div className="relative px-1">
+              {isResourcesActive && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                />
+              )}
             <DropdownMenu open={isResourcesMenuOpen} onOpenChange={setIsResourcesMenuOpen}>
-              <DropdownMenuTrigger className="flex items-center gap-1 px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] transition-colors duration-200 outline-none font-medium">
+                <DropdownMenuTrigger
+                  className={cn(
+                    "relative z-10 flex items-center gap-1 px-4 py-2 transition-colors duration-200 outline-none font-medium",
+                    isResourcesActive
+                      ? "text-white"
+                      : "text-[#2C3E50] hover:text-[#1A2332]",
+                  )}
+                >
                 Resource
                 <ChevronDown className="w-3.5 h-3.5" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="bg-white/40 backdrop-blur-3xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)] rounded-xl mt-2 min-w-[200px] p-2">
+              <DropdownMenuContent align="start" className="bg-white/40 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)] rounded-xl mt-2 min-w-[200px] p-2">
                 <DropdownMenuItem
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
@@ -257,6 +341,8 @@ export const ParentNavigation = memo(function ParentNavigation() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
+
           </div>
 
           <div className="desktop-nav-cta hidden lg:flex items-center gap-4">
@@ -286,17 +372,28 @@ export const ParentNavigation = memo(function ParentNavigation() {
             <Link
               href="/"
               onClick={closeMenu}
-              className="block px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40 rounded-lg transition-colors backdrop-blur-sm font-medium"
+              className={cn(
+                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
+                isActiveLink("/")
+                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
+              )}
             >
               Home
             </Link>
-            <a
-              href="#leadaccel"
+            <Link
+              href="/#leadaccel"
+              prefetch={false}
               onClick={closeMenu}
-              className="block px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40 rounded-lg transition-colors backdrop-blur-sm font-medium"
+              className={cn(
+                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
+                isActiveLink("/#leadaccel")
+                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
+              )}
             >
               Product
-            </a>
+            </Link>
 
             <div>
               <button
@@ -352,7 +449,12 @@ export const ParentNavigation = memo(function ParentNavigation() {
             <Link
               href="/about"
               onClick={closeMenu}
-              className="block px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40 rounded-lg transition-colors backdrop-blur-sm font-medium"
+              className={cn(
+                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
+                isActiveLink("/about")
+                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
+                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
+              )}
             >
               About
             </Link>

@@ -196,8 +196,8 @@ export function UseCases() {
                       <div className="w-full max-w-md">
                         <div className="relative overflow-hidden rounded-2xl border-2 border-primary/20 bg-background/80 backdrop-blur-sm p-8 lg:p-10 shadow-xl">
                           {/* Decorative gradient */}
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-                          <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-xl" />
+                          <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full blur-xl" />
                           
                           <div className="relative space-y-6 text-center">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">

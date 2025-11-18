@@ -102,8 +102,8 @@ export function HowWeHelp() {
           </motion.div>
 
           {/* Subtle Gradient Orbs */}
-          <div className="absolute top-10 right-10 w-64 h-64 bg-[#4CAF50]/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#4DD0E1]/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-10 w-64 h-64 bg-[#4CAF50]/5 rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#4DD0E1]/5 rounded-full blur-xl"></div>
         </div>
 
         {/* Header */}

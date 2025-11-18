@@ -1,34 +1,24 @@
 "use client";
 
-import { motion } from "motion/react";
 import { useState, useEffect, useMemo, memo } from "react";
+import { useViewportAnimation } from "@/hooks/useViewportAnimation";
 
 interface OptimizedBackgroundProps {
   variant?: 'hero' | 'cta';
 }
 
-// Memoized dot component to prevent unnecessary re-renders
+// Floating dot component using CSS animations
 const FloatingDot = memo(({ dot }: { dot: any }) => (
-  <motion.div
-    className="absolute rounded-full"
+  <div
+    className="absolute rounded-full animate-float-dot gpu-accelerated"
     style={{
       left: dot.x,
       top: dot.y,
       width: dot.size,
       height: dot.size,
       backgroundColor: dot.color,
-      willChange: 'transform, opacity',
-    }}
-    animate={{
-      opacity: [0, 0.4, 0.7, 0.4, 0],
-      scale: [0.8, 1, 1.2, 1, 0.8],
-      y: [0, -30, -60, -30, 0],
-    }}
-    transition={{
-      duration: dot.duration,
-      repeat: Infinity,
-      delay: dot.delay,
-      ease: "easeInOut",
+      animationDuration: `${dot.duration}s`,
+      animationDelay: `${dot.delay}s`,
     }}
   />
 ));
@@ -36,6 +26,7 @@ const FloatingDot = memo(({ dot }: { dot: any }) => (
 FloatingDot.displayName = 'FloatingDot';
 
 export const OptimizedBackground = memo(({ variant = 'hero' }: OptimizedBackgroundProps) => {
+  const { ref } = useViewportAnimation({ rootMargin: "-100px" });
   const [mousePosition, setMousePosition] = useState({ x: 500, y: 500 });
 
   useEffect(() => {
@@ -87,7 +78,7 @@ export const OptimizedBackground = memo(({ variant = 'hero' }: OptimizedBackgrou
     return baseConfig;
   }, [variant]);
 
-  // Memoize inline styles
+  // Memoize inline styles for mouse spotlight (kept as JS since it's interactive)
   const spotlightStyle = useMemo(() => ({
     left: mousePosition.x - 400,
     top: mousePosition.y - 400,
@@ -96,99 +87,57 @@ export const OptimizedBackground = memo(({ variant = 'hero' }: OptimizedBackgrou
     background: 'radial-gradient(circle, rgba(0, 184, 169, 0.08), rgba(0, 184, 169, 0.03) 40%, transparent 70%)',
     borderRadius: '50%',
     willChange: 'transform',
+    transition: 'left 0.1s ease-out, top 0.1s ease-out',
   }), [mousePosition.x, mousePosition.y]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {/* Subtle mouse spotlight - throttled and optimized */}
-      <motion.div
+    <div ref={ref} className="absolute inset-0 overflow-hidden play-animations">
+      {/* Subtle mouse spotlight - kept as JS for interactivity */}
+      <div
         className="absolute pointer-events-none"
         style={spotlightStyle}
       />
 
-      {/* Animated Wave Line 1 - Optimized with fewer points */}
-      <svg className="absolute top-[15%] left-0 w-full h-[200px]" style={{ opacity: 0.06 }}>
-        <motion.path
+      {/* Animated Wave Lines - Smooth flowing animation */}
+      <svg className="absolute top-[15%] left-0 w-full h-[200px] animate-wave-flow gpu-accelerated" style={{ opacity: 0.4 }}>
+        <path
           d="M0,100 Q500,50 1000,100 T2000,100"
           fill="none"
-          stroke="#00B8A9"
-          strokeWidth="2"
-          animate={{
-            d: [
-              "M0,100 Q500,50 1000,100 T2000,100",
-              "M0,100 Q500,150 1000,100 T2000,100",
-              "M0,100 Q500,50 1000,100 T2000,100",
-            ],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          stroke="rgba(0, 184, 169, 0.18)"
+          strokeWidth="1"
+          strokeLinecap="round"
         />
       </svg>
 
-      {/* Animated Wave Line 2 - Optimized */}
-      <svg className="absolute top-[50%] left-0 w-full h-[150px]" style={{ opacity: 0.05 }}>
-        <motion.path
+      {/* Animated Wave Line 2 - Starts subtle, increases */}
+      <svg className="absolute top-[50%] left-0 w-full h-[150px] animate-wave-flow-2 gpu-accelerated" style={{ opacity: 0.25 }}>
+        <path
           d="M0,75 Q600,100 1200,75 T2400,75"
           fill="none"
-          stroke="#FF6B6B"
-          strokeWidth="2"
-          animate={{
-            d: [
-              "M0,75 Q600,100 1200,75 T2400,75",
-              "M0,75 Q600,50 1200,75 T2400,75",
-              "M0,75 Q600,100 1200,75 T2400,75",
-            ],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
+          stroke="rgba(255, 107, 107, 0.25)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
         />
       </svg>
 
-      {/* Minimal floating dots with optimized rendering */}
+      {/* Minimal floating dots with CSS animations */}
       {dots.map((dot) => (
         <FloatingDot key={dot.id} dot={dot} />
       ))}
 
-      {/* Optimized gradient orbs with CSS transform */}
-      <motion.div
-        className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full"
+      {/* Optimized gradient orbs with CSS animations */}
+      <div
+        className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full animate-breathe gpu-accelerated"
         style={{
           background: 'radial-gradient(circle, rgba(0, 184, 169, 0.06), transparent 70%)',
-          willChange: 'transform',
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
         }}
       />
 
-      <motion.div
-        className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full"
+      <div
+        className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full animate-breathe-large gpu-accelerated"
         style={{
           background: 'radial-gradient(circle, rgba(255, 107, 107, 0.04), transparent 70%)',
-          willChange: 'transform',
-        }}
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
+          animationDelay: '1s',
         }}
       />
     </div>

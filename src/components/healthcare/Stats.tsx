@@ -43,7 +43,7 @@ export function Stats() {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-10 left-10 w-64 h-64 bg-[#4CAF50]/10 rounded-full blur-3xl"
+          className="absolute top-10 left-10 w-64 h-64 bg-[#4CAF50]/10 rounded-full blur-xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.1, 0.2, 0.1],
@@ -55,7 +55,7 @@ export function Stats() {
           }}
         />
         <motion.div
-          className="absolute bottom-10 right-10 w-72 h-72 bg-[#4DD0E1]/10 rounded-full blur-3xl"
+          className="absolute bottom-10 right-10 w-72 h-72 bg-[#4DD0E1]/10 rounded-full blur-xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.1, 0.2, 0.1],

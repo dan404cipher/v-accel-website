@@ -51,17 +51,16 @@ export function KeyFeatures() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Large Card - Data Analytics Dashboard */}
           <motion.div 
-            className="lg:row-span-2 bg-gradient-to-br from-card to-primary/5 border rounded-2xl p-5 hover:border-primary/50 transition-all group relative overflow-hidden cursor-pointer"
+            className="lg:row-span-2 bg-gradient-to-br from-card to-primary/5 border rounded-2xl p-5 hover:border-primary/50 transition-all group relative overflow-hidden cursor-pointer hover-scale gpu-accelerated"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
             onMouseEnter={() => setHoveredCard(0)}
             onMouseLeave={() => setHoveredCard(null)}
           >
             {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-xl" />
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
             
             <div className="h-full flex flex-col relative z-10">

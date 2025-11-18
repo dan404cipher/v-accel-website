@@ -427,11 +427,11 @@ export function CaseStudyPage() {
               <Input
                 type="email"
                 placeholder="Enter your email address"
-                className="h-12 flex-1 rounded-lg border-2 border-[#1A2332]/20 px-4 transition-all focus:border-[#00B8A9] focus:ring-2 focus:ring-[#00B8A9]/20"
+                className="h-14 sm:h-12 md:h-14 flex-1 rounded-lg border-2 border-[#1A2332]/20 px-4 transition-all focus:border-[#00B8A9] focus:ring-2 focus:ring-[#00B8A9]/20"
               />
-              <Button className="h-12 rounded-lg bg-[#1A2332] px-8 text-base text-white shadow-[0_4px_14px_rgba(26,35,50,0.39)] transition-all hover:bg-[#1A2332]/90 hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)]">
+              <Button className="h-10 sm:h-12 md:h-14 rounded-lg bg-[#1A2332] px-3 sm:px-6 md:px-8 text-xs sm:text-sm md:text-base text-white shadow-[0_4px_14px_rgba(26,35,50,0.39)] transition-all hover:bg-[#1A2332]/90 hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)] w-full sm:w-auto">
                 Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-1.5 sm:ml-2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
               </Button>
             </div>
           </motion.div>

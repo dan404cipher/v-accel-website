@@ -62,8 +62,7 @@ export function ProblemSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="group"
+                className="group hover-lift gpu-accelerated"
               >
                 <div className={`relative h-full bg-gradient-to-br ${problem.gradient} border ${problem.borderColor} rounded-2xl p-8 hover:shadow-xl transition-all duration-300`}>
                   {/* Icon container */}

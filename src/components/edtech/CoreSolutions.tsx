@@ -35,8 +35,8 @@ export function CoreSolutions() {
     <section className="py-20 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/40 relative overflow-hidden">
       {/* Soft decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/20 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-200/20 rounded-full blur-xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

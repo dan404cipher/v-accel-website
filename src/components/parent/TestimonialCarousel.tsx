@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { useState, useEffect, memo, useCallback } from "react";
 import { TestimonialCard } from "./TestimonialCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -84,15 +83,11 @@ export const TestimonialCarousel = memo(function TestimonialCarousel({ testimoni
 
       {/* Carousel Container */}
       <div className="overflow-hidden">
-        <motion.div
-          className="flex"
-          animate={{
-            x: `-${currentIndex * (100 / slidesToShow)}%`,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
+        <div
+          className="flex transition-transform duration-300 ease-out"
+          style={{
+            transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
+            willChange: 'transform',
           }}
         >
           {testimonials.map((testimonial, index) => (
@@ -110,7 +105,7 @@ export const TestimonialCarousel = memo(function TestimonialCarousel({ testimoni
               />
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Dots Navigation */}

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
-import { TrendingUp, PieChart, BarChart3, LineChart, IndianRupee } from "lucide-react";
+import { TrendingUp, PieChart, BarChart3, IndianRupee } from "lucide-react";
+import { useViewportAnimation } from "@/hooks/useViewportAnimation";
 
 const floatingIcons = [
   { Icon: TrendingUp, delay: 0, duration: 20, x: "10%", y: "20%" },
@@ -11,8 +11,10 @@ const floatingIcons = [
 ];
 
 export function FinancialBackground() {
+  const { ref } = useViewportAnimation({ rootMargin: "-100px" });
+  
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none play-animations">
       {/* Gradient Orbs */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl"></div>
@@ -38,116 +40,74 @@ export function FinancialBackground() {
         <rect width="100%" height="100%" fill="url(#grid)" />
       </svg>
 
-      {/* Floating Financial Icons */}
+      {/* Floating Financial Icons - Now using CSS animations */}
       {floatingIcons.map((item, index) => {
         const IconComponent = item.Icon;
         return (
-          <motion.div
+          <div
             key={index}
-            className="absolute"
+            className="absolute animate-float-up-down gpu-accelerated"
             style={{
               left: item.x,
               top: item.y,
-              willChange: 'transform, opacity',
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: [0.03, 0.08, 0.03],
-              y: [0, -30, 0],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: item.duration,
-              delay: item.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animationDuration: `${item.duration}s`,
+              animationDelay: `${item.delay}s`,
             }}
           >
             <IconComponent className="w-12 h-12 text-primary" />
-          </motion.div>
+          </div>
         );
       })}
 
-      {/* Animated Chart Lines */}
+      {/* Animated Chart Lines - Using CSS stroke-dasharray for drawing effect */}
       <svg className="absolute inset-0 w-full h-full opacity-[0.04]">
-        <motion.path
+        <path
           d="M 0 300 Q 200 250, 400 280 T 800 260 T 1200 290 T 1600 270"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          strokeDasharray="2000"
+          strokeDashoffset="2000"
+          className="animate-draw-path gpu-accelerated"
+          style={{ willChange: 'stroke-dashoffset' }}
         />
-        <motion.path
+        <path
           d="M 0 500 Q 250 450, 500 480 T 1000 460 T 1500 490"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{
-            duration: 4,
-            delay: 1,
-            repeat: Infinity,
-            ease: "easeInOut",
+          strokeDasharray="2000"
+          strokeDashoffset="2000"
+          className="animate-draw-path-slow gpu-accelerated"
+          style={{ 
+            animationDelay: '1s',
+            willChange: 'stroke-dashoffset'
           }}
         />
       </svg>
 
-      {/* Floating Circles representing data points */}
+      {/* Floating Circles representing data points - CSS animations */}
       {[...Array(4)].map((_, i) => (
-        <motion.div
+        <div
           key={`circle-${i}`}
-          className="absolute w-2 h-2 bg-primary/20 rounded-full"
+          className="absolute w-2 h-2 bg-primary/20 rounded-full animate-pulse-opacity gpu-accelerated"
           style={{
             left: `${10 + i * 25}%`,
             top: `${30 + (i % 3) * 20}%`,
-            willChange: 'transform, opacity',
-          }}
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.2, 0.5, 0.2],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            delay: i * 0.3,
-            repeat: Infinity,
-            ease: "easeInOut",
+            animationDuration: `${3 + i * 0.5}s`,
+            animationDelay: `${i * 0.3}s`,
           }}
         />
       ))}
 
-      {/* Geometric Shapes */}
-      <motion.div
-        className="absolute top-20 right-20 w-32 h-32 border-2 border-primary/10 rounded-lg"
-        style={{ willChange: 'transform' }}
-        animate={{
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+      {/* Geometric Shapes - CSS rotation animations */}
+      <div
+        className="absolute top-20 right-20 w-32 h-32 border-2 border-primary/10 rounded-lg animate-rotate-slow gpu-accelerated"
       />
       
-      <motion.div
-        className="absolute bottom-40 left-32 w-24 h-24 border-2 border-primary/10"
-        style={{ borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%", willChange: 'transform' }}
-        animate={{
-          rotate: [0, -180, -360],
-        }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+      <div
+        className="absolute bottom-40 left-32 w-24 h-24 border-2 border-primary/10 animate-rotate-reverse gpu-accelerated"
+        style={{ borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%" }}
       />
     </div>
   );

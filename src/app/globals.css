@@ -255,6 +255,199 @@ html {
   }
 }
 
+/* Animation helpers */
+@keyframes float-up-down {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-15px) translateZ(0);
+  }
+}
+
+.animate-float-up-down {
+  animation: float-up-down 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes float-simple {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-10px) translateZ(0);
+  }
+}
+
+.animate-float-simple {
+  animation: float-simple 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes float-dot {
+  0%, 100% {
+    transform: translateY(2px) translateZ(0);
+    opacity: 0.35;
+  }
+  40% {
+    transform: translateY(-14px) translateZ(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-6px) translateZ(0);
+    opacity: 0.6;
+  }
+}
+
+.animate-float-dot {
+  animation: float-dot 4s ease-in-out infinite;
+}
+
+@keyframes pulse-opacity {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-opacity {
+  animation: pulse-opacity 3s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.animate-breathe {
+  animation: breathe 10s ease-in-out infinite;
+}
+
+@keyframes breathe-large {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.7;
+  }
+}
+
+.animate-breathe-large {
+  animation: breathe-large 14s ease-in-out infinite;
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 30s linear infinite;
+}
+
+@keyframes rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-rotate-reverse {
+  animation: rotate-reverse 30s linear infinite;
+}
+
+@keyframes wave-flow {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-25px);
+    opacity: 0.85;
+  }
+}
+
+.animate-wave-flow {
+  animation: wave-flow 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes wave-flow-2 {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(20px);
+    opacity: 0.45;
+  }
+}
+
+.animate-wave-flow-2 {
+  animation: wave-flow-2 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes draw-path {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-path {
+  animation: draw-path 6s ease-in-out infinite;
+  animation-fill-mode: forwards;
+}
+
+.animate-draw-path-slow {
+  animation: draw-path 9s ease-in-out infinite;
+  animation-fill-mode: forwards;
+}
+
+.hover-scale {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  will-change: transform, box-shadow;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+}
+
+/* Viewport animation helpers */
+.play-animations * {
+  animation-play-state: running !important;
+}
+
+.pause-animations *,
+.pause-animations *::before,
+.pause-animations *::after {
+  animation-play-state: paused !important;
+}
 @media (min-width: 1024px) {
   .mobile-nav-trigger,
   .mobile-nav-menu {
@@ -293,3 +486,14 @@ nav {
     align-items: flex-start;
   }
 }
+/* Viewport-controlled animation helpers */
+.play-animations * {
+  animation-play-state: running !important;
+}
+
+.pause-animations *,
+.pause-animations *::before,
+.pause-animations *::after {
+  animation-play-state: paused !important;
+}
+
