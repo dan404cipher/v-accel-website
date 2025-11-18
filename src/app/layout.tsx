@@ -5,6 +5,7 @@ import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { ParentNavigation } from "@/components/layout/parent-navigation";
 import { ParentFooter } from "@/components/layout/parent-footer";
+import { ScrollToTop } from "@/components/shared/scroll-to-top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,11 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
+  icons: {
+    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    apple: [{ url: "/favicon.ico", type: "image/x-icon" }],
+  },
 };
 
 export default function RootLayout({
@@ -46,9 +52,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#F4F6F8] antialiased`}>
+        <ScrollToTop />
         <div className="flex min-h-screen flex-col">
           <ParentNavigation />
-          <main className="flex-1 pt-0 md:pt-0">{children}</main>
+          <main data-page-hero className="flex-1 pt-0 md:pt-0">
+            {children}
+          </main>
           <ParentFooter />
         </div>
       </body>

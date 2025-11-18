@@ -107,7 +107,7 @@ const AnimatedProductText = memo(() => {
   );
 
   return (
-    <span className="inline-block">
+    <span className="block mt-2 sm:mt-3">
       <span className="text-[#2C3E50]">AI-powered </span>
       <span
         className="inline-block relative text-center sm:text-left"
@@ -203,7 +203,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-[#F4F6F8]">
       {/* Section 1: Hero Area - Optimized */}
-      <section className="relative flex items-center justify-center px-4 sm:px-6 py-0 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-[100svh]">
+      <section className="relative flex items-center justify-center px-0 py-0 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-[100svh]">
         {/* Simple gradient background */}
         <div
           className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]"
@@ -218,7 +218,7 @@ export function HomePage() {
           <OptimizedBackground variant="hero" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 w-full py-16 sm:py-20 lg:py-24">
+        <div className="container mx-auto relative z-10 w-full text-center px-4 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24 mt-10 sm:mt-14 lg:mt-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -244,7 +244,7 @@ export function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="inline text-[#2C3E50] block">
+              <span className="block text-[#2C3E50] text-[clamp(3.25rem,5.5vw,5.6rem)]">
                 Accelerate your business with
               </span>
               <AnimatedProductText />
@@ -419,7 +419,7 @@ export function HomePage() {
             </div>
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] text-center font-medium">
               {
-                "Your growth shouldn\u2019t be slowed by technology bottlenecks."
+                "Your growth shouldn't be slowed by technology bottlenecks."
               }
             </h2>
           </motion.div>

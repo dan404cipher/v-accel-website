@@ -97,15 +97,20 @@ export function ParentFooter() {
           >
             <h4 className="text-[#1A2332] mb-5">Services</h4>
             <ul className="space-y-3.5 text-sm">
-              {["EdTech", "FinTech", "Healthcare"].map((service) => (
-                <li key={service}>
-                  <motion.a
-                    href="#"
-                    className="text-[#2C3E50]/70 font-medium hover:text-[#00B8A9] transition-colors"
-                    whileHover={{ x: 5 }}
-                  >
-                    {service}
-                  </motion.a>
+              {[
+                { label: "EdTech", href: "/services/edtech" },
+                { label: "FinTech", href: "/services/fintech" },
+                { label: "Healthcare", href: "/services/healthcare" },
+              ].map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href} className="block">
+                    <motion.span
+                      className="text-[#2C3E50]/70 font-medium hover:text-[#00B8A9] transition-colors inline-block"
+                      whileHover={{ x: 5 }}
+                    >
+                      {label}
+                    </motion.span>
+                  </Link>
                 </li>
               ))}
             </ul>

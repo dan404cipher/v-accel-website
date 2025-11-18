@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState, useRef, useEffect } from "react";
-import type { MouseEvent } from "react";
+import { useState } from "react";
 import { ImageWithFallback } from "./ImageWithFallback";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -62,171 +61,82 @@ const technologies = [
 export function TechStack() {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("cloud");
-  const [mousePosition, setMousePosition] = useState({ x: 400, y: 300 });
-  const throttleRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
   const { ref: viewportRef } = useViewportAnimation({ rootMargin: "-100px" });
-
   // Removed auto-tab switching to reduce timers and improve performance
-
-  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
-    const now = Date.now();
-    if (now - throttleRef.current < 80) return;
-    throttleRef.current = now;
-
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    rafRef.current = requestAnimationFrame(() => {
-      setMousePosition({ x, y });
-      rafRef.current = null;
-    });
-  };
-
-  useEffect(() => {
-    return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
 
   return (
     <section
       ref={viewportRef}
       id="tech-stack"
-      className="relative py-20 lg:py-32 bg-gradient-to-b from-[#F4F6F8] via-white to-[#EDF4F6] overflow-hidden sm:overflow-visible play-animations"
-      onMouseMove={handleMouseMove}
+      className="relative py-20 lg:py-32 bg-[#FAFBFC] overflow-hidden play-animations"
     >
-      {/* Section divider */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00B8A9]/30 to-transparent opacity-60" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#1A2332]/25 to-transparent opacity-50" />
-
-      {/* Ambient interactive background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-white/40" />
-        <div className="absolute left-1/2 top-1/3 -translate-x-1/2 w-[90%] h-[70%] bg-white/45 rounded-[999px] blur-[180px]" />
-        {/* Cursor-responsive spotlight - CSS animation */}
-        <div
-          className="absolute -translate-x-1/2 -translate-y-1/2 blur-2xl animate-spotlight-pulse gpu-accelerated"
-          style={{
-            left: mousePosition.x,
-            top: mousePosition.y,
-            width: 700,
-            height: 700,
-            background:
-              "radial-gradient(circle, rgba(0,184,169,0.22), rgba(0,184,169,0.08) 45%, transparent 70%)",
-            borderRadius: "50%",
-          }}
-        />
-
-        {/* Primary grid - CSS animation */}
-        <div
-          className="absolute inset-0 animate-grid-opacity gpu-accelerated"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(26,35,50,0.12) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(26,35,50,0.12) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-            maskImage: `radial-gradient(circle 420px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 420px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)`,
-          }}
-        />
-
-        {/* Secondary grid - CSS animation */}
-        <div
-          className="absolute inset-0 animate-grid-opacity-secondary gpu-accelerated"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(0,184,169,0.15) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0,184,169,0.15) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-            backgroundPosition: "30px 30px",
-            maskImage: `radial-gradient(circle 320px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.04) 60%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 320px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.04) 60%, transparent 100%)`,
-          }}
-        />
-
-        {/* Gradient orbs - CSS animations */}
-        <div
-          className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] opacity-30 animate-orb-scale gpu-accelerated"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(0, 184, 169, 0.2) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="absolute bottom-[-10%] left-[-5%] w-[520px] h-[520px] opacity-25 animate-orb-scale-large gpu-accelerated"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(26, 35, 50, 0.16) 0%, transparent 70%)",
-            filter: "blur(70px)",
-          }}
-        />
-
-        {/* Floating dots - CSS animations */}
-        {[...Array(6)].map((_, i) => (
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+        <div className="absolute inset-0 overflow-hidden">
           <div
-            key={`tech-dot-${i}`}
-            className="absolute w-2 h-2 rounded-full bg-[#00B8A9]/60 animate-tech-dot-float gpu-accelerated"
+            className="absolute pointer-events-none"
             style={{
-              left: `${12 + i * 14}%`,
-              top: `${25 + (i % 3) * 25}%`,
-              animationDuration: `${4.5 + i * 0.3}s`,
-              animationDelay: `${i * 0.5}s`,
+              left: "-189px",
+              top: "168px",
+              width: "800px",
+              height: "800px",
+              background:
+                "radial-gradient(circle, rgba(0, 184, 169, 0.08), rgba(0, 184, 169, 0.03) 40%, transparent 70%)",
+              borderRadius: "50%",
             }}
           />
-        ))}
 
-        {/* Mid-line accent - CSS animation */}
-        <div
-          className="absolute top-1/3 left-0 right-0 h-px opacity-70 animate-line-accent gpu-accelerated"
-          style={{
-            background: "linear-gradient(90deg, transparent, rgba(0,184,169,0.45), transparent)",
-          }}
-        />
+          <svg className="absolute top-[15%] left-0 w-full h-[200px]" style={{ opacity: 0.06 }}>
+            <path
+              d="M0,100 Q500,137.81305 1000,100 T2000,100"
+              fill="none"
+              stroke="#00B8A9"
+              strokeWidth="2"
+            />
+          </svg>
 
-        {/* Animated wave lines - Simplified to static for performance (path morphing is expensive) */}
-        <svg className="absolute top-[18%] left-0 w-full h-[180px]" style={{ opacity: 0.08 }}>
-          <path
-            d="M0,100 Q500,60 1000,100 T2000,100"
-            fill="none"
-            stroke="#00B8A9"
-            strokeWidth="2"
+          <svg className="absolute top-[50%] left-0 w-full h-[150px]" style={{ opacity: 0.05 }}>
+            <path
+              d="M0,75 Q600,99.99742 1200,75 T2400,75"
+              fill="none"
+              stroke="#FF6B6B"
+              strokeWidth="2"
+            />
+          </svg>
+
+          {[
+            { left: "15%", top: "25%", size: 4, color: "#00B8A9", transform: "translateY(-38px) scale(1.05)" },
+            { left: "80%", top: "20%", size: 3, color: "#00B8A9", transform: "translateY(-10px) scale(0.87)" },
+            { left: "25%", top: "75%", size: 4, color: "#FF6B6B", transform: "translateY(-14px) scale(0.9)" },
+            { left: "70%", top: "65%", size: 3, color: "#00B8A9", transform: "translateY(-60px) scale(1.2)" },
+          ].map((dot, idx) => (
+            <div
+              key={`static-dot-${idx}`}
+              className="absolute rounded-full"
+              style={{
+                left: dot.left,
+                top: dot.top,
+                width: `${dot.size}px`,
+                height: `${dot.size}px`,
+                backgroundColor: dot.color,
+                transform: dot.transform,
+              }}
+            />
+          ))}
+
+          <div
+            className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full"
+            style={{
+              background: "radial-gradient(circle, rgba(0, 184, 169, 0.06), transparent 70%)",
+            }}
           />
-        </svg>
 
-        <svg className="absolute bottom-[22%] left-0 w-full h-[150px]" style={{ opacity: 0.07 }}>
-          <path
-            d="M0,75 Q600,110 1200,75 T2400,75"
-            fill="none"
-            stroke="#1A2332"
-            strokeWidth="2"
+          <div
+            className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full"
+            style={{
+              background: "radial-gradient(circle, rgba(255, 107, 107, 0.04), transparent 70%)",
+            }}
           />
-        </svg>
-
-        {/* Geometric accents - CSS animations */}
-        <div
-          className="absolute top-1/4 right-1/5 w-40 h-40 opacity-[0.05] animate-tech-shape-rotate gpu-accelerated"
-          style={{
-            background: "linear-gradient(135deg, rgba(0,184,169,0.4), transparent)",
-            clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-          }}
-        />
-        <div
-          className="absolute bottom-1/3 left-1/3 w-32 h-32 opacity-[0.04] animate-tech-blob-morph gpu-accelerated"
-          style={{
-            background: "linear-gradient(135deg, rgba(26,35,50,0.5), transparent)",
-          }}
-        />
+        </div>
       </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
