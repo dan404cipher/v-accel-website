@@ -54,7 +54,7 @@ export function HealthcareBackground() {
               animationDelay: `${item.delay}s`,
             }}
           >
-            <IconComponent className="w-12 h-12 text-primary" />
+            <IconComponent className="w-12 h-12 text-primary/10" />
           </div>
         );
       })}

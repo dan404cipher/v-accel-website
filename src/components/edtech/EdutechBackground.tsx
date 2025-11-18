@@ -69,7 +69,7 @@ export function EdutechBackground() {
           }}
         >
           <item.Icon 
-            className="text-primary/20" 
+            className="text-primary/5" 
             size={32}
             strokeWidth={1.5}
           />
