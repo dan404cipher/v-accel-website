@@ -33,6 +33,9 @@ import {
   Briefcase,
 } from "lucide-react";
 
+const BADGE_BASE =
+  "inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-base text-[#1A2332] font-semibold";
+
 export function AboutPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLElement>(null);
@@ -96,8 +99,8 @@ export function AboutPage() {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-xs sm:text-sm md:text-base py-[10px] px-[20px] font-bold">
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" />
+              <Badge className={`${BADGE_BASE} mb-4 md:mb-6 shadow-lg`}>
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#00B8A9]" />
                 About V-Accel AI Dynamics
               </Badge>
             </motion.div>
@@ -182,8 +185,8 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="mb-16 text-center"
           >
-            <Badge className="mb-[24px] bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-[#1A2332] shadow-lg py-[8px] px-[16px] mt-[0px] mr-[0px] ml-[0px] text-[14px] font-semibold">
-              <Rocket className="w-4 h-4 mr-2 text-[#00B8A9]" />
+            <Badge className={`${BADGE_BASE} mb-6`}>
+              <Rocket className="w-4 h-4 text-[#00B8A9]" />
               Our Journey
             </Badge>
           </motion.div>
@@ -396,7 +399,7 @@ export function AboutPage() {
                     Delivering excellence across EdTech, FinTech & Healthcare
                   </span>
                 </div>
-                <Badge className="bg-[#00B8A9]/10 text-[rgb(26,35,50)] border-[#00B8A9]/20 text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 font-semibold">
+                <Badge className={`${BADGE_BASE}`}>
                   #innovation
                 </Badge>
               </div>
@@ -467,7 +470,7 @@ export function AboutPage() {
                 </div>
 
                 {/* Goal Badge */}
-                <Badge className="bg-[#00B8A9]/10 text-[#1A2332] text-sm border-[#00B8A9]/20 px-6 py-3 mb-6 font-semibold">
+                <Badge className={`${BADGE_BASE} mb-6`}>
                   Our goal: Trusted partner across 3 regulated industries
                 </Badge>
 
@@ -555,8 +558,8 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <Badge className="mb-[24px] bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-[#1A2332] shadow-lg text-base sm:text-lg py-[8px] px-[16px] mt-[0px] mr-[0px] ml-[0px] font-semibold">
-              <Users className="w-6 h-6 mr-2 text-[#00B8A9]" />
+            <Badge className={`${BADGE_BASE} mb-6`}>
+              <Users className="w-5 h-5 text-[#00B8A9]" />
               Leadership
             </Badge>
             <h2 className="text-4xl md:text-6xl font-semibold mb-4">
@@ -592,8 +595,8 @@ export function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <Badge className="bg-white/90 backdrop-blur-sm text-[#1A2332] border-0 px-4 py-2 shadow-lg font-semibold">
-                    <Award className="w-4 h-4 mr-2" />
+                  <Badge className={`${BADGE_BASE} bg-white/90 border-white/60`}>
+                    <Award className="w-4 h-4 text-[#00B8A9]" />
                     10+ Years Experience
                   </Badge>
                 </motion.div>
