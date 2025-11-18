@@ -38,6 +38,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
+    "googleapis": "^166.0.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.553.0",
     "motion": "^11.11.17",
@@ -51,13 +52,15 @@
     "react-resizable-panels": "^2.1.7",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.4.0",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/xlsx": "^0.0.35",
     "autoprefixer": "^10.4.17",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
