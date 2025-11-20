@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
-import { Linkedin, Twitter, Github, Mail } from "lucide-react";
+import { Linkedin, Twitter, Github, Mail, Instagram, Youtube } from "lucide-react";
 import vaccelLogo from "@assets/2f6818b63f91758834982350ffe7523437d669ba.png";
 
 export function ParentFooter() {
@@ -68,23 +68,33 @@ export function ParentFooter() {
               Empowering healthcare organizations with cutting-edge technology solutions.
             </p>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {[
-                { icon: Linkedin, label: "LinkedIn" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Github, label: "GitHub" },
-                { icon: Mail, label: "Email" },
-              ].map(({ icon: Icon, label }) => (
+                { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/v-accel/" },
+                { icon: Youtube, label: "Youtube", href: "https://youtube.com/@v-accel-ai?si=nofB222q7iIDjNpa" },
+                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/vaccel.ai?igsh=MTA0OXc1c2pnemZpZA==" },
+                { icon: Mail, label: "Email", href: "mailto:info@v-accel.ai" },
+              ].map(({ icon: Icon, label, href }, index) => (
+                <motion.div key={label} className="wrapper relative group">
                 <motion.a
-                  key={label}
-                  href="#"
-                  className="w-9 h-9 bg-[#00B8A9] rounded-lg flex items-center justify-center hover:bg-[#1A2332] transition-colors text-white shadow-md"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="icon w-10 h-10 rounded-[14px] bg-[#00B8A9] flex items-center justify-center text-white shadow-md transition-all duration-300 group-hover:bg-[#1A2332]"
+                    whileHover={{ scale: 1.05, rotate: index === 0 ? -4 : 4 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={label}
                 >
-                  <Icon className="w-4 h-4" />
+                    <Icon className="w-4.5 h-4.5 transition-colors duration-300 group-hover:text-white" />
                 </motion.a>
+                  <span
+                    className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-2 -translate-y-full rounded-full bg-[#1A2332] text-white text-xs font-semibold tracking-wide px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:-translate-y-[135%] transition-all duration-300 shadow-[0_6px_18px_rgba(0,0,0,0.25)] whitespace-nowrap"
+                    style={{ textShadow: "0px -1px 0px rgba(0,0,0,0.4)" }}
+                  >
+                    {label}
+                    <span className="absolute left-1/2 top-full -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-[#1A2332]" />
+                  </span>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -166,11 +176,17 @@ export function ParentFooter() {
                 className="text-[#2C3E50]/70 font-medium hover:text-[#00B8A9] transition-colors block"
                   whileHover={{ x: 5 }}
                 >
-                  86102 62853
+                  +91 86102 62853
                 </motion.a>
               </li>
               <li>
-                <p className="text-[#2C3E50]/70 font-medium leading-relaxed">
+                <motion.a
+                  href="https://www.google.com/maps/search/?api=1&query=V-Accel+AI+Dynamics+Pvt+Ltd+No:04,+Ground+Floor,+Tidel+Park,+Rajiv+Gandhi+Salai,+Taramani,+Chennai+-+113"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2C3E50]/70 font-medium leading-relaxed block hover:text-[#00B8A9] transition-colors"
+                  whileHover={{ x: 5 }}
+                >
                   V-Accel AI Dynamics Pvt Ltd
                   <br />
                   No:04, Ground Floor, Tidel Park,
@@ -178,7 +194,7 @@ export function ParentFooter() {
                   Rajiv Gandhi Salai, Taramani,
                   <br />
                   Chennai - 113
-                </p>
+                </motion.a>
               </li>
             </ul>
           </motion.div>
@@ -193,7 +209,7 @@ export function ParentFooter() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              © {new Date().getFullYear()} V-Accel Healthcare. All rights reserved.
+              © {new Date().getFullYear()} V-Accel AI Dynamics Pvt Ltd. All rights reserved.
             </motion.p>
 
             <motion.div

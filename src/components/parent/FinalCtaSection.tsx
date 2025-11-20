@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Rocket, ArrowRight, Clock } from "lucide-react";
 
 import { OptimizedBackground } from "./OptimizedBackground";
+import { SectionBadge } from "./SectionBadge";
 
 export function FinalCtaSection() {
   return (
@@ -21,10 +22,11 @@ export function FinalCtaSection() {
           transition={{ duration: 0.5 }}
           className="space-y-8"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20">
-            <Rocket className="w-5 h-5 text-[#00B8A9]" />
-            <span className="text-lg sm:text-xl text-[rgb(26,35,50)] font-medium">{"Let\u2019s Build Together"}</span>
-          </div>
+          <SectionBadge
+            icon={Rocket}
+            label={"Let\u2019s Build Together"}
+            className="mx-auto justify-center"
+          />
 
           <h2 className="text-[#1A2332] text-3xl sm:text-4xl lg:text-5xl font-medium">
             {"Let\u2019s build something that lasts."}

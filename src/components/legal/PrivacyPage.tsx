@@ -498,7 +498,7 @@ export function PrivacyPage() {
   );
 }
 
-function Hero({ viewportRef }: { viewportRef: React.RefObject<HTMLDivElement> }) {
+function Hero({ viewportRef }: { viewportRef: React.RefObject<HTMLDivElement | null> }) {
   return (
     <section ref={viewportRef} className="relative overflow-hidden bg-gradient-to-br from-[#3E5266] via-[#3E5266] to-[#4A5568] pt-32 pb-24 play-animations">
       <div className="absolute inset-0">

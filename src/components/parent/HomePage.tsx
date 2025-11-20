@@ -1,10 +1,16 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState, useEffect, useCallback, useMemo, memo, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+  useRef,
+} from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import dynamic from "next/dynamic";
 import { ProblemCard } from "./ProblemCard";
 import { OptimizedBackground } from "./OptimizedBackground";
@@ -87,6 +93,7 @@ import {
 } from "lucide-react";
 import { ImageWithFallback } from "./ImageWithFallback";
 import leadAccelImage from "@assets/d64e6d6646625791c48e3bc956b41ef6548cda47.png";
+import { SectionBadge } from "./SectionBadge";
 
 // Animated Product Text Component - Memoized for better performance
 const AnimatedProductText = memo(() => {
@@ -203,7 +210,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-[#F4F6F8]">
       {/* Section 1: Hero Area - Optimized */}
-      <section className="relative flex items-center justify-center px-0 py-0 overflow-hidden bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] min-h-[100svh]">
+      <section className="relative overflow-hidden min-h-[100svh] flex items-center bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4] py-24 sm:py-32">
         {/* Simple gradient background */}
         <div
           className="absolute inset-0 bg-gradient-to-br from-[#F4F6F8] via-white to-[#E8F5F4]"
@@ -218,7 +225,7 @@ export function HomePage() {
           <OptimizedBackground variant="hero" />
         </div>
 
-        <div className="container mx-auto relative z-10 w-full text-center px-4 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24 mt-10 sm:mt-14 lg:mt-20">
+        <div className="max-w-7xl mx-auto text-center relative z-10 w-full px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -231,20 +238,21 @@ export function HomePage() {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <Badge className="mb-4 md:mb-6 bg-gradient-to-r from-[#1A2332]/10 to-[#00B8A9]/10 text-[#1A2332] border-0 shadow-lg text-sm md:text-base py-[10px] px-[20px] font-semibold tracking-wide">
-                <Sparkles className="w-4 h-4 mr-2" />
-                AI-Powered Innovation
-              </Badge>
+              <SectionBadge
+                icon={Sparkles}
+                label="AI-Powered Innovation"
+                className="mb-4 md:mb-6 mx-auto justify-center"
+              />
             </motion.div>
 
             {/* Main heading with staggered animation */}
             <motion.h1
-              className="text-[clamp(2.75rem,6vw,5rem)] md:text-[clamp(3.5rem,5vw,5.5rem)] font-normal mb-4 sm:mb-6 leading-[1.05] text-balance px-1"
+              className="text-[clamp(2.4rem,8vw,3rem)] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[clamp(3.5rem,5vw,5.5rem)] font-normal mb-4 sm:mb-6 leading-[1.05] text-balance px-1"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="block text-[#2C3E50] text-[clamp(3.25rem,5.5vw,5.6rem)]">
+              <span className="block text-[#2C3E50] text-[clamp(2.4rem,8vw,5.6rem)] sm:text-[clamp(2.8rem,6vw,5.6rem)]">
                 Accelerate your business with
               </span>
               <AnimatedProductText />
@@ -252,7 +260,7 @@ export function HomePage() {
 
             {/* Description */}
             <motion.p
-              className="text-[clamp(1rem,2.5vw,1.375rem)] md:text-[clamp(1.1rem,2vw,1.5rem)] text-[#2C3E50] max-w-3xl mx-auto leading-relaxed font-normal px-4 sm:px-2 mb-6 sm:mb-8 md:mb-10 text-balance"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-normal px-2 sm:px-4 mb-6 md:mb-10 text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -264,16 +272,16 @@ export function HomePage() {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-stretch sm:items-center px-4 sm:px-2 min-h-[3.5rem] sm:min-h-[3rem]"
+              className="flex gap-3 md:gap-4 justify-center items-center flex-wrap px-2 sm:px-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               style={{ willChange: "auto" }}
             >
-              <div className="w-full sm:w-auto flex-shrink-0">
+              <div className="w-full sm:w-auto">
                 <Button
                   size="default"
-                  className="w-full sm:w-auto rounded-lg px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm md:text-base bg-[#1A2332] hover:bg-[#1A2332]/90 shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)] transition-all group text-white h-11 sm:h-12 md:h-14 flex-shrink-0"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium rounded-lg px-6 md:px-8 py-4 text-sm md:text-base bg-[#1A2332] hover:bg-[#1A2332]/90 shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_6px_20px_rgba(26,35,50,0.5)] transition-all group text-white h-12 md:h-14"
                   onClick={() => onNavigate("solutions")}
                 >
                   Explore Industry Solutions
@@ -283,11 +291,11 @@ export function HomePage() {
                 </Button>
               </div>
 
-              <div className="w-full sm:w-auto flex-shrink-0">
+              <div className="w-full sm:w-auto">
                 <Button
                   size="default"
                   variant="outline"
-                  className="w-full sm:w-auto rounded-lg px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm md:text-base border-2 border-black/80 bg-[rgba(255,255,255,0)] text-black/90 hover:border-black hover:bg-gray-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.1)] hover:shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] transition-all h-11 sm:h-12 md:h-14 text-[rgb(44,62,80)] flex-shrink-0"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium rounded-lg px-6 md:px-8 py-4 text-sm md:text-base border-2 border-black/80 bg-[rgba(255,255,255,0)] text-[rgb(44,62,80)] hover:border-black hover:bg-gray-50 shadow-[0_2px_10px_0_rgba(0,0,0,0.1)] hover:shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] transition-all h-12 md:h-14"
                   onClick={() => onNavigate("lead-accel")}
                 >
                   See Our Product
@@ -411,12 +419,11 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <ShieldAlert className="w-4.5 h-4.5 text-[#00B8A9]" />
-              <span className="text-base text-[rgb(26,35,50)] font-semibold">
-                Challenges
-              </span>
-            </div>
+            <SectionBadge
+              icon={ShieldAlert}
+              label="Challenges"
+              className="mb-6 mx-auto justify-center"
+            />
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] text-center font-medium">
               {
                 "Your growth shouldn't be slowed by technology bottlenecks."
@@ -450,9 +457,11 @@ export function HomePage() {
             className="text-center max-w-3xl mx-auto"
           >
             <p className="text-[#2C3E50] text-lg font-normal">
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-base text-[rgb(26,35,50)] font-semibold mr-2">
-                V-Accel
-              </span>{" "}
+              <SectionBadge
+                as="span"
+                label="V-Accel"
+                className="mr-2 mb-0 align-middle"
+              />{" "}
               helps organizations close these gaps — blending domain expertise
               and engineering depth to deliver software that accelerates your
               roadmap without compromising quality or compliance.
@@ -471,12 +480,11 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <Target className="w-4.5 h-4.5 text-[#00B8A9]" />
-              <span className="text-base text-[rgb(26,35,50)] font-semibold">
-                Industry Expertise
-              </span>
-            </div>
+            <SectionBadge
+              icon={Target}
+              label="Industry Expertise"
+              className="mb-6 mx-auto justify-center"
+            />
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
               Purpose-built solutions across three critical industries.
             </h2>
@@ -521,12 +529,11 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-[#00B8A9]/12 rounded-full border border-[#00B8A9]/25 shadow-sm">
-              <FileCheck className="w-5.5 h-5.5 text-[#00B8A9]" />
-              <span className="text-lg text-[rgb(26,35,50)] font-semibold">
-                Built by V-Accel
-              </span>
-            </div>
+            <SectionBadge
+              icon={FileCheck}
+              label="Built by V-Accel"
+              className="mx-auto justify-center"
+            />
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -562,9 +569,11 @@ export function HomePage() {
 
               <div className="space-y-4">
                 <h2 className="text-[#1A2332] leading-relaxed font-normal text-base sm:text-lg text-left">
-                  <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-[#1A2332]/10 border border-[#1A2332]/20 text-[#1A2332] rounded-md mr-2 sm:mr-3 text-base sm:text-lg font-semibold">
-                    Project Accel
-                  </span>
+                  <SectionBadge
+                    as="span"
+                    label="Project Accel"
+                    className="mr-2 sm:mr-3 mb-0 align-middle"
+                  />
                   <span className="inline ">
                     A project management platform built for how{" "}
                   </span>
@@ -644,12 +653,11 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-lg mb-6 border border-[#00B8A9]/20">
-              <Shield className="w-4.5 h-4.5 text-[#00B8A9]" />
-              <span className="text-base text-[rgb(26,35,50)] font-semibold">
-                Proof & Trust
-              </span>
-            </div>
+            <SectionBadge
+              icon={Shield}
+              label="Proof & Trust"
+              className="mb-6 mx-auto justify-center"
+            />
             <h2 className="text-[#1A2332] text-2xl sm:text-[32px] mb-6 font-medium">
               Trusted by companies that build for scale and compliance.
             </h2>
@@ -729,8 +737,9 @@ export function HomePage() {
               </div>
             </div>
           </motion.div>
+        </div>
 
-          {/* Compliance Badges */}
+        <div className="relative mx-auto mt-12 sm:mt-16 lg:mt-20 w-full overflow-hidden">
           <TechStack />
         </div>
       </section>
@@ -748,12 +757,11 @@ export function HomePage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 mb-6">
-              <MessageCircle className="w-4.5 h-4.5 text-[#00B8A9]" />
-              <span className="text-base text-[rgb(26,35,50)] font-semibold">
-                Client Success Stories
-              </span>
-            </div>
+            <SectionBadge
+              icon={MessageCircle}
+              label="Client Success Stories"
+              className="mb-6 mx-auto justify-center"
+            />
             <h2 className="mb-4 text-[#1A2332] text-2xl sm:text-[32px] font-medium">
               {"Hear from companies we\u2019ve helped scale."}
             </h2>
@@ -844,9 +852,11 @@ export function HomePage() {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="mb-6"
                 >
-                  <span className="inline-flex items-center px-5 py-2.5 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-base font-semibold tracking-wider text-[rgb(26,35,50)] uppercase">
-                    FAQs
-                  </span>
+                  <SectionBadge
+                    as="span"
+                    label="FAQs"
+                    className="mb-0 uppercase tracking-wider"
+                  />
                 </motion.div>
 
                 <motion.h2

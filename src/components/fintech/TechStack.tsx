@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { FinancialBackground } from "./FinancialBackground";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ImageWithFallback } from "../parent/ImageWithFallback";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
@@ -12,6 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const technologies = [
   {
@@ -61,10 +62,60 @@ const technologies = [
 
 
 export function TechStack() {
+  const AUTOPLAY_DELAY = 2000;
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("cloud");
+  const tabKeys = useMemo(() => technologies.map((tech) => tech.key), []);
+  const [activeTab, setActiveTab] = useState(tabKeys[0]);
+  const [isTabAutoplayPaused, setIsTabAutoplayPaused] = useState(false);
+  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const autoplayPlugin = useMemo(
+    () =>
+      Autoplay({
+        delay: AUTOPLAY_DELAY,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    [],
+  );
 
-  // Removed auto-tab switching to reduce timers and improve performance
+  useEffect(() => {
+    if (typeof autoplayPlugin?.reset === "function") {
+      autoplayPlugin.reset();
+    }
+  }, [activeTab, autoplayPlugin]);
+
+  useEffect(() => {
+    if (isTabAutoplayPaused) return;
+    const activeTech = technologies.find((tech) => tech.key === activeTab);
+    const slidesCount = activeTech?.items.length ?? 1;
+    const timeout = setTimeout(() => {
+      setActiveTab((prev) => {
+        const currentIndex = tabKeys.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % tabKeys.length;
+        return tabKeys[nextIndex];
+      });
+    }, slidesCount * AUTOPLAY_DELAY);
+    return () => clearTimeout(timeout);
+  }, [activeTab, tabKeys, isTabAutoplayPaused]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setIsTabAutoplayPaused(true);
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsTabAutoplayPaused(false);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section id="tech-stack" className="relative py-20 lg:py-32 bg-[#FAFBFC] overflow-hidden">
@@ -96,7 +147,13 @@ export function TechStack() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-6xl mx-auto"
         >
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={handleTabChange}
+            className="w-full"
+            onMouseEnter={() => setIsTabAutoplayPaused(true)}
+            onMouseLeave={() => setIsTabAutoplayPaused(false)}
+          >
             <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto gap-2 bg-transparent mb-12">
               {technologies.map((tech, index) => (
                 <TabsTrigger
@@ -128,6 +185,7 @@ export function TechStack() {
                       loop: true,
                     }}
                     className="w-full"
+                    plugins={[autoplayPlugin]}
                   >
                     <CarouselContent className="-ml-2 md:-ml-4">
                       {tech.items.map((item, idx) => (

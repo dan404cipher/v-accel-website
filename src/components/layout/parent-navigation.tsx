@@ -4,7 +4,6 @@ import { memo, useCallback, useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -25,12 +24,14 @@ export const ParentNavigation = memo(function ParentNavigation() {
   const [isResourcesMenuOpen, setIsResourcesMenuOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState("");
   const navRef = useRef<HTMLElement>(null);
+  const navItemsContainerRef = useRef<HTMLDivElement>(null);
+  const navItemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
 
   const desktopNavLinks = useMemo(
     () => [
-      { label: "Home", href: "/" },
-      { label: "Product", href: "/#leadaccel" },
-      { label: "About", href: "/about" },
+      { label: "Home", href: "/", widthClass: "w-[100px]" },
+      { label: "Product", href: "/#leadaccel", widthClass: "w-[110px]" },
     ],
     [],
   );
@@ -101,6 +102,51 @@ export const ParentNavigation = memo(function ParentNavigation() {
   const isResourcesActive =
     pathname === "/blog" || pathname === "/case-studies";
 
+  const activeNavKey = useMemo(() => {
+    if (isServicesActive) return "service";
+    if (isResourcesActive) return "resource";
+    if (isActiveLink("/about")) return "about";
+    if (isActiveLink("/#leadaccel")) return "product";
+    if (isActiveLink("/")) return "home";
+    return null;
+  }, [isActiveLink, isResourcesActive, isServicesActive]);
+
+  const updateIndicatorPosition = useCallback(() => {
+    if (!activeNavKey) {
+      setIndicatorStyle(null);
+      return;
+    }
+    const target = navItemRefs.current[activeNavKey];
+    const container = navItemsContainerRef.current;
+    if (target && container) {
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      setIndicatorStyle({
+        left: targetRect.left - containerRect.left,
+        width: targetRect.width,
+      });
+    } else {
+      setIndicatorStyle(null);
+    }
+  }, [activeNavKey]);
+
+  useEffect(() => {
+    updateIndicatorPosition();
+  }, [updateIndicatorPosition]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleResize = () => updateIndicatorPosition();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [updateIndicatorPosition]);
+
+  const assignNavItemRef = useCallback((key: string) => {
+    return (element: HTMLDivElement | null) => {
+      navItemRefs.current[key] = element;
+    };
+  }, []);
+
   // Close menu on scroll
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -137,11 +183,8 @@ export const ParentNavigation = memo(function ParentNavigation() {
   }, [isMenuOpen, closeMenu]);
 
   return (
-    <motion.nav
+    <nav
       ref={navRef}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
       className="fixed top-4 sm:top-6 left-0 right-0 z-[120] px-3 sm:px-4 md:px-6 lg:px-8"
       style={{
         '--background': '#ffffff',
@@ -151,78 +194,61 @@ export const ParentNavigation = memo(function ParentNavigation() {
         '--border': 'rgba(0, 0, 0, 0.1)',
       } as React.CSSProperties & { [key: string]: string }}
     >
-      <div 
-        className="max-w-7xl mx-auto relative overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.12)]" 
-        style={{ 
-          backgroundColor: 'transparent',
-          color: '#2C3E50',
-          '--background': '#ffffff',
-          '--foreground': '#2C3E50',
-          '--primary': '#1A2332',
-          '--radius': '0.625rem',
-        } as React.CSSProperties & { [key: string]: string }}
-      >
-        <div className="absolute inset-0 bg-white/95 sm:bg-white/40 backdrop-blur-md sm:backdrop-blur-xl pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/60 to-white/70 sm:from-white/40 sm:via-white/20 sm:to-white/30 pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00B8A9]/10 via-transparent to-[#00B8A9]/10 sm:from-[#00B8A9]/5 sm:to-[#00B8A9]/5 pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-full" />
-        <div className="absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-full border border-white/60 shadow-inner pointer-events-none" />
+      <div className="max-w-7xl mx-auto relative overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-3xl rounded-2xl sm:rounded-3xl lg:rounded-full border border-white/40 shadow-[0_20px_60px_rgba(15,23,42,0.15)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-white/15 rounded-2xl sm:rounded-3xl lg:rounded-full" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/15 to-white/30 rounded-2xl sm:rounded-3xl lg:rounded-full" />
+        <div className="absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-full border border-white/70 shadow-inner" />
 
-        <div className="relative z-10 flex items-center justify-between px-4 md:px-6 py-3 md:py-3.5">
+        <div className="relative flex items-center justify-between px-4 md:px-6 py-3.5 md:py-4">
           <Link href="/" onClick={closeMenu}>
-            <motion.div
-              className="flex items-center gap-3"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
+            <div className="flex items-center gap-3">
               <Image src={vaccelLogo} alt="V-Accel" className="h-8 md:h-9 w-auto" width={36} height={36} />
-            </motion.div>
+            </div>
           </Link>
 
-          <div className="desktop-nav-links hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-            {desktopNavLinks.map((link) => {
-              const active = isActiveLink(link.href);
-              return (
-            <Link
+          <div className="desktop-nav-links hidden lg:flex flex-1 items-center justify-center">
+            <div
+              ref={navItemsContainerRef}
+              className="flex items-center gap-1 relative max-w-full"
+            >
+              {indicatorStyle ? (
+                <div
+                  className="pointer-events-none absolute rounded-full bg-[#1A2332] border border-[#1A2332] shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all duration-300 ease-out"
+                  style={{
+                    height: "100%",
+                    top: 0,
+                    width: indicatorStyle.width,
+                    transform: `translateX(${indicatorStyle.left}px)`,
+                  }}
+                />
+              ) : null}
+              {desktopNavLinks.map((link, index) => (
+                <div
                   key={link.href}
+                  ref={assignNavItemRef(link.href === "/#leadaccel" ? "product" : "home")}
+                  className={cn("relative flex items-center justify-center", link.widthClass ?? "w-[110px]")}
+                >
+                  <Link
                   href={link.href}
                   prefetch={false}
                   onClick={closeMenu}
-                  className="relative px-4 py-2 font-medium text-sm"
-                >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                      transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                    />
-                  )}
-                  <span
                     className={cn(
-                      "relative z-10 transition-colors duration-200",
-                      active ? "text-white" : "text-[#2C3E50] hover:text-[#1A2332]",
+                      "relative z-10 flex items-center justify-center w-full px-4 py-2 text-base font-medium transition-colors duration-200",
+                      isActiveLink(link.href) ? "text-white" : "text-[#2C3E50] hover:text-[#1A2332]",
                     )}
-            >
+                >
                     {link.label}
-                  </span>
             </Link>
-              );
-            })}
+                </div>
+            ))}
 
-            <div className="relative px-1">
-              {isServicesActive && (
-                <motion.span
-                  layoutId="nav-active-pill"
-                  className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                />
-              )}
+              <div className="relative w-[120px] px-1" ref={assignNavItemRef("service")}>
             <DropdownMenu open={isServicesMenuOpen} onOpenChange={setIsServicesMenuOpen}>
                 <DropdownMenuTrigger
                   className={cn(
-                    "relative z-10 flex items-center gap-1 px-4 py-2 transition-colors duration-200 outline-none font-medium",
-                    isServicesActive
-                      ? "text-white"
-                      : "text-[#2C3E50] hover:text-[#1A2332]",
+                    "relative z-10 flex items-center justify-center gap-1 w-full px-4 py-2 text-base font-medium transition-colors duration-200 outline-none",
+                    isServicesActive ? "text-white" : "text-[#2C3E50] hover:text-[#1A2332]",
                   )}
                 >
                 Service
@@ -233,7 +259,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
                     pathname === "/services/edtech"
-                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
+                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-medium"
                       : "hover:bg-white/30 text-[#2C3E50] hover:text-[#1A2332]"
                   }`}
                   onSelect={() => setIsServicesMenuOpen(false)}
@@ -250,7 +276,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
                     pathname === "/services/fintech"
-                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
+                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-medium"
                       : "hover:bg-white/30 text-[#2C3E50] hover:text-[#1A2332]"
                   }`}
                   onSelect={() => setIsServicesMenuOpen(false)}
@@ -267,7 +293,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
                     pathname === "/services/healthcare"
-                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
+                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-medium"
                       : "hover:bg-white/30 text-[#2C3E50] hover:text-[#1A2332]"
                   }`}
                   onSelect={() => setIsServicesMenuOpen(false)}
@@ -284,21 +310,28 @@ export const ParentNavigation = memo(function ParentNavigation() {
             </DropdownMenu>
             </div>
 
-            <div className="relative px-1">
-              {isResourcesActive && (
-                <motion.span
-                  layoutId="nav-active-pill"
-                  className="absolute inset-0 rounded-full bg-[#1A2332] shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                />
-              )}
+            <div className="relative flex items-center justify-center w-[110px] px-1" ref={assignNavItemRef("about")}>
+              <Link
+                href="/about"
+                prefetch={false}
+                onClick={closeMenu}
+                className={cn(
+                  "relative z-10 flex items-center justify-center w-full px-4 py-2 text-base font-medium transition-colors duration-200",
+                  isActiveLink("/about")
+                    ? "text-white"
+                    : "text-[#2C3E50] hover:text-[#1A2332]",
+                )}
+              >
+                About
+              </Link>
+            </div>
+
+            <div className="relative w-[130px] px-1" ref={assignNavItemRef("resource")}>
             <DropdownMenu open={isResourcesMenuOpen} onOpenChange={setIsResourcesMenuOpen}>
                 <DropdownMenuTrigger
                   className={cn(
-                    "relative z-10 flex items-center gap-1 px-4 py-2 transition-colors duration-200 outline-none font-medium",
-                    isResourcesActive
-                      ? "text-white"
-                      : "text-[#2C3E50] hover:text-[#1A2332]",
+                    "relative z-10 flex items-center justify-center gap-1 w-full px-4 py-2 text-base font-medium transition-colors duration-200 outline-none",
+                    isResourcesActive ? "text-white" : "text-[#2C3E50] hover:text-[#1A2332]",
                   )}
                 >
                 Resource
@@ -309,7 +342,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
                     pathname === "/blog"
-                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
+                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-medium"
                       : "hover:bg-white/30 text-[#2C3E50] hover:text-[#1A2332]"
                   }`}
                   onSelect={() => setIsResourcesMenuOpen(false)}
@@ -326,7 +359,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   asChild
                   className={`cursor-pointer backdrop-blur-sm rounded-full m-1 ${
                     pathname === "/case-studies"
-                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
+                      ? "bg-[#00B8A9]/20 text-[#00B8A9] font-medium"
                       : "hover:bg-white/30 text-[#2C3E50] hover:text-[#1A2332]"
                   }`}
                   onSelect={() => setIsResourcesMenuOpen(false)}
@@ -343,6 +376,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
             </DropdownMenu>
             </div>
 
+          </div>
           </div>
 
           <div className="desktop-nav-cta hidden lg:flex items-center gap-4">
@@ -363,21 +397,11 @@ export const ParentNavigation = memo(function ParentNavigation() {
         </div>
 
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="mobile-nav-menu lg:hidden border-t border-white/30 mt-3 pt-3 pb-3 space-y-1 bg-white/95 backdrop-blur-none relative z-10"
-          >
+          <div className="mobile-nav-menu lg:hidden border-t border-black/10 mt-3 pt-3 pb-3 space-y-1 bg-white relative z-10 rounded-2xl">
             <Link
               href="/"
               onClick={closeMenu}
-              className={cn(
-                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
-                isActiveLink("/")
-                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
-              )}
+              className="block px-4 py-2 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
             >
               Home
             </Link>
@@ -385,12 +409,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
               href="/#leadaccel"
               prefetch={false}
               onClick={closeMenu}
-              className={cn(
-                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
-                isActiveLink("/#leadaccel")
-                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
-              )}
+              className="block px-4 py-2 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
             >
               Product
             </Link>
@@ -398,7 +417,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
             <div>
               <button
                 onClick={toggleMobileServices}
-                className="flex items-center justify-between w-full px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40 rounded-lg transition-colors backdrop-blur-sm font-medium"
+                className="flex items-center justify-between w-full px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50 rounded-lg transition-colors font-medium"
               >
                 Service
                 <ChevronDown
@@ -412,33 +431,21 @@ export const ParentNavigation = memo(function ParentNavigation() {
                   <Link
                     href="/services/edtech"
                     onClick={closeMenu}
-                    className={`block px-4 py-2.5 rounded-lg transition-colors backdrop-blur-sm font-medium ${
-                      pathname === "/services/edtech"
-                        ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
-                        : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40"
-                    }`}
+                    className="block px-4 py-2.5 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
                   >
                     EdTech
                   </Link>
                   <Link
                     href="/services/fintech"
                     onClick={closeMenu}
-                    className={`block px-4 py-2.5 rounded-lg transition-colors backdrop-blur-sm font-medium ${
-                      pathname === "/services/fintech"
-                        ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
-                        : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40"
-                    }`}
+                    className="block px-4 py-2.5 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
                   >
                     FinTech
                   </Link>
                   <Link
                     href="/services/healthcare"
                     onClick={closeMenu}
-                    className={`block px-4 py-2.5 rounded-lg transition-colors backdrop-blur-sm font-medium ${
-                      pathname === "/services/healthcare"
-                        ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
-                        : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40"
-                    }`}
+                    className="block px-4 py-2.5 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
                   >
                     HealthCare
                   </Link>
@@ -449,12 +456,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
             <Link
               href="/about"
               onClick={closeMenu}
-              className={cn(
-                "block px-4 py-2 rounded-lg transition-colors backdrop-blur-sm font-medium",
-                isActiveLink("/about")
-                  ? "bg-[#1A2332] text-white shadow-[0_10px_25px_rgba(26,35,50,0.25)]"
-                  : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40",
-              )}
+              className="block px-4 py-2 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
             >
               About
             </Link>
@@ -462,7 +464,7 @@ export const ParentNavigation = memo(function ParentNavigation() {
             <div>
               <button
                 onClick={toggleMobileResources}
-                className="flex items-center justify-between w-full px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40 rounded-lg transition-colors backdrop-blur-sm font-medium"
+                className="flex items-center justify-between w-full px-4 py-2 text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50 rounded-lg transition-colors font-medium"
               >
                 Resource
                 <ChevronDown
@@ -476,22 +478,14 @@ export const ParentNavigation = memo(function ParentNavigation() {
                 <Link
                   href="/blog"
                     onClick={closeMenu}
-                    className={`block px-4 py-2.5 rounded-lg transition-colors backdrop-blur-sm font-medium ${
-                      pathname === "/blog"
-                        ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
-                        : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40"
-                    }`}
+                    className="block px-4 py-2.5 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
                   >
                     Blog
                   </Link>
                 <Link
                   href="/case-studies"
                     onClick={closeMenu}
-                    className={`block px-4 py-2.5 rounded-lg transition-colors backdrop-blur-sm font-medium ${
-                      pathname === "/case-studies"
-                        ? "bg-[#00B8A9]/20 text-[#00B8A9] font-semibold"
-                        : "text-[#2C3E50] hover:text-[#1A2332] hover:bg-white/40"
-                    }`}
+                    className="block px-4 py-2.5 rounded-lg transition-colors font-medium text-[#2C3E50] hover:text-[#1A2332] hover:bg-gray-50"
                   >
                   Case Studies
                   </Link>
@@ -506,10 +500,10 @@ export const ParentNavigation = memo(function ParentNavigation() {
                 </Button>
               </Link>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 });
 

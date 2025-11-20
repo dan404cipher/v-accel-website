@@ -21,7 +21,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { ImageWithFallback } from "./ImageWithFallback";
-import chennaiMapBg from "@assets/292b345ba7d201da1766c695823acf6877e18a7c.png";
+import chennaiMapBg from "@assets/contact-map.png";
 import phoneMockup from "@assets/995e2841ce10ae46f2c330cc3619c2c8b2c2ee3a.png";
 
 export function ContactPage() {

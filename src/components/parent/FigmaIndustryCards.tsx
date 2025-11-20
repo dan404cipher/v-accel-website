@@ -21,7 +21,7 @@ export const FigmaIndustryCards = memo(function FigmaIndustryCards() {
         className="bg-white flex flex-col gap-6 overflow-hidden rounded-[14px] shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
       >
         <Link href="/services/edtech" className="flex flex-col gap-6">
-        <div className="h-[230px] relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden h-[180px] sm:h-[210px] lg:h-[230px]">
             <Image
               alt="EdTech Dashboard"
               className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
@@ -52,7 +52,7 @@ export const FigmaIndustryCards = memo(function FigmaIndustryCards() {
         className="bg-white flex flex-col gap-6 overflow-hidden rounded-[14px] shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
       >
         <Link href="/services/fintech" className="flex flex-col gap-6">
-        <div className="h-[230px] relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden h-[180px] sm:h-[210px] lg:h-[230px]">
             <Image
               alt="FinTech Platform"
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
@@ -83,7 +83,7 @@ export const FigmaIndustryCards = memo(function FigmaIndustryCards() {
         className="bg-white flex flex-col gap-6 overflow-hidden rounded-[14px] shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
       >
         <Link href="/services/healthcare" className="flex flex-col gap-6">
-        <div className="h-[230px] relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden h-[180px] sm:h-[210px] lg:h-[230px]">
             <Image
               alt="Healthcare Platform"
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"

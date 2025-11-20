@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { SectionBadge } from "./SectionBadge";
 import { 
   Shield,
   Lightbulb,
@@ -50,10 +50,12 @@ export function CompanyValues() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-[#00B8A9]/10 rounded-full border border-[#00B8A9]/20 text-[#1A2332] shadow-lg text-[16px] py-[8px] px-[16px]">
-            <Heart className="w-4 h-4 mr-2 text-[#00B8A9]" />
-            Our Values
-          </Badge>
+          <SectionBadge
+            icon={Heart}
+            label="Our Values"
+            className="mb-4 mx-auto justify-center"
+            iconClassName="mr-0"
+          />
           <h2 className="text-4xl md:text-4xl font-semibold mb-4 text-[32px] text-[rgb(26,35,50)]">
             What We <span className="bg-gradient-to-r from-[#1A2332] to-[#FF6B6B] bg-clip-text text-[rgb(26,35,50)] text-[32px]">Stand For</span>
           </h2>

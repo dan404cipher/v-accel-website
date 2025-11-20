@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { ImageWithFallback } from "./ImageWithFallback";
+import { SectionBadge } from "./SectionBadge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Carousel,
@@ -12,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useViewportAnimation } from "@/hooks/useViewportAnimation";
+import Autoplay from "embla-carousel-autoplay";
 
 const technologies = [
   {
@@ -59,9 +61,61 @@ const technologies = [
 ];
 
 export function TechStack() {
+  const AUTOPLAY_DELAY = 2000;
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("cloud");
+  const tabKeys = useMemo(() => technologies.map((tech) => tech.key), []);
+  const [activeTab, setActiveTab] = useState(tabKeys[0]);
+  const [isTabAutoplayPaused, setIsTabAutoplayPaused] = useState(false);
+  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { ref: viewportRef } = useViewportAnimation({ rootMargin: "-100px" });
+  const autoplayPlugin = useMemo(
+    () =>
+      Autoplay({
+        delay: AUTOPLAY_DELAY,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    [],
+  );
+
+  useEffect(() => {
+    if (typeof autoplayPlugin?.reset === "function") {
+      autoplayPlugin.reset();
+    }
+  }, [activeTab, autoplayPlugin]);
+
+  useEffect(() => {
+    if (isTabAutoplayPaused) return;
+    const activeTech = technologies.find((tech) => tech.key === activeTab);
+    const slidesCount = activeTech?.items.length ?? 1;
+    const timeout = setTimeout(() => {
+      setActiveTab((prev) => {
+        const currentIndex = tabKeys.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % tabKeys.length;
+        return tabKeys[nextIndex];
+      });
+    }, slidesCount * AUTOPLAY_DELAY);
+    return () => clearTimeout(timeout);
+  }, [activeTab, tabKeys, isTabAutoplayPaused, AUTOPLAY_DELAY]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setIsTabAutoplayPaused(true);
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsTabAutoplayPaused(false);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
   // Removed auto-tab switching to reduce timers and improve performance
 
   return (
@@ -138,17 +192,18 @@ export function TechStack() {
           />
         </div>
       </div>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2 }}
           >
-            <div className="inline-block px-4 py-2 bg-[#00B8A9]/10 rounded-full mb-4">
-              <span className="text-[rgb(26,35,50)]">Technology Stack</span>
-            </div>
+            <SectionBadge
+              label="Technology Stack"
+              className="mb-4 mx-auto justify-center"
+            />
             <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-4 text-[#1A2332] text-[32px]">
               Built on Trusted, Modern Technology
             </h2>
@@ -165,7 +220,13 @@ export function TechStack() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-6xl mx-auto overflow-visible"
         >
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={handleTabChange}
+            className="w-full"
+            onMouseEnter={() => setIsTabAutoplayPaused(true)}
+            onMouseLeave={() => setIsTabAutoplayPaused(false)}
+          >
             <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto gap-2 bg-transparent mb-12">
               {technologies.map((tech, index) => (
                 <TabsTrigger
@@ -198,6 +259,7 @@ export function TechStack() {
                       loop: true,
                     }}
                     className="w-full"
+                    plugins={[autoplayPlugin]}
                   >
                     <CarouselContent className="-ml-2 md:-ml-4">
                       {tech.items.map((item, idx) => (

@@ -13,6 +13,7 @@ import { FinalCtaSection } from "./FinalCtaSection";
 import { CompanyValues } from "./CompanyValues";
 import { TrustedPartners } from "./TrustedPartners";
 import { StatisticsBar } from "./StatisticsBar";
+import { SectionBadge } from "./SectionBadge";
 import founderImage from "@assets/d4cc23ca1f15b0a6e25454aaf732f2bd383b9f1a.png";
 import {
   Sparkles,
@@ -99,10 +100,11 @@ export function AboutPage() {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <Badge className={`${BADGE_BASE} mb-4 md:mb-6 shadow-lg`}>
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#00B8A9]" />
-                About V-Accel AI Dynamics
-              </Badge>
+              <SectionBadge
+                icon={Sparkles}
+                label="About V-Accel AI Dynamics"
+                className="mb-4 md:mb-6 mx-auto justify-center"
+              />
             </motion.div>
 
             <motion.h1
@@ -185,10 +187,11 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="mb-16 text-center"
           >
-            <Badge className={`${BADGE_BASE} mb-6`}>
-              <Rocket className="w-4 h-4 text-[#00B8A9]" />
-              Our Journey
-            </Badge>
+            <SectionBadge
+              icon={Rocket}
+              label="Our Journey"
+              className="mb-6 mx-auto justify-center"
+            />
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -304,12 +307,12 @@ export function AboutPage() {
 
                     {/* Icon circle */}
                     <motion.div
-                      className="absolute left-0 top-8 -translate-x-[21px] w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg flex-shrink-0"
+                      className="absolute left-0 top-8 -translate-x-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg flex-shrink-0"
                       style={{ backgroundColor: item.color }}
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 400 }}
                     >
-                      <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                      <item.icon className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white" />
                     </motion.div>
 
                     <div className="pt-1">
@@ -558,10 +561,11 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <Badge className={`${BADGE_BASE} mb-6`}>
-              <Users className="w-5 h-5 text-[#00B8A9]" />
-              Leadership
-            </Badge>
+            <SectionBadge
+              icon={Users}
+              label="Leadership"
+              className="mb-6 mx-auto justify-center"
+            />
             <h2 className="text-4xl md:text-6xl font-semibold mb-4">
               <span className="text-[#1A2332] text-[32px]">
                 Meet the Founder
