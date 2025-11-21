@@ -13,7 +13,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import vaccelLogo from "@assets/2f6818b63f91758834982350ffe7523437d669ba.png";
+import logo1x from "@assets/vaccel-logo-134.png";
+import logo2x from "@assets/vaccel-logo-268.png";
 
 export const ParentNavigation = memo(function ParentNavigation() {
   const pathname = usePathname();
@@ -203,7 +204,15 @@ export const ParentNavigation = memo(function ParentNavigation() {
         <div className="relative flex items-center justify-between px-4 md:px-6 py-3.5 md:py-4">
           <Link href="/" onClick={closeMenu}>
             <div className="flex items-center gap-3">
-              <Image src={vaccelLogo} alt="V-Accel" className="h-8 md:h-9 w-auto" width={36} height={36} />
+              <Image
+                src={logo1x}
+                alt="V-Accel"
+                className="h-8 md:h-9 w-auto"
+                width={134}
+                height={64}
+                sizes="134px"
+                priority
+              />
             </div>
           </Link>
 

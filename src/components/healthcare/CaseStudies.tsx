@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ArrowRight, TrendingUp, Clock, Users } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
@@ -56,7 +56,7 @@ export function CaseStudies() {
             Real Results for Real Businesses
           </h2>
           <p className="text-lg text-muted-foreground">
-            See how we've helped financial institutions transform their operations and achieve measurable success
+            See how we&apos;ve helped financial institutions transform their operations and achieve measurable success
           </p>
         </div>
 

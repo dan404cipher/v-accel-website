@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
@@ -37,9 +38,15 @@ export function FinalCtaSection() {
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="rounded-lg bg-[#1A2332] text-white hover:bg-[#0F141D] shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_8px_24px_rgba(15,20,29,0.55)] transition-all duration-300 group text-base sm:text-lg py-5 px-7">
-              Talk to Our Team
-              <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+            <Button
+              asChild
+              size="lg"
+              className="rounded-lg bg-[#1A2332] text-white hover:bg-[#0F141D] shadow-[0_4px_14px_0_rgba(26,35,50,0.39)] hover:shadow-[0_8px_24px_rgba(15,20,29,0.55)] transition-all duration-300 group text-base sm:text-lg py-5 px-7"
+            >
+              <Link href="/contact#contact-form" className="flex items-center justify-center gap-2">
+                Talk to Our Team
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
           </div>
 

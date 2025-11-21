@@ -10,8 +10,6 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { createSeededRandom } from "@/lib/seeded-random";
 
 const services = [
@@ -55,7 +53,6 @@ const services = [
 
 export function Services() {
   // Memoize particle positions and animation values
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const particles = useMemo(() => {
     const rng = createSeededRandom(241);
     return Array.from({ length: 3 }, () => ({

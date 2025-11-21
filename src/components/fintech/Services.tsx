@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Cloud, Code, Database, Lock, Zap, LineChart } from "lucide-react";
 import { FinancialBackground } from "./FinancialBackground";
 

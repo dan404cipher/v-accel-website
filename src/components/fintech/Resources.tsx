@@ -1,34 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { FileText, BookOpen, TrendingUp, ArrowRight } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-
-const resources = [
-  {
-    type: "Whitepaper",
-    icon: FileText,
-    title: "The Future of Digital Banking",
-    description: "Explore emerging trends and technologies shaping the next generation of banking services.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaW5hbmNpYWwlMjByZXBvcnR8ZW58MXx8fHwxNzYyNTgwMDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tag: "Trending",
-  },
-  {
-    type: "E-Book",
-    icon: BookOpen,
-    title: "Cloud Migration for Financial Institutions",
-    description: "A comprehensive guide to successful cloud adoption with best practices and case studies.",
-    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbG91ZCUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzYyNTgwMDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tag: "Popular",
-  },
-  {
-    type: "Report",
-    icon: TrendingUp,
-    title: "AI in FinTech: 2025 Industry Report",
-    description: "Data-driven insights on artificial intelligence adoption and ROI in financial services.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhaXxlbnwxfHx8fDE3NjI1ODAwNDN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    tag: "New",
-  },
-];
+import { ArrowRight } from "lucide-react";
 
 const blogPosts = [
   {

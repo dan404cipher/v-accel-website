@@ -4,7 +4,8 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Linkedin, Twitter, Github, Mail, Instagram, Youtube } from "lucide-react";
-import vaccelLogo from "@assets/2f6818b63f91758834982350ffe7523437d669ba.png";
+import logo1x from "@assets/vaccel-logo-134.png";
+import logo2x from "@assets/vaccel-logo-268.png";
 
 export function ParentFooter() {
   return (
@@ -56,11 +57,13 @@ export function ParentFooter() {
           >
             <motion.div className="mb-6" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
               <Image
-                src={vaccelLogo}
+                src={logo1x}
                 alt="V-Accel Healthcare"
-                width={160}
+                width={134}
                 height={64}
                 className="h-16 w-auto"
+                sizes="160px"
+                priority
               />
             </motion.div>
 

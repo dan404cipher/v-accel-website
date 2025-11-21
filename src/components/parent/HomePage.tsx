@@ -494,7 +494,7 @@ export function HomePage() {
             </p>
           </motion.div>
 
-          <div className="mb-10">
+          <div className="mb-8 sm:mb-10 lg:mb-12">
             <FigmaIndustryCards />
           </div>
 

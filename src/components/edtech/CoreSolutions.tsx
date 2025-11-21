@@ -32,7 +32,7 @@ export function CoreSolutions() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/40 relative overflow-hidden">
+    <section id="core-solutions" className="py-20 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/40 relative overflow-hidden">
       {/* Soft decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/20 rounded-full blur-xl"></div>

@@ -2,11 +2,8 @@
 
 import { Shield, Wallet, AlertTriangle, Plug, BarChart3, FileCheck, ArrowRight, TrendingUp } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
 
 export function KeyFeatures() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
   return (
     <section id="key-features" className="py-12 lg:py-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,8 +53,6 @@ export function KeyFeatures() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            onMouseEnter={() => setHoveredCard(0)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-xl" />
@@ -119,8 +114,6 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             whileHover={{ scale: 1.03 }}
-            onMouseEnter={() => setHoveredCard(1)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
               <Shield className="h-5 w-5 text-primary" />
@@ -143,8 +136,6 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ scale: 1.03 }}
-            onMouseEnter={() => setHoveredCard(2)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
               <Wallet className="h-5 w-5 text-primary" />
@@ -167,8 +158,6 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
             whileHover={{ scale: 1.02 }}
-            onMouseEnter={() => setHoveredCard(3)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="grid md:grid-cols-2 gap-5 items-start">
               <div>
@@ -211,8 +200,6 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
             whileHover={{ scale: 1.03 }}
-            onMouseEnter={() => setHoveredCard(4)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
               <AlertTriangle className="h-5 w-5 text-primary" />
@@ -240,8 +227,6 @@ export function KeyFeatures() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
             whileHover={{ scale: 1.03 }}
-            onMouseEnter={() => setHoveredCard(5)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
               <FileCheck className="h-5 w-5 text-primary" />

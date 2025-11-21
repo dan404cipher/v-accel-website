@@ -46,11 +46,15 @@ export function Testimonials() {
     [],
   );
 
-  const [mounted, setMounted] = useState(false);
-  const [slidesPerView, setSlidesPerView] = useState(3);
+  const [slidesPerView, setSlidesPerView] = useState(() => {
+    if (typeof window === "undefined") return 3;
+    const width = window.innerWidth;
+    if (width < 768) return 1;
+    if (width < 1024) return 2;
+    return 3;
+  });
 
   useEffect(() => {
-    setMounted(true);
     const handleResize = () => {
       const width = window.innerWidth;
       if (width < 768) {
@@ -71,24 +75,26 @@ export function Testimonials() {
     Math.ceil(extendedTestimonials.length / slidesPerView),
     1,
   );
+  const maxPageIndex = Math.max(pageCount - 1, 0);
 
-  const [activePage, setActivePage] = useState(0);
-
-  useEffect(() => {
-    setActivePage((prev) => Math.min(prev, pageCount - 1));
-  }, [pageCount]);
+  const [rawActivePage, setRawActivePage] = useState(0);
+  const activePage = useMemo(
+    () => Math.min(Math.max(rawActivePage, 0), maxPageIndex),
+    [rawActivePage, maxPageIndex],
+  );
 
   const goToPage = useCallback(
     (nextPage: number) => {
+      if (pageCount <= 0) return;
       if (nextPage < 0) {
-        setActivePage(pageCount - 1);
-      } else if (nextPage >= pageCount) {
-        setActivePage(0);
+        setRawActivePage(maxPageIndex);
+      } else if (nextPage > maxPageIndex) {
+        setRawActivePage(0);
       } else {
-        setActivePage(nextPage);
+        setRawActivePage(nextPage);
       }
     },
-    [pageCount],
+    [maxPageIndex, pageCount],
   );
 
   const handlePrev = useCallback(() => {
@@ -204,7 +210,7 @@ export function Testimonials() {
                     <Quote className="h-10 w-10 text-[#4CAF50]/20 mb-4" />
                     
                     <p className="text-[#6B7280] mb-6 flex-grow italic">
-                      "{testimonial.quote}"
+                      &ldquo;{testimonial.quote}&rdquo;
                     </p>
 
                     <div className="flex items-center gap-4 pt-4 border-t border-gray-200">
@@ -253,7 +259,6 @@ export function Testimonials() {
             <ChevronRight className="h-5 w-5" />
           </button>
 
-          {mounted && (
           <div className="mt-16 flex items-center justify-center gap-3">
             {Array.from({ length: pageCount }).map((_, index) => (
               <button
@@ -268,7 +273,6 @@ export function Testimonials() {
               />
             ))}
           </div>
-          )}
         </div>
       </div>
     </section>

@@ -47,7 +47,7 @@ export function CaseStudy() {
             <div className="space-y-4">
               <h3 className="text-2xl">The Challenge</h3>
               <p className="text-muted-foreground leading-relaxed">
-                A client's existing LMS couldn't handle growing enrollments or
+                A client&apos;s existing LMS couldn&apos;t handle growing enrollments or
                 data visibility needs. The platform was experiencing performance
                 issues, lack of real-time analytics, and limited scalability
                 options.

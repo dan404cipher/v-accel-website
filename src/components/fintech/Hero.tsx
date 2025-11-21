@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import mobileAppScreen from "../../assets/fintech/8c56b3ded6cbcf7d1bf6eeb5c6666a73f89e4ed7.png";
 import { FinancialBackground } from "./FinancialBackground";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -70,12 +71,14 @@ export function Hero() {
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   variant="outline"
-                  onClick={() => scrollToSection("contact")}
                 >
-                  Talk to Our Team
+                  <Link href="/contact#contact-form">
+                    Talk to Our Team
+                  </Link>
                 </Button>
               </motion.div>
             </motion.div>

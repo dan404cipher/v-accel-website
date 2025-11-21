@@ -165,8 +165,8 @@ export function DpaPage() {
     ),
   );
 
-  const heroViewport = useViewportAnimation();
-  const mainViewport = useViewportAnimation({ rootMargin: "-30% 0px -30% 0px" });
+  const { ref: heroViewportRef } = useViewportAnimation();
+  const { ref: mainViewportRef } = useViewportAnimation({ rootMargin: "-30% 0px -30% 0px" });
 
   const scrollToSection = (sectionId: SectionId) => {
     const element = sectionRefs.current[sectionId];
@@ -223,8 +223,8 @@ export function DpaPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F4F6F8] to-white">
-      <Hero viewportRef={heroViewport.ref} />
-      <section ref={mainViewport.ref} className="py-16 -mt-12 relative z-20 play-animations">
+      <Hero viewportRef={heroViewportRef} />
+      <section ref={mainViewportRef} className="py-16 -mt-12 relative z-20 play-animations">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
             <SideNav activeSection={activeSection} onNavigate={scrollToSection} />

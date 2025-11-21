@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -38,6 +38,19 @@ export function ContactPage() {
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === "#contact-form") {
+      const target = document.getElementById("contact-form");
+      if (target) {
+        // Delay to ensure layout is ready before scrolling
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -431,11 +444,12 @@ export function ContactPage() {
         <div className="max-w-7xl mx-auto px-6 relative" style={{ zIndex: 10 }}>
           {/* Contact Form - Full Width */}
           <motion.div
+            id="contact-form"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto mb-16"
+            className="max-w-4xl mx-auto mb-16 scroll-mt-28 lg:scroll-mt-40"
           >
             <Card className="relative p-8 md:p-10 border-0 shadow-2xl bg-white overflow-hidden">
               {/* Decorative gradient corner */}
@@ -457,7 +471,10 @@ export function ContactPage() {
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="group">
                       <label

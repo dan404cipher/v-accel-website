@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import Link from "next/link";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { HealthcareBackground } from "./HealthcareBackground";
@@ -18,7 +19,7 @@ export function CTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Let's simplify your healthcare technology.
+            Let&apos;s simplify your healthcare technology.
           </motion.h2>
           <motion.p 
             className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
@@ -27,18 +28,20 @@ export function CTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            If compliance challenges, integration gaps, or workflow inefficiencies are slowing your operations — let's find a better way forward.
+            If compliance challenges, integration gaps, or workflow inefficiencies are slowing your operations — let&apos;s find a better way forward.
           </motion.p>
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Button size="lg" className="gap-2 group hover:scale-105 transition-transform">
-              Talk to Our Team
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <Button asChild size="lg" className="gap-2 group hover:scale-105 transition-transform">
+              <Link href="/contact#contact-form" className="flex items-center gap-2">
+                Talk to Our Team
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </motion.div>
         </div>

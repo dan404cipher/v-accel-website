@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { ImageWithFallback } from "./ImageWithFallback";
 import { SectionBadge } from "./SectionBadge";
+import { OptimizedBackground } from "./OptimizedBackground";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Carousel,
@@ -124,74 +125,7 @@ export function TechStack() {
       id="tech-stack"
       className="relative py-20 lg:py-32 bg-[#FAFBFC] overflow-hidden play-animations"
     >
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              left: "-189px",
-              top: "168px",
-              width: "800px",
-              height: "800px",
-              background:
-                "radial-gradient(circle, rgba(0, 184, 169, 0.08), rgba(0, 184, 169, 0.03) 40%, transparent 70%)",
-              borderRadius: "50%",
-            }}
-          />
-
-          <svg className="absolute top-[15%] left-0 w-full h-[200px]" style={{ opacity: 0.06 }}>
-            <path
-              d="M0,100 Q500,137.81305 1000,100 T2000,100"
-              fill="none"
-              stroke="#00B8A9"
-              strokeWidth="2"
-            />
-          </svg>
-
-          <svg className="absolute top-[50%] left-0 w-full h-[150px]" style={{ opacity: 0.05 }}>
-            <path
-              d="M0,75 Q600,99.99742 1200,75 T2400,75"
-              fill="none"
-              stroke="#FF6B6B"
-              strokeWidth="2"
-            />
-          </svg>
-
-          {[
-            { left: "15%", top: "25%", size: 4, color: "#00B8A9", transform: "translateY(-38px) scale(1.05)" },
-            { left: "80%", top: "20%", size: 3, color: "#00B8A9", transform: "translateY(-10px) scale(0.87)" },
-            { left: "25%", top: "75%", size: 4, color: "#FF6B6B", transform: "translateY(-14px) scale(0.9)" },
-            { left: "70%", top: "65%", size: 3, color: "#00B8A9", transform: "translateY(-60px) scale(1.2)" },
-          ].map((dot, idx) => (
-            <div
-              key={`static-dot-${idx}`}
-              className="absolute rounded-full"
-              style={{
-                left: dot.left,
-                top: dot.top,
-                width: `${dot.size}px`,
-                height: `${dot.size}px`,
-                backgroundColor: dot.color,
-                transform: dot.transform,
-              }}
-            />
-          ))}
-
-          <div
-            className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(0, 184, 169, 0.06), transparent 70%)",
-            }}
-          />
-
-          <div
-            className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(255, 107, 107, 0.04), transparent 70%)",
-            }}
-          />
-        </div>
-      </div>
+      <OptimizedBackground variant="hero" />
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
@@ -287,6 +221,7 @@ export function TechStack() {
 
                               <div className="relative flex flex-col items-center gap-4">
                                 <div 
+                                  data-animate-on-visible
                                   className="h-20 w-20 flex items-center justify-center animate-tech-logo-float gpu-accelerated"
                                   style={{
                                     animationDelay: `${idx * 0.3}s`,

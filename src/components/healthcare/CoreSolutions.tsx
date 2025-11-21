@@ -28,7 +28,7 @@ const solutions = [
 
 export function CoreSolutions() {
   return (
-    <section id="solutions" className="py-20 lg:py-28 bg-white relative overflow-hidden">
+    <section id="core-solutions" className="py-20 lg:py-28 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-4xl mx-auto text-center mb-12">

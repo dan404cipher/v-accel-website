@@ -9,7 +9,6 @@ import {
 } from "motion/react";
 import { useEffect, useRef, useState, useMemo } from "react";
 
-import { cn } from "@/lib/utils";
 import { createSeededRandom } from "@/lib/seeded-random";
 
 const stats = [
@@ -87,7 +86,6 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
 export function Stats() {
   // Memoize particle positions and animation values
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const particles = useMemo(() => {
     const rng = createSeededRandom(359);
     return Array.from({ length: 8 }, () => ({

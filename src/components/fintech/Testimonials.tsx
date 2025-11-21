@@ -75,24 +75,26 @@ export function Testimonials() {
     Math.ceil(extendedTestimonials.length / slidesPerView),
     1,
   );
+  const maxPageIndex = Math.max(pageCount - 1, 0);
 
-  const [activePage, setActivePage] = useState(0);
-
-  useEffect(() => {
-    setActivePage((prev) => Math.min(prev, pageCount - 1));
-  }, [pageCount]);
+  const [rawActivePage, setRawActivePage] = useState(0);
+  const activePage = useMemo(
+    () => Math.min(Math.max(rawActivePage, 0), maxPageIndex),
+    [rawActivePage, maxPageIndex],
+  );
 
   const goToPage = useCallback(
     (nextPage: number) => {
+      if (pageCount <= 0) return;
       if (nextPage < 0) {
-        setActivePage(pageCount - 1);
-      } else if (nextPage >= pageCount) {
-        setActivePage(0);
+        setRawActivePage(maxPageIndex);
+      } else if (nextPage > maxPageIndex) {
+        setRawActivePage(0);
       } else {
-        setActivePage(nextPage);
+        setRawActivePage(nextPage);
       }
     },
-    [pageCount],
+    [maxPageIndex, pageCount],
   );
 
   const handlePrev = useCallback(() => {
@@ -208,7 +210,7 @@ export function Testimonials() {
                           <Quote className="h-10 w-10 text-[#45647B]/20 mb-4" />
                   
                   <p className="text-muted-foreground mb-6 flex-grow italic">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </p>
 
                           <div className="flex items-center gap-4 pt-4 border-t border-[#45647B]/10">

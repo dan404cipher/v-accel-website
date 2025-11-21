@@ -6,8 +6,16 @@ import { HealthcareBackground } from "./HealthcareBackground";
 import { motion } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import heroImage from "@assets/f1c492f95124a52f897533a675f029f7199c04e3.png";
+import Link from "next/link";
 
 export function Hero() {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="hero"
@@ -58,6 +66,7 @@ export function Hero() {
               <Button
                 size="lg"
                 className="gap-2 group hover:scale-105 transition-transform"
+                onClick={() => scrollToSection("core-solutions")}
               >
                 Explore Solutions
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -66,8 +75,11 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 className="hover:scale-105 transition-transform"
+                asChild
               >
-                Talk to Our Team
+                <Link href="/contact#contact-form">
+                  Talk to Our Team
+                </Link>
               </Button>
             </motion.div>
           </div>

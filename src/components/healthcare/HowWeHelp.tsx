@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "motion/react";
-import { Search, PenTool, Rocket, Heart, Activity, Stethoscope, Pill, Shield, Users } from "lucide-react";
+import { Search, PenTool, Rocket, Heart, Activity, Stethoscope } from "lucide-react";
 
 const steps = [
   {

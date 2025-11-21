@@ -71,24 +71,26 @@ export function Testimonials() {
     Math.ceil(extendedTestimonials.length / slidesPerView),
     1,
   );
+  const maxPageIndex = Math.max(pageCount - 1, 0);
 
-  const [activePage, setActivePage] = useState(0);
-
-  useEffect(() => {
-    setActivePage((prev) => Math.min(prev, pageCount - 1));
-  }, [pageCount]);
+  const [rawActivePage, setRawActivePage] = useState(0);
+  const activePage = useMemo(
+    () => Math.min(Math.max(rawActivePage, 0), maxPageIndex),
+    [rawActivePage, maxPageIndex],
+  );
 
   const goToPage = useCallback(
     (nextPage: number) => {
+      if (pageCount <= 0) return;
       if (nextPage < 0) {
-        setActivePage(pageCount - 1);
-      } else if (nextPage >= pageCount) {
-        setActivePage(0);
+        setRawActivePage(maxPageIndex);
+      } else if (nextPage > maxPageIndex) {
+        setRawActivePage(0);
       } else {
-        setActivePage(nextPage);
+        setRawActivePage(nextPage);
       }
     },
-    [pageCount],
+    [maxPageIndex, pageCount],
   );
 
   const handlePrev = useCallback(() => {
@@ -211,7 +213,7 @@ export function Testimonials() {
                       ))}
                     </div>
                     <p className="text-foreground mb-8 leading-relaxed flex-1">
-                      "{testimonial.content}"
+                      &ldquo;{testimonial.content}&rdquo;
                     </p>
                     <div className="flex items-center gap-3 pt-6 border-t border-primary/10">
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">

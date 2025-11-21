@@ -5,8 +5,16 @@ import { ArrowRight, Play } from "lucide-react";
 import { DeviceMockups } from "./DeviceMockups";
 import { EdutechBackground } from "./EdutechBackground";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 export function Hero() {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="home"
@@ -59,15 +67,26 @@ export function Hero() {
               transition={{ delay: 0.5, duration: 0.6 }}
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="default" className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8">
+                <Button
+                  size="default"
+                  className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8"
+                  onClick={() => scrollToSection("core-solutions")}
+                >
                   Explore Solutions
                   <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="default" variant="outline" className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8">
-                  <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  Talk to Our Team
+                <Button
+                  size="default"
+                  variant="outline"
+                  className="gap-2 text-xs sm:text-sm md:text-base font-semibold h-9 sm:h-10 md:h-12 px-4 sm:px-6 md:px-8"
+                  asChild
+                >
+                  <Link href="/contact#contact-form">
+                    <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    Talk to Our Team
+                  </Link>
                 </Button>
               </motion.div>
             </motion.div>
